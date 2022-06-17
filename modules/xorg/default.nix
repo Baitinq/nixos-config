@@ -27,4 +27,5 @@
   };
   systemd.user.services.polkit-gnome-authentication-agent-1.enable = true;
 
+  #xsession.enable = true; NOT NEEDED RIGHT
 }

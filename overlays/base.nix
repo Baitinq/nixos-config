@@ -25,4 +25,21 @@ final: prev:
       sha256 = "sha256-J5JwuQMdDU4Oy7let0IYA2rwOZD057LEE+sOmmGCkqc=";
     };
   });
+
+  neovim = prev.neovim.override {
+    vimAlias = true;
+    configure = {
+      packages.myPlugins = with prev.vimPlugins; {
+        start = [
+          vim-addon-nix
+          YouCompleteMe
+          nerdtree
+          rainbow_parentheses
+          base16-vim
+          vim-orgmode
+        ];
+        opt = [ ];
+      };
+    };
+  };
 }

@@ -63,21 +63,6 @@ in
 
     obs-studio = { enable = true; };
 
-    neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      withPython3 = true;
-      plugins = with pkgs.vimPlugins; [
-        vim-addon-nix
-        YouCompleteMe
-        nerdtree
-        rainbow_parentheses
-        base16-vim
-        vim-orgmode
-      ];
-    };
-
     zsh = {
       enable = true;
       zplug = {
@@ -168,6 +153,4 @@ in
       sha256 = "sha256-YKpIno5QSJM/GGp5DwQeuhKmTU5S96+IhLr0O0V8PDI=";
     };
   };
-
-  xsession.enable = true;
 }
