@@ -33,6 +33,7 @@ in
     qbittorrent
     xorg.xev
     statix
+    custom.anime-downloader
   ];
 
   programs = {

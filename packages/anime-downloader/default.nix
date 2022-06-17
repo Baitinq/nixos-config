@@ -1,21 +1,17 @@
-{ pkgs
-, lib
-, fetchFromGitHub
-, python3Packages
-, python3
-, extraPkgs ? pkgs: [ ]
-}:
-python3Packages.buildPythonApplication rec {
-  pname = "anime-dl";
+{ pkgs, lib }:
+
+pkgs.python38.pkgs.buildPythonPackage rec {
+  pname = "anime-downloader";
   version = "5.0.14";
-  src = fetchFromGitHub {
+
+  src = pkgs.fetchFromGitHub {
     owner = "anime-dl";
     repo = "anime-downloader";
     rev = version;
     sha256 = "1ai71g8cp2i37p53lm32nl3h8cq7rcxifhnj1z1cfvxbqjvackaj";
   };
 
-  propagatedBuildInputs = with python3.pkgs; [
+  propagatedBuildInputs = with pkgs.python38.pkgs; [
     pySmartDL
     cfscrape
     beautifulsoup4
@@ -26,7 +22,10 @@ python3Packages.buildPythonApplication rec {
     coloredlogs
     tabulate
     pycryptodome
-  ] ++ extraPkgs pkgs;
+
+    pkgs.nodejs
+    pkgs.mpv
+  ];
 
   doCheck = false;
 
@@ -38,4 +37,3 @@ python3Packages.buildPythonApplication rec {
     platforms = platforms.linux;
   };
 }
-
