@@ -31,7 +31,6 @@ in
     polkit_gnome
     progress
     qbittorrent
-    vscode
     xorg.xev
     statix
   ];
@@ -130,6 +129,14 @@ in
       '';
     };
 
+    vscode = {
+      enable = true;
+      mutableExtensionsDir = false; #needed for bug with installing extensions
+      package = pkgs.vscodium;
+      extensions = with pkgs.vscode-extensions; [
+        esbenp.prettier-vscode
+      ];
+    };
   };
 
   home.file = {
