@@ -1,0 +1,9 @@
+#!/bin/bash
+
+choice=$( (echo 1 | grep 0) | dmenu -p "Paste a link to a video:")
+if [[ $choice == '' ]]; then
+  echo "No input."
+  exit 1
+else
+  mpv $choice
+fi

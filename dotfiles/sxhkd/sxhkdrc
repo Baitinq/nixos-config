@@ -1,0 +1,177 @@
+##################################
+#
+##### DWM #####
+##################################
+
+alt + shift + q
+    dwmc quit
+
+alt + q
+    dwmc killclient
+
+alt + {1-9}
+    dwmc viewex {1-9}
+
+alt + shift + {1-9}
+    dwmc tagex {1-9}
+
+alt + Tab
+   dwmc view
+
+alt + 0
+    dwmc viewall
+
+alt + shift + 0
+    dwmc tagall
+
+
+#move clockwise & anticlockwise
+alt + k
+    dwmc focusstack 1
+alt + j
+    dwmc focusstack -1
+
+#move windows clockwise and anticlockwsie
+alt + shift + k
+    dwmc movestack 1
+alt + shift + j
+    dwmc movestack -1
+
+#cycle layout clockwise and anticlockwise
+alt + ctrl + period
+    dwmc cyclelayout 1
+alt + space
+    dwmc cyclelayout 1
+alt + ctrl + comma
+    dwmc cyclelayout -1
+
+
+alt + f
+    dwmc togglefullscreen
+alt + F11
+    dwmc togglefullscreen
+
+alt + shift + space
+    dwmc togglefloating
+
+alt + b
+    dwmc togglebar
+
+##################################
+##################################
+
+
+#enter and leave game mode
+alt + shift + F11: ctrl + shift + F11 
+    pkill -ALRM sxhkd
+
+# Make sxhkd reload its configuration files
+alt + Escape
+	pkill -USR1 -x sxhkd
+
+#Screenshot
+alt + grave
+        bash ~/.scripts/screenshot
+
+####################
+##### PROGRAMS #####
+####################
+
+# terminal emulator
+alt + Return
+	st -e zsh
+
+# program launcher
+alt + d
+	dmenu_run -i
+
+# exit menu
+alt + shift + e
+	bash ~/.scripts/exit
+
+# video play menu
+alt + y
+	bash ~/.scripts/videos
+
+# lock session
+alt + shift + x
+	bash ~/.scripts/i3lock.sh
+
+# file viewer
+alt + p
+  st -e bash ~/.config/vifm/scripts/vifmrun
+
+# browser
+alt + w
+	surf -p https://searx.be
+
+# email client
+alt + m
+  st -e neomutt
+
+# music player
+alt + n
+	st -e ncmpcpp
+
+# calendar player
+alt + u
+	st -e calcurse
+
+# program launcher
+alt + c
+  clipmenu
+
+
+##################
+##### VOLUME #####
+##################
+
+# Raise volume
+XF86AudioRaiseVolume
+  amixer sset Master 5%+
+	#pactl set-sink-volume 0 +5%
+
+# Lower volume
+XF86AudioLowerVolume
+  amixer sset Master 5%-
+	#pactl set-sink-volume 0 -5%
+
+# Mute audio
+# note: mute always sets audio off (toggle)
+XF86AudioMute
+  amixer sset Master toggle
+	#pactl set-sink-mute 0 toggle
+
+
+######################
+##### BRIGHTNESS #####
+######################
+
+XF86MonBrightnessUp
+  light -A 5
+
+XF86MonBrightnessDown
+  light -U 5
+
+######################
+######## MEDIA #######
+######################
+
+XF86AudioPlay
+  playerctl play
+
+XF86AudioPause
+  playerctl pause
+
+XF86AudioNext
+  playerctl next
+
+XF86AudioPrev
+  playerctl previous
+
+######################
+######## OTHER #######
+######################
+
+XF86TouchpadToggle
+	exec ~/.config/i3/scripts/toggletouchpad.sh

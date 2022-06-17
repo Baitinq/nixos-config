@@ -1,0 +1,117 @@
+! .Xresources
+URxvt.depth: 32
+URxvt.internalBorder: 10
+URxvt.externalBorder: 0
+URxvt.linespace: 0
+
+! General settings
+URxvt.saveLines: 2000
+URxvt.scrollBar: False
+URxvt.scrollstyle: rxvt
+URxvt.termName: xterm-256color
+URxvt.urgentOnBell: True
+URxvt.cursorBlink: False
+
+#define font1         Inconsolata LGC Nerd Font
+#define font2         DejaVu Sans Mono Nerd Font
+#define font3         Noto Sans Mono CJK JP
+#define font4         Noto Color Emoji
+#define font5         Noto Sans Hebrew
+
+URxvt*letterSpace: 0
+URxvt*font:           xft:font1:pixelsize=16, xft:font2:pixelsize=16,xft:font3:pixelsize=16, xft:font4:pixelsize=16, xft:font5:pixelsize=16
+URxvt*boldfont:       xft:font1:bold:pixelsize=16, xft:font2:bold:pixelsize=16,xft:font3:bold:pixelsize=16, xft:font4:bold:pixelsize=16, xft:font5:bold:pixelsize=16
+URxvt*italicfont:     xft:font1:italic:pixelsize=16, xft:font2:italic:pixelsize=16,xft:font3:italic:pixelsize=16, xft:font4:italic:pixelsize=16, xft:font5:italic:pixelsize=16
+URxvt*boldItalicfont: xft:font1:boldItalic:pixelsize=16, xft:font2:boldItalic:pixelsize=16,xft:font3:boldItalic:pixelsize=16, xft:font4:boldItalic:pixelsize=16, xft:font5:boldItalic:pixelsize=16
+
+! Extensions
+! URxvt.perl-ext-common: default,clipboard,keyboard-select,url-select
+! URxvt.urlLauncher: xdg-open
+! URxvt.urlButton: 1
+! URxvt.underlineURLs: True
+
+URxvt.copyCommand:  xclip -i -selection clipboard
+URxvt.pasteCommand: xclip -o -selection clipboard
+
+! Keybindings
+URxvt.keysym.Mod4-c: perl:clipboard:copy
+URxvt.keysym.Mod4-v: perl:clipboard:paste
+URxvt.keysym.Mod4-C-v: perl:clipboard:paste_escaped
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.C-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-u: perl:url-select:select_next
+
+! Tango theme
+
+URxvt.background: #1C1C1C
+URxvt.foreground: #DEDEDE
+
+! black
+URxvt.color0  : #2E3436
+URxvt.color8  : #555753
+! red
+URxvt.color1  : #CC0000
+URxvt.color9  : #EF2929
+! green
+URxvt.color2  : #4E9A06
+URxvt.color10 : #8AE234
+! yellow
+URxvt.color3  : #C4A000
+URxvt.color11 : #FCE94F
+! blue
+URxvt.color4  : #3465A4
+URxvt.color12 : #729FCF
+! magenta
+URxvt.color5  : #75507B
+URxvt.color13 : #AD7FA8
+! cyan
+URxvt.color6  : #06989A
+URxvt.color14 : #34E2E2
+! white
+URxvt.color7  : #D3D7CF
+URxvt.color15 : #EEEEEC
+
+!SXIV
+Sxiv.font: 		   font1:size=8
+Sxiv.foreground: #2F343F
+Sxiv.background: #1C1C1C
+
+!ST
+St.font: font1:pixelsize=16
+St.termname: xterm-256color
+St.alpha: 1
+St.borderpx: 4
+
+! Shinobi theme
+
+St.background: #1C1C1C
+St.foreground: #DEDEDE
+St.cursorColor: #DEDEDE
+
+! black
+St.color0  : #2E3436
+St.color8  : #555753
+! red
+St.color1  : #CC0000
+St.color9  : #EF2929
+! green
+St.color2  : #6790EB
+St.color10 : #2F343F
+! yellow
+St.color3  : #C4A000
+St.color11 : #FCE94F
+! blue
+St.color4  : #3465A4
+St.color12 : #729FCF
+! magenta
+St.color5  : #75507B
+St.color13 : #AD7FA8
+! cyan
+St.color6  : #06989A
+St.color14 : #34E2E2
+! white
+St.color7  : #D3D7CF
+St.color15 : #EEEEEC
