@@ -11,6 +11,7 @@
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
+  boot.loader.grub.splashImage = null;
   # boot.loader.grub.efiSupport = true;
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
@@ -70,13 +71,6 @@
     git-crypt
     neovim
   ];
-
-  /*programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    plugins = with pkgs.vimPlugins; [vim-addon-nix youcompleteme];
-    };*/
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
