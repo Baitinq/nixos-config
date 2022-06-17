@@ -42,8 +42,6 @@
     extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
   };
 
-  #nixpkgs.config.allowUnfree = true;
-
   environment.variables = {
     TERMINAL = "st";
     EDITOR = "nvim";
@@ -70,14 +68,15 @@
     pciutils
     gnupg
     git-crypt
+    neovim
   ];
 
-  programs.neovim = {
+  /*programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
-    #  plugins = with pkgs.vimPlugins; [vim-addon-nix youcompleteme];
-  };
+    plugins = with pkgs.vimPlugins; [vim-addon-nix youcompleteme];
+    };*/
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
