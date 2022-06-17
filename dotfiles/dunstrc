@@ -1,0 +1,34 @@
+[global]
+monitor = 0
+alignment = center
+follow = keyboard
+frame_width = 1
+#geometry = 150x0-5+5
+geometry = "350x5-0+24"
+padding = 5
+font = Noto Sans Display Nerd Font 12
+separator_color = "#6790EB"
+frame_color = "#6790EB"
+word_wrap = true
+
+[shortcuts]
+close = ctrl+space
+close_all = ctrl+shift+space
+history = ctrl+grave
+context = ctrl+shift+period
+
+[urgency_low]
+background = "#2F343F"
+foreground = "#f3f4f5"
+timeout = 5
+
+[urgency_normal]
+background = "#2F343F"
+foreground = "#f3f4f5"
+timeout = 10
+
+[urgency_critical]
+background = "#2F343F"
+foreground = "#f3f4f5"
+frame_color = "#FF0000"
+timeout = 0

@@ -1,0 +1,64 @@
+#!/bin/bash
+# teiler - A script to share (german word: teilen) screenshots/casts for tiling WMs - Pun intended
+# (c) Rasmus Steinke <rasi at xssn dot at>
+# Additional Ideas, testing and some code by Zeltak <zeltak at gmail dot com>
+#
+# Requirements:
+# dmenu, scrot, bc, some notification daemon
+
+
+#changelog
+#v0.8
+#Put notify-send into its own function, Made delay being calculated from counter value.
+#v0.7
+#Massive Code Cleanup
+#v0.6
+#Countdown script stolen from Google and integrated.
+#v0.5
+#added clip uploading
+#v0.4
+#added screencast function
+#v0.3
+#added 1.notifications 2.unique names for each type (for quick launch) 3.better photo editor (pinta) 4.dmenu title
+#v1.0
+#revamped by baitinq. Eliminated most of the depends, made it simpler to use.
+
+
+############### Configuration options ##############################
+
+IMG_PATH=$HOME/Images
+FILEMASK=%Y-%m-%d-@%H-%M-%S-screenshot.png
+RES=1920x1080   #set your screen resolution
+TIME=3000       #How long will notifications be visible (ms)?
+COUNTER=3000    #Ms to count for delay
+
+################## Configuration End ##############################
+
+prog="
+---Local screenshots (saved at IMG_PATH)---
+1.Normal_fullscreen
+2.Delayed_fullscreen
+3.Section
+---Recordings---
+4.Cast
+5.Stop_cast
+"
+
+
+cmd=$(dmenu -l 8 -p 'Choose Screenshot Type' <<< "$prog")
+
+(( rounded_num= ($COUNTER + (2 - 1) / 2))) #round the number
+
+cd $IMG_PATH
+case ${cmd%% *} in
+
+    #for local screenshots
+    1.Normal_fullscreen)            scrot -d 1 "$FILEMASK" && notify-send -u low -t ${TIME} "Screenshot saved"  ;;
+    2.Delayed_fullscreen)           notify-send -u low -t $rounded_num "Screenshot in $(($COUNTER / 1000)) seconds" && sleep $(($COUNTER / 1000)) && scrot -d 1 "$FILEMASK" && notify-send -u low -t ${TIME} "Screenshot saved"  ;;
+    3.Section)                      scrot -s "$FILEMASK" && notify-send -u low -t ${TIME} "Screenshot saved"    ;;
+
+    #for screencasts
+    4.Cast)                         ffmpeg -r 25 -f x11grab -s $RES -i :0.0+0,0 -vcodec libx264 temp_cast.mkv && notify-send -u low -t ${TIME} "Screencast started"  ;;
+    5.Stop_cast)                    kill $(pgrep -f x11grab) && sleep 3 && notify-send -u low -t ${TIME} "Screencast stopped"  ;;
+	  *)		exec "'${cmd}'"  ;;
+esac
