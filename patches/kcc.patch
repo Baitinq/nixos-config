@@ -1,0 +1,30 @@
+diff --git a/kindlecomicconverter/startup.py b/kindlecomicconverter/startup.py
+index c92579d..0217a76 100644
+--- a/kindlecomicconverter/startup.py
++++ b/kindlecomicconverter/startup.py
+@@ -25,7 +25,7 @@ from .shared import dependencyCheck
+ 
+ 
+ def start():
+-    dependencyCheck(3)
++    #dependencyCheck(3)
+     from . import KCC_gui
+     os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = "1"
+     KCCAplication = KCC_gui.QApplicationMessaging(sys.argv)
+@@ -43,14 +43,14 @@ def start():
+ 
+ 
+ def startC2E():
+-    dependencyCheck(2)
++    #dependencyCheck(2)
+     from .comic2ebook import main
+     print('comic2ebook v' + __version__ + ' - Written by Ciro Mattia Gonano and Pawel Jastrzebski.')
+     sys.exit(main(sys.argv[1:]))
+ 
+ 
+ def startC2P():
+-    dependencyCheck(1)
++    #dependencyCheck(1)
+     from .comic2panel import main
+     print('comic2panel v' + __version__ + ' - Written by Ciro Mattia Gonano and Pawel Jastrzebski.')
+     sys.exit(main(sys.argv[1:]))

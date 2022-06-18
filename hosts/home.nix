@@ -36,6 +36,8 @@ in
     custom.anime-downloader
     custom.adl
     custom.trackma
+    kcc
+    custom.kindlegen
   ];
 
   services.gpg-agent = {
