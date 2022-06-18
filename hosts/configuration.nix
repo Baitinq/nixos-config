@@ -38,6 +38,8 @@
   # services.printing.enable = true;
 
   users.mutableUsers = false;
+
+  users.users.root.hashedPassword = secrets.root_hashed_password;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.baitinq = {
     isNormalUser = true;
