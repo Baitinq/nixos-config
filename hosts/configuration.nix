@@ -79,10 +79,6 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    #enableSSHSupport = true; #look at this
-  };
 
   # List services that you want to enable:
 
@@ -93,10 +89,11 @@
     port = 2222;
   }];
   programs.ssh.askPassword = "";
-  programs.ssh.startAgent = true;
-  programs.ssh.extraConfig = ''
+
+  /*programs.ssh.startAgent = true;
+    programs.ssh.extraConfig = ''
     AddKeysToAgent yes
-  '';
+    '';*/
 
   programs.firejail.enable = true;
   programs.firejail.wrappedBinaries = {
