@@ -1,12 +1,12 @@
 { pkgs, lib }:
 
-pkgs.python38.pkgs.buildPythonApplication rec {
+pkgs.python3.pkgs.buildPythonApplication rec {
   pname = "trackma";
   version = "0.8.4";
 
   buildInputs = with pkgs; [ gobject-introspection gtk3 gnome.adwaita-icon-theme ];
   nativeBuildInputs = with pkgs; [ wrapGAppsHook ];
-  propagatedBuildInputs = with pkgs.python38.pkgs; [ setuptools pygobject3 pycairo pillow ];
+  propagatedBuildInputs = with pkgs.python3.pkgs; [ setuptools pygobject3 pycairo pillow ];
 
   #bug with fetchFromGithub?
   src = pkgs.fetchgit {
