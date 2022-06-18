@@ -37,10 +37,12 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
+  users.mutableUsers = false;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.baitinq = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
+    hashedPassword = secrets.baitinq_hashed_password;
   };
 
   environment.variables = {
