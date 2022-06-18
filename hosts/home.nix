@@ -142,15 +142,16 @@ in
     };
   };
 
+  xdg.configFile."zathura/zathurarc".source = dotfiles + "/zathurarc";
+  xdg.configFile."sxhkd/".source = dotfiles + "/sxhkd/";
+  xdg.configFile."dunst/dunstrc".source = dotfiles + "/dunstrc";
+  xdg.configFile."dwmbar".source = dotfiles + "/dwmbar/";
+
   home.file = {
     ".bash_profile".source = dotfiles + "/.bash_profile";
     ".xinitrc".source = dotfiles + "/.xinitrc";
     ".Xresources".source = dotfiles + "//.Xresources/";
     ".bashrc".source = dotfiles + "/.bashrc";
-    ".config/zathura/zathurarc".source = dotfiles + "/zathurarc";
-    ".config/sxhkd/".source = dotfiles + "/sxhkd";
-    ".config/dunst/dunstrc".source = dotfiles + "/dunstrc";
-    ".config/dwmbar".source = dotfiles + "/dwmbar/";
 
     ".scripts/".source = dotfiles + "/scripts/";
   };
