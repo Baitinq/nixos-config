@@ -135,9 +135,9 @@ in
     vscode = {
       enable = true;
       mutableExtensionsDir = false; #needed for bug with installing extensions
-      package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
         esbenp.prettier-vscode
+        bbenoist.nix
       ];
     };
   };
