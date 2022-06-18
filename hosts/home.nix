@@ -34,6 +34,8 @@ in
     xorg.xev
     statix
     custom.anime-downloader
+    custom.adl
+    custom.trackma
   ];
 
   programs = {
