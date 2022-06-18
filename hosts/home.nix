@@ -10,7 +10,7 @@ in
     scrot
     qemu
     redshift
-    custom.xwinwrapr
+    custom.xwinwrap
     discord
     mpv
     sxiv
