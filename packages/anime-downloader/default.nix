@@ -1,6 +1,6 @@
 { pkgs, lib }:
 
-pkgs.python38.pkgs.buildPythonPackage rec {
+pkgs.python3.pkgs.buildPythonPackage rec {
   pname = "anime-downloader";
   version = "5.0.14";
 
@@ -11,7 +11,7 @@ pkgs.python38.pkgs.buildPythonPackage rec {
     sha256 = "1ai71g8cp2i37p53lm32nl3h8cq7rcxifhnj1z1cfvxbqjvackaj";
   };
 
-  propagatedBuildInputs = with pkgs.python38.pkgs; [
+  propagatedBuildInputs = with pkgs.python3.pkgs; [
     pySmartDL
     cfscrape
     beautifulsoup4
