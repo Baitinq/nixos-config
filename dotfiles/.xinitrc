@@ -36,6 +36,12 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
         dbus-update-activation-environment DISPLAY XAUTHORITY
 fi
 
+# NEEDED FOR NVIDIA DRIVERS
+if [ -x "$(command -v nvidia-smi)" ]; then
+  xrandr --setprovideroutputsource modesetting NVIDIA-0
+fi
+
+xrandr --auto
 #xrandr -s 1920x1080 &
 
 sxhkd &
