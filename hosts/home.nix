@@ -42,12 +42,13 @@ in
     ];
   };
 
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    sshKeys = [ "E0EACE39DEA192BE50B00C3741C555123B65019E" ];
+  services = {
+    gpg-agent = {
+      enable = true;
+      enableSshSupport = true;
+      sshKeys = [ "E0EACE39DEA192BE50B00C3741C555123B65019E" ];
+    };
   };
-
 
   programs = {
     git = {
