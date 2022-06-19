@@ -3,42 +3,44 @@ let
   dotfiles = ../dotfiles;
 in
 {
-  home.username = "${user}";
-  home.homeDirectory = "/home/${user}";
+  home = {
+    username = "${user}";
+    homeDirectory = "/home/${user}";
 
-  home.packages = with pkgs; [
-    scrot
-    qemu
-    redshift
-    custom.xwinwrap
-    discord
-    mpv
-    sxiv
-    dwm
-    st
-    dmenu
-    unclutter
-    clipmenu
-    dunst
-    sxhkd
-    feh
-    custom.smart-wallpaper
-    custom.dwmbar
-    numlockx
-    surf
-    pavucontrol
-    light
-    polkit_gnome
-    progress
-    qbittorrent
-    xorg.xev
-    statix
-    custom.anime-downloader
-    custom.adl
-    custom.trackma
-    kcc
-    custom.kindlegen
-  ];
+    packages = with pkgs; [
+      scrot
+      qemu
+      redshift
+      custom.xwinwrap
+      discord
+      mpv
+      sxiv
+      dwm
+      st
+      dmenu
+      unclutter
+      clipmenu
+      dunst
+      sxhkd
+      feh
+      custom.smart-wallpaper
+      custom.dwmbar
+      numlockx
+      surf
+      pavucontrol
+      light
+      polkit_gnome
+      progress
+      qbittorrent
+      xorg.xev
+      statix
+      custom.anime-downloader
+      custom.adl
+      custom.trackma
+      kcc
+      custom.kindlegen
+    ];
+  };
 
   services.gpg-agent = {
     enable = true;
@@ -151,10 +153,12 @@ in
     };
   };
 
-  xdg.configFile."zathura/zathurarc".source = dotfiles + "/zathurarc";
-  xdg.configFile."sxhkd/".source = dotfiles + "/sxhkd/";
-  xdg.configFile."dunst/dunstrc".source = dotfiles + "/dunstrc";
-  xdg.configFile."dwmbar".source = dotfiles + "/dwmbar/";
+  xdg = {
+    configFile."zathura/zathurarc".source = dotfiles + "/zathurarc";
+    configFile."sxhkd/".source = dotfiles + "/sxhkd/";
+    configFile."dunst/dunstrc".source = dotfiles + "/dunstrc";
+    configFile."dwmbar".source = dotfiles + "/dwmbar/";
+  };
 
   home.file = {
     ".bash_profile".source = dotfiles + "/.bash_profile";

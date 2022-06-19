@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
-  virtualisation.docker.enable = true;
-  users.users.baitinq.extraGroups = [ "docker" ];
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+  };
 
-  virtualisation.libvirtd.enable = true;
+  users.users.${user}.extraGroups = [ "docker" ];
 }
