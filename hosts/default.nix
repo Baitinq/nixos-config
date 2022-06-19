@@ -32,7 +32,7 @@ in
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit pkgs user secrets hostname inputs; };
           home-manager.users.${user} = {
-            imports = [ ./home.nix ] ++ [ (import ./phobos/home.nix) ];
+            imports = [ ./home.nix ] ++ [ (import ./${ hostname }/home.nix) ];
           };
         }
       ];
