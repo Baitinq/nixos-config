@@ -1,19 +1,20 @@
-{ config, pkgs, ... }: {
-  services.xserver.enable = true;
+{ config, pkgs, ... }:
+{
+  services.xserver = {
+    enable = true;
 
-  # Configure keymap in X11
-  services.xserver.layout = "gb";
+    # Configure keymap in X11
+    layout = "gb";
 
-  services.xserver.displayManager.startx.enable = true;
-  services.xserver.windowManager.dwm.enable = true;
+    displayManager.startx.enable = true;
+    windowManager.dwm.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
-  services.xserver.dpi = 96;
+    dpi = 96;
+  };
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     description = "polkit-gnome-authentication-agent-1";
-    #wants = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
     wantedBy = [ "graphical-session.target" ];
     after = [ "graphical-session.target" ];
     serviceConfig = {
@@ -27,5 +28,4 @@
   };
   systemd.user.services.polkit-gnome-authentication-agent-1.enable = true;
 
-  #xsession.enable = true; NOT NEEDED RIGHT
 }

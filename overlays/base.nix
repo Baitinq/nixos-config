@@ -8,6 +8,7 @@ final: prev:
       sha256 = "sha256-jcfcOEQTdAw/4yFmHO3MtXjhcxNnNpqJgjuxy0T8zIs=";
     };
   });
+  
   dmenu = prev.dmenu.overrideAttrs (old: {
     src = prev.fetchFromGitHub {
       owner = "Baitinq";
@@ -16,6 +17,7 @@ final: prev:
       sha256 = "sha256-MyNMxdaWtgjClZGIHUtYwwx51u5NII5Ce4BnOnUojo8=";
     };
   });
+
   st = prev.st.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ prev.harfbuzz ];
     src = prev.fetchFromGitHub {
