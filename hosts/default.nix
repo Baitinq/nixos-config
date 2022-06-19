@@ -8,7 +8,7 @@ let
     overlays = [
       nur.overlay
       (import ../packages)
-      (import ../overlays/base.nix)
+      (import ../overlays)
     ];
   };
 
