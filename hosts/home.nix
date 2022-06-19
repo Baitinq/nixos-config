@@ -128,17 +128,19 @@ in
       };
 
       initExtra = ''
+        autoload -U history-search-end #needed for -end
+        zle -N history-beginning-search-backward-end history-search-end
+        zle -N history-beginning-search-forward-end history-search-end
+
         #when going up go up only beggining of curr word history
-        bindkey '\e[A' history-search-backward
-        bindkey '\e[B' history-search-forward
+        bindkey '\e[A' history-beginning-search-backward-end
+        bindkey '\e[B' history-beginning-search-forward-end
         #ctrl + arrow forward/backward word
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
         #alt + arrow forward/backward word
         bindkey "^[[1;3C" forward-word
         bindkey "^[[1;3D" backward-word
-        #ctrl + delete delete whole word
-        bindkey '^H' backward-kill-word
         #alt + delete delete whole word
         bindkey "\e\x7f" backward-kill-word
       '';
