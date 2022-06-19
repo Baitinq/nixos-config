@@ -8,7 +8,7 @@ final: prev:
       sha256 = "sha256-jcfcOEQTdAw/4yFmHO3MtXjhcxNnNpqJgjuxy0T8zIs=";
     };
   });
-  
+
   dmenu = prev.dmenu.overrideAttrs (old: {
     src = prev.fetchFromGitHub {
       owner = "Baitinq";
@@ -30,6 +30,7 @@ final: prev:
 
   neovim = prev.neovim.override {
     vimAlias = true;
+    viAlias = true;
     configure = {
       packages.myPlugins = with prev.vimPlugins; {
         start = [
@@ -44,6 +45,20 @@ final: prev:
       };
     };
   };
+
+  xwinwrap = prev.xwinwrap.overrideAttrs (old: {
+    src = prev.fetchFromGitHub {
+      owner = "Baitinq";
+      repo = "xwinwrap";
+      rev = "401b5a5eb092173443253cdd57736cd6bf401e40";
+      sha256 = "sha256-8+asreFjzD49O3sZlAXBsWD3PU0rqkbs/J3Dq9VeiYA=";
+    };
+    buildPhase = "make all";
+    installPhase = ''
+      mkdir -p $out/bin
+      mv xwinwrap $out/bin/xwinwrap
+    '';
+  });
 
   kcc = prev.kcc.overrideAttrs (oldAttrs: {
     version = "5.5.2";
