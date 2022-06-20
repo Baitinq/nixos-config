@@ -12,12 +12,11 @@ let
         ];
       };
       secrets = import ../secrets;
+      extraArgs = { inherit pkgs inputs user secrets hostname; };
     in
     nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {
-        inherit pkgs inputs user secrets hostname;
-      };
+      specialArgs = extraArgs;
       modules = [
         ./configuration.nix
         ./${hostname}
@@ -25,7 +24,7 @@ let
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit pkgs user secrets hostname inputs; };
+          home-manager.extraSpecialArgs = extraArgs;
           home-manager.users.${user} = {
             imports = [ ./home.nix ] ++ [ (import ./${ hostname }/home.nix) ];
           };
