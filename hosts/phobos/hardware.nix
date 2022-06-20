@@ -21,6 +21,9 @@ in
     fsType = "ext4";
   };
 
+  # Define on which hard drive you want to install Grub.
+  boot.loader.grub.device = "/dev/sdb"; # or "nodev" for efi only
+
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = powerMode;

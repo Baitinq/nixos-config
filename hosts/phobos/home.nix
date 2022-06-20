@@ -5,5 +5,10 @@
     jetbrains.idea-community
     calibre
     qtcreator
+    custom.anime-downloader
+    custom.adl
+    custom.trackma
+    kcc
+    custom.kindlegen
   ];
 }

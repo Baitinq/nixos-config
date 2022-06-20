@@ -25,8 +25,6 @@ in
       feh
       custom.smart-wallpaper
       custom.dwmbar
-      numlockx
-      surf
       pavucontrol
       light
       polkit_gnome
@@ -34,11 +32,6 @@ in
       qbittorrent
       xorg.xev
       statix
-      custom.anime-downloader
-      custom.adl
-      custom.trackma
-      kcc
-      custom.kindlegen
     ];
   };
 
