@@ -46,6 +46,8 @@ final: prev:
     };
   };
 
+  minecraft = prev.minecraft.override { jre = prev.jdk8; };
+
   xwinwrap = prev.xwinwrap.overrideAttrs (old: {
     src = prev.fetchFromGitHub {
       owner = "Baitinq";
