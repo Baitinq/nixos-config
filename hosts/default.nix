@@ -32,9 +32,14 @@ let
       ];
     };
 in
-let hosts = [ "baitinq" "vm" ]; #TODO: generate from here. List to set + apply func
+let hosts = [
+  { hostname = "baitinq"; system = "x86_64-linux"; }
+  { hostname = "vm"; system = "x86_64-linux"; }
+];
 in
-{
-  baitinq = mkHost "baitinq" "x86_64-linux";
-  vm = mkHost "vm" "x86_64-linux";
-}
+  /*
+    We have a list of sets.
+    Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
+    builtins.listToAttrs on the result
+  */
+builtins.listToAttrs (map ({ hostname, system }: { name = hostname; value = mkHost hostname system; }) hosts)
