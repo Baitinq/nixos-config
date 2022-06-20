@@ -34,5 +34,6 @@
       driSupport = true;
     };
   };
+
   virtualisation.virtualbox.guest.enable = true;
 }
