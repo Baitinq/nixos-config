@@ -9,6 +9,9 @@
     ./hardware.nix
   ];
 
+  # Configure keymap in X11
+  services.xserver.layout = "gb";
+
   # Pick only one of the below networking options.
   networking = {
     # networkmanager.enable = true;  # Easiest to use and most distros use this by default.
