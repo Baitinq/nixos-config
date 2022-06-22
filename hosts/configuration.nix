@@ -84,6 +84,7 @@
     pciutils
     gnupg
     neovim
+    steam-run
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
