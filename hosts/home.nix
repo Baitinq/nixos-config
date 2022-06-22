@@ -50,11 +50,10 @@ in
       enable = true;
       userName = "Baitinq";
       userEmail = "manuelpalenzuelamerino@gmail.com";
-      /*signing = {
+      signing = {
         signByDefault = true;
-        key = null; #let gpg decide based on author
-        };
-      */
+        key = "18BE4F736F27FC190C1E1000BB3C0BC698650937";
+      };
     };
 
     firefox = {
