@@ -178,4 +178,6 @@ in
       sha256 = "sha256-YKpIno5QSJM/GGp5DwQeuhKmTU5S96+IhLr0O0V8PDI=";
     };
   };
+
+  home.stateVersion = "22.05";
 }
