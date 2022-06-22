@@ -83,7 +83,6 @@
     usbutils
     pciutils
     gnupg
-    git-crypt
     neovim
   ];
 

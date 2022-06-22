@@ -32,6 +32,7 @@ in
       qbittorrent
       xorg.xev
       statix
+      git-crypt
     ];
   };
 
