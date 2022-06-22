@@ -1,17 +1,17 @@
-{ pkgs, lib }:
+{ python39, fetchFromGitHub, nodejs, mpv, lib }:
 
-pkgs.python39.pkgs.buildPythonPackage rec {
+python39.pkgs.buildPythonPackage rec {
   pname = "anime-downloader";
   version = "5.0.14";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "anime-dl";
     repo = "anime-downloader";
     rev = version;
     sha256 = "1ai71g8cp2i37p53lm32nl3h8cq7rcxifhnj1z1cfvxbqjvackaj";
   };
 
-  propagatedBuildInputs = with pkgs.python39.pkgs; [
+  propagatedBuildInputs = with python39.pkgs; [
     pySmartDL
     cfscrape
     beautifulsoup4
@@ -23,8 +23,8 @@ pkgs.python39.pkgs.buildPythonPackage rec {
     tabulate
     pycryptodome
 
-    pkgs.nodejs
-    pkgs.mpv
+    nodejs
+    mpv
   ];
 
   doCheck = false;
