@@ -44,6 +44,7 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  console.useXkbConfig = true; #use same kb settings (layout) as xorg
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;

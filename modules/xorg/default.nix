@@ -3,9 +3,6 @@
   services.xserver = {
     enable = true;
 
-    # Configure keymap in X11
-    layout = "gb";
-
     displayManager.startx.enable = true;
     windowManager.dwm.enable = true;
 
