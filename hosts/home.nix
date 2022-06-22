@@ -33,6 +33,7 @@ in
       xorg.xev
       statix
       git-crypt
+      nixpkgs-fmt
     ];
   };
 
@@ -52,7 +53,8 @@ in
       /*signing = {
         signByDefault = true;
         key = null; #let gpg decide based on author
-      };*/
+        };
+      */
     };
 
     firefox = {

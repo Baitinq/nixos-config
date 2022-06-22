@@ -14,7 +14,6 @@
     let user = "baitinq";
     in
     {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
       nixosConfigurations = import ./hosts {
         inherit (nixpkgs) lib;
         inherit inputs nixpkgs home-manager nur user;
