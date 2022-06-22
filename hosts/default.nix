@@ -1,5 +1,10 @@
 { user, lib, nixpkgs, nur, inputs, home-manager, ... }:
 let
+  hosts = [
+    { hostname = "baitinq"; system = "x86_64-linux"; }
+    { hostname = "vm"; system = "x86_64-linux"; }
+  ];
+
   mkHost = hostname: system:
     let
       pkgs = import nixpkgs {
@@ -31,11 +36,6 @@ let
         }
       ];
     };
-in
-let hosts = [
-  { hostname = "baitinq"; system = "x86_64-linux"; }
-  { hostname = "vm"; system = "x86_64-linux"; }
-];
 in
   /*
     We have a list of sets.
