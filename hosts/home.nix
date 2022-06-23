@@ -41,7 +41,7 @@ in
     gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      sshKeys = [ "EB477A9998D3976260C5E9292F42033ED5BB9D57" ];
+      sshKeys = [ "BC10A40920B576F641480795B9C7E01A4E47DA9F" ];
     };
   };
 
@@ -52,7 +52,7 @@ in
       userEmail = "manuelpalenzuelamerino@gmail.com";
       signing = {
         signByDefault = true;
-        key = "7E25334F468BF1EF0B04B3F02A75FD6CD8C2A6951B9AE20CA3E42FBDF3F4285D";
+        key = "18BE4F736F27FC190C1E1000BB3C0BC698650937";
       };
     };
 
