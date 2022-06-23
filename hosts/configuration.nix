@@ -79,6 +79,7 @@
     htop
     pfetch
     unzip
+    zip
     yt-dlp
     lf
     usbutils
