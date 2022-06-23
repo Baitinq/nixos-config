@@ -34,6 +34,7 @@ in
       statix
       git-crypt
       nixpkgs-fmt
+      paperkey
     ];
   };
 
