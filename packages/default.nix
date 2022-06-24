@@ -5,7 +5,7 @@ final: prev:
     dwmbar = prev.callPackage ./dwmbar { };
     trackma = prev.callPackage ./trackma { };
     anime-downloader = prev.callPackage ./anime-downloader { };
-    adl = prev.callPackage ./adl { anime-downloader = final.custom.anime-downloader; trackma = final.custom.trackma; };
+    adl = prev.callPackage ./adl { inherit (final.custom) anime-downloader trackma; };
     kindlegen = prev.callPackage ./kindlegen { };
   };
 }
