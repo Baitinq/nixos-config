@@ -1,7 +1,7 @@
 { user, lib, nixpkgs, nur, inputs, home-manager, ... }:
 let
   hosts = [
-    { hostname = "baitinq"; system = "x86_64-linux"; }
+    { hostname = "phobos"; system = "x86_64-linux"; }
     { hostname = "vm"; system = "x86_64-linux"; }
   ];
 
