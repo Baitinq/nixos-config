@@ -71,7 +71,7 @@ final: prev:
       sha256 = "sha256-vH3Cz7nL+sStogcCRLcN30Iap25f5hylXHECX52G4f0=";
     };
     patches = [
-      ../patches/kcc.patch
+      ../../patches/kcc.patch
       (prev.fetchpatch
         {
           url = "https://github.com/Baitinq/kcc/commit/73cd0dd107901bebe7d72e2b86ecf8b830a19758.diff";
