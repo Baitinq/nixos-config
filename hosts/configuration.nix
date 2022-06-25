@@ -8,17 +8,20 @@
     ../modules/virtualisation
   ];
 
-  # Use the systemd-boot boot loader.
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      editor = false;
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        editor = false;
+      };
+      efi = {
+        efiSysMountPoint = "/boot";
+        canTouchEfiVariables = true;
+      };
+      timeout = 0;
     };
-    efi = {
-      efiSysMountPoint = "/boot";
-      canTouchEfiVariables = true;
-    };
-    timeout = 0;
+
+    cleanTmpDir = true;
   };
 
   # Set your time zone.
