@@ -7,22 +7,13 @@ in
 
   boot = {
     initrd = {
-      availableKernelModules =
-        [ "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
+      availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
       kernelModules = [ ];
     };
     kernelModules = [ "kvm_intel" ];
     extraModulePackages = [ ];
     kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" ];
   };
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/2a0ba6f5-a4ec-4614-9bd2-11b4a66d5d82";
-    fsType = "ext4";
-  };
-
-  # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sdb"; # or "nodev" for efi only
 
   swapDevices = [ ];
 
@@ -53,5 +44,28 @@ in
       };
     };
   };
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/9a450653-8369-4850-af4f-cbec7cac8a99";
+      fsType = "btrfs";
+      options = [ "subvol=root compress-force=zstd noatime" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/9a450653-8369-4850-af4f-cbec7cac8a99";
+      fsType = "btrfs";
+      options = [ "subvol=home compress-force=zstd" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/9a450653-8369-4850-af4f-cbec7cac8a99";
+      fsType = "btrfs";
+      options = [ "subvol=nix compress-force=zstd noatime" ];
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/0A8B-3968";
+      fsType = "vfat";
+    };
 
 }
