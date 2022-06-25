@@ -2,6 +2,7 @@
 let
   hosts = [
     { hostname = "phobos"; system = "x86_64-linux"; }
+    { hostname = "luna"; system = "x86_64-linux"; }
     { hostname = "vm"; system = "x86_64-linux"; }
   ];
 
