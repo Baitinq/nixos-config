@@ -8,16 +8,16 @@
     ../modules/virtualisation
   ];
 
-  # Use the GRUB 2 boot loader.
+  # Use the systemd-boot boot loader.
   boot.loader = {
-    grub = {
+    systemd-boot = {
       enable = true;
-      version = 2;
-      splashImage = null;
-      # efiSupport = true;
-      # efiInstallAsRemovable = true;
+      editor = false;
     };
-    # efi.efiSysMountPoint = "/boot/efi";
+    efi = {
+      efiSysMountPoint = "/boot";
+      canTouchEfiVariables = true;
+    };
     timeout = 0;
   };
 
@@ -87,6 +87,7 @@
     gnupg
     neovim
     steam-run
+    compsize #used to check btrfs space savings
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
