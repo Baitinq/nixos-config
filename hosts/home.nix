@@ -26,7 +26,6 @@ in
       custom.smart-wallpaper
       custom.dwmbar
       pavucontrol
-      light
       polkit_gnome
       progress
       qbittorrent

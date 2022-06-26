@@ -111,6 +111,8 @@
   programs = {
     ssh.askPassword = "";
 
+    light.enable = true;
+
     firejail = {
       enable = true;
       wrappedBinaries = {
