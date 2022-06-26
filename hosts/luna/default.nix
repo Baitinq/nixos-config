@@ -17,6 +17,20 @@
       # don’t shutdown when power button is short-pressed
       HandlePowerKey=ignore
     '';
+    udev.extraHwdb = ''
+      evdev:name:AT Translated Set 2 keyboard:*
+       KEYBOARD_KEY_3b=back
+       KEYBOARD_KEY_3c=forward
+       KEYBOARD_KEY_3d=refresh
+       KEYBOARD_KEY_3e=fullscreen
+       KEYBOARD_KEY_3f=switchvideomode
+       KEYBOARD_KEY_40=brightnessdown
+       KEYBOARD_KEY_41=brightnessup
+       KEYBOARD_KEY_42=mute
+       KEYBOARD_KEY_43=volumedown
+       KEYBOARD_KEY_44=volumeup
+       KEYBOARD_KEY_db=search
+    '';
   };
 
   # Pick only one of the below networking options.
