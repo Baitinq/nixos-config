@@ -31,9 +31,8 @@
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 
-  environment.systemPackages = with pkgs;
-    [
-
-    ];
+  environment.systemPackages = with pkgs; [
+    xf86_input_cmt #chromebook touchpad drivers
+  ];
 }
 
