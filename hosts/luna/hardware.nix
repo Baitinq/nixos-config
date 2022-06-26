@@ -23,19 +23,19 @@ in
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/af0f88f6-d4db-471e-b5b7-2c0a1c314c23";
     fsType = "btrfs";
-    options = [ "subvol=root compress-force=zstd noatime" ];
+    options = [ "subvol=root" "compress-force=zstd" "noatime" ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/af0f88f6-d4db-471e-b5b7-2c0a1c314c23";
     fsType = "btrfs";
-    options = [ "subvol=nix compress-force=zstd noatime" ];
+    options = [ "subvol=nix" "compress-force=zstd" "noatime" ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/d7d4ebea-7c4b-4b1b-afdf-8b39f686276e";
     fsType = "btrfs";
-    options = [ "subvol=home compress-force=zstd" ];
+    options = [ "subvol=home" "compress-force=zstd" ];
   };
 
   swapDevices = [ ];
