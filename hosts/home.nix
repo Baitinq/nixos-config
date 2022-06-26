@@ -3,6 +3,8 @@ let
   dotfiles = ../dotfiles;
 in
 {
+  imports = [ ];
+
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
