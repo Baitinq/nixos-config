@@ -1,6 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 let
-  powerMode = "powersave";
+  powerMode = "schedutil";
 in
 {
   imports = [ ];
