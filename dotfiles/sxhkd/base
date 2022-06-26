@@ -1,0 +1,15 @@
+# terminal emulator
+alt + Return
+	st -e zsh
+
+# program launcher
+alt + d
+	dmenu_run -i
+
+# exit menu
+alt + shift + e
+	bash ~/.scripts/exit
+
+# clipboard
+alt + c
+  clipmenu

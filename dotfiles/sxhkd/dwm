@@ -1,0 +1,60 @@
+##################################
+#
+##### DWM #####
+##################################
+
+alt + shift + q
+    dwmc quit
+
+alt + q
+    dwmc killclient
+
+alt + {1-9}
+    dwmc viewex {1-9}
+
+alt + shift + {1-9}
+    dwmc tagex {1-9}
+
+alt + Tab
+   dwmc view
+
+alt + 0
+    dwmc viewall
+
+alt + shift + 0
+    dwmc tagall
+
+#move clockwise & anticlockwise
+alt + k
+    dwmc focusstack 1
+alt + j
+    dwmc focusstack -1
+
+#move windows clockwise and anticlockwsie
+alt + shift + k
+    dwmc movestack 1
+alt + shift + j
+    dwmc movestack -1
+
+#cycle layout clockwise and anticlockwise
+alt + ctrl + period
+    dwmc cyclelayout 1
+alt + space
+    dwmc cyclelayout 1
+alt + ctrl + comma
+    dwmc cyclelayout -1
+
+
+alt + f
+    dwmc togglefullscreen
+alt + F11
+    dwmc togglefullscreen
+
+alt + shift + space
+    dwmc togglefloating
+
+alt + b
+    dwmc togglebar
+
+##################################
+##################################
