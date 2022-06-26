@@ -159,7 +159,6 @@ in
 
   xdg = {
     configFile."zathura/zathurarc".source = dotfiles + "/zathurarc";
-    configFile."sxhkd/".source = dotfiles + "/sxhkd/";
     configFile."dunst/dunstrc".source = dotfiles + "/dunstrc";
   };
 
