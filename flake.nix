@@ -8,9 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "github:nix-community/NUR";
+    nix-index.url = "github:Mic92/nix-index-database";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nur }:
+  outputs = inputs @ { self, nixpkgs, home-manager, nur, ... }:
     let user = "baitinq";
     in
     {

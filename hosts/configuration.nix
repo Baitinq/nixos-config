@@ -91,6 +91,7 @@
     neovim
     steam-run
     compsize #used to check btrfs space savings
+    comma
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
