@@ -60,7 +60,8 @@ in
         alt + grave
           bash ~/.scripts/screenshot
 
-        Print
+        #TODO: Print
+        F5
           bash ~/.scripts/screenshot
 
         XF86Search
