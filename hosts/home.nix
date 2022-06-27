@@ -25,8 +25,6 @@ in
       dunst
       sxhkd
       feh
-      custom.smart-wallpaper
-      custom.dwmbar
       pavucontrol
       polkit_gnome
       progress
@@ -36,6 +34,8 @@ in
       git-crypt
       nixpkgs-fmt
       paperkey
+      custom.smart-wallpaper
+      custom.dwmbar
     ];
   };
 

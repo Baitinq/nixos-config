@@ -8,11 +8,11 @@ in
     jetbrains.idea-community
     calibre
     qtcreator
+    kcc
     custom.anime-downloader
     custom.adl
     custom.trackma
     custom.kindlegen
-    kcc
   ];
 
   programs.firefox.profiles.default.settings = {
