@@ -43,7 +43,8 @@ in
       builtins.readFile (dotfiles + "/sxhkd/dwm") +
       builtins.readFile (dotfiles + "/sxhkd/base") +
       ''
-            #enter and leave game mode
+      
+        #enter and leave game mode
         alt + shift + F11: ctrl + shift + F11 
             pkill -ALRM sxhkd
 
@@ -53,7 +54,7 @@ in
 
         #Screenshot
         alt + grave
-                bash ~/.scripts/screenshot
+          bash ~/.scripts/screenshot
 
 
         ##################
@@ -109,7 +110,6 @@ in
 
         XF86TouchpadToggle
         	exec ~/.config/i3/scripts/toggletouchpad.sh
-
       '';
   };
 
