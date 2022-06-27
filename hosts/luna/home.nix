@@ -49,18 +49,27 @@ in
       builtins.readFile (dotfiles + "/sxhkd/dwm") +
       builtins.readFile (dotfiles + "/sxhkd/base") +
       ''
-            #enter and leave game mode
+      
+        #enter and leave game mode
         alt + shift + F11: ctrl + shift + F11 
-            pkill -ALRM sxhkd
+          pkill -ALRM sxhkd
 
         # Make sxhkd reload its configuration files
         alt + Escape
-        	pkill -USR1 -x sxhkd
+          pkill -USR1 -x sxhkd
 
         #Screenshot
         alt + grave
-                bash ~/.scripts/screenshot
+          bash ~/.scripts/screenshot
 
+        Print
+          bash ~/.scripts/screenshot
+
+        Super_L
+        	dmenu_run -i
+
+        XF86PowerOff
+        	bash /usr/share/dmenu-baitinq-git/scripts/exit
 
         ##################
         ##### VOLUME #####
@@ -68,19 +77,16 @@ in
 
         # Raise volume
         XF86AudioRaiseVolume
-          amixer sset Master 5%+
-        	#pactl set-sink-volume 0 +5%
+        	pactl set-sink-volume 0 +5%
 
         # Lower volume
         XF86AudioLowerVolume
-          amixer sset Master 5%-
-        	#pactl set-sink-volume 0 -5%
+        	pactl set-sink-volume 0 -5%
 
         # Mute audio
         # note: mute always sets audio off (toggle)
         XF86AudioMute
-          amixer sset Master toggle
-        	#pactl set-sink-mute 0 toggle
+        	pactl set-sink-mute 0 toggle
 
 
         ######################
@@ -113,9 +119,14 @@ in
         ######## OTHER #######
         ######################
 
-        XF86TouchpadToggle
-        	exec ~/.config/i3/scripts/toggletouchpad.sh
+        @XF86Back
+            xte 'keydown Alt_L' 'key Left' 'keyup Alt_L'
 
+        @XF86Forward
+            xte 'keydown Alt_L' 'key Right' 'keyup Alt_L'
+
+        @XF86Reload
+            xte 'keydown Control_L' 'key r' 'keyup Control_L'
       '';
 
     "mpv/mpv.conf".text = ''
