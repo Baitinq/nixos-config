@@ -15,9 +15,7 @@ in
     kcc
   ];
 
-  #TODO: Can we just not update prev set?
   programs.firefox.profiles.default.settings = {
-    "general.autoScroll" = true; #TODO: This is aready set in parent home
     "media.ffmpeg.vaapi.enabled" = true; #Hardware acceleration
   };
 
