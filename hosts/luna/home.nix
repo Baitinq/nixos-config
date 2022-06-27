@@ -69,6 +69,10 @@ in
         XF86PowerOff
         	bash /usr/share/dmenu-baitinq-git/scripts/exit
 
+        #TODO: Change to XF86FullScreen or XF86XK_FullScreen when implemented
+        F4
+          dwmc togglefullscreen
+
         ##################
         ##### VOLUME #####
         ##################
