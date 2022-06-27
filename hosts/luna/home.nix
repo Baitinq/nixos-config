@@ -63,7 +63,7 @@ in
         Print
           bash ~/.scripts/screenshot
 
-        Super_L
+        XF86Search
         	dmenu_run -i
 
         XF86PowerOff
