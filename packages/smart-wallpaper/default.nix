@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     rev = "154acddeb4b63c19beacc6a68248dd02797d9cca";
     sha256 = "sha256-fRK3N+UnBPXpvx4Z64JC5TstUi//l5jtrm+rFDxIQUs=";
   };
-  buildInputs = [ bash xdpyinfo killall ];
+  buildInputs = [ bash ];
   nativeBuildInputs = [ makeWrapper ];
   installPhase = ''
     mkdir -p $out/bin

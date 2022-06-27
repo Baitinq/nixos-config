@@ -8,7 +8,7 @@ stdenv.mkDerivation {
     rev = "65f68e1dcae4c0caa52668d3a854269e7d226f7c";
     sha256 = "sha256-huGpDtkWrhZyKDNKXat8T3qtAyMjBaq8HFd1w1ThUVk=";
   };
-  buildInputs = [ bash anime-downloader trackma mpv fzf ];
+  buildInputs = [ bash ];
   nativeBuildInputs = [ makeWrapper ];
   installPhase = ''
     mkdir -p $out/bin
