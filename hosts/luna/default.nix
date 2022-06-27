@@ -22,8 +22,8 @@
        KEYBOARD_KEY_3b=back
        KEYBOARD_KEY_3c=forward
        KEYBOARD_KEY_3d=refresh
-       #KEYBOARD_KEY_3e=full_screen DOESNT CURRENTLY WORK WITH XORG (KEY_ZOOM)
-       KEYBOARD_KEY_3f=switchvideomode
+       #KEYBOARD_KEY_3e=full_screen DOESNT CURRENTLY WORK WITH XORG (KEY_ZOOM), same with 3f
+       #KEYBOARD_KEY_3f=switchvideomode
        KEYBOARD_KEY_40=brightnessdown
        KEYBOARD_KEY_41=brightnessup
        KEYBOARD_KEY_42=mute
