@@ -15,6 +15,10 @@ in
     kcc
   ];
 
+  programs.firefox.profiles.default.settings = {
+    "media.ffmpeg.vaapi.enabled" = true; #Hardware acceleration
+  };
+
   xdg.configFile = {
     "dwmbar/config".text = ''
       #!/bin/sh
@@ -111,6 +115,10 @@ in
         XF86TouchpadToggle
         	exec ~/.config/i3/scripts/toggletouchpad.sh
       '';
+
+    "mpv/mpv.conf".text = ''
+      hwdec
+    '';
   };
 
   home.file.".cache/nix-index/files".source = inputs.nix-index.legacyPackages.x86_64-linux.database;
