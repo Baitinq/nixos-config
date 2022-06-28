@@ -10,16 +10,16 @@ pkgs.python39.pkgs.buildPythonApplication rec {
 
   #bug with fetchFromGithub?
   src = pkgs.fetchgit {
-    url = "https://github.com/z411/trackma.git";
-    rev = "934c567096bbe5104d6ad7a21014d04b1b198052";
-    sha256 = "sha256-Es95F6TTPzHDt5sXLseV9gi8erDvmJEvlB0Kl1RPpB4=";
+    url = "https://github.com/z411/${pname}.git";
+    rev = "v"+version;
+    sha256 = "sha256-OoPnOqq2havXc726nXpvoO00BEnjauw8zdXYDltBbsg=";
   };
 
   doCheck = false;
 
   meta = with lib; {
-    homepage = "https://github.com/z411/trackma";
-    description = "Open multi-site list manager for Unix-like systems.";
+    homepage = "https://github.com/z411/${pname}";
+    description = "Trackma aims to be a lightweight and simple but feature-rich program for Unix based systems for fetching, updating and using data from personal lists hosted in several media tracking websites.";
     license = licenses.gpl3;
     maintainers = [ ];
     platforms = lib.platforms.linux;
