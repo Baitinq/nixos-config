@@ -13,13 +13,15 @@
     kernelParams = [ "net.ifnames=0" "biosdevname=0" ];
   };
 
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/boot";
+    fsType = "vfat";
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
-
-  # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
   swapDevices = [ ];
 

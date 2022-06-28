@@ -4,8 +4,8 @@ let
 in
 {
   home.packages = with pkgs; [
-    #jetbrains.idea-community
-    #qtcreator
+    jetbrains.idea-community
+    qtcreator
   ];
 
   xdg.configFile = {
