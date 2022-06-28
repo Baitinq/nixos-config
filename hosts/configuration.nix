@@ -78,6 +78,7 @@
     wget
     nano
     git
+    git-crypt
     fzf
     htop
     pfetch

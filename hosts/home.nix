@@ -31,7 +31,6 @@ in
       qbittorrent
       xorg.xev
       statix
-      git-crypt
       nixpkgs-fmt
       paperkey
     ] ++
