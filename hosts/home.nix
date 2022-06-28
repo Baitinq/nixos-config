@@ -34,9 +34,11 @@ in
       git-crypt
       nixpkgs-fmt
       paperkey
-      custom.smart-wallpaper
-      custom.dwmbar
-    ];
+    ] ++
+    (with pkgs.custom; [
+      smart-wallpaper
+      dwmbar
+    ]);
   };
 
   services = {

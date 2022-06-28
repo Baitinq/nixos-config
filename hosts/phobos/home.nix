@@ -9,11 +9,13 @@ in
     calibre
     qtcreator
     kcc
-    custom.adl
-    custom.trackma
-    custom.kindlegen
-    custom.manga-cli
-  ];
+  ] ++
+  (with pkgs.custom; [
+    adl
+    trackma
+    kindlegen
+    manga-cli
+  ]);
 
   programs.firefox.profiles.default.settings = {
     "media.ffmpeg.vaapi.enabled" = true; #Hardware acceleration
