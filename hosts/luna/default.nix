@@ -46,6 +46,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    dmidecode #needed for updating coreboot bios
     xf86_input_cmt #chromebook touchpad drivers
   ];
 
