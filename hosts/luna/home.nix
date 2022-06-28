@@ -68,7 +68,7 @@ in
         	dmenu_run -i
 
         XF86PowerOff
-        	bash /usr/share/dmenu-baitinq-git/scripts/exit
+        	bash ~/.scripts/exit
 
         #TODO: Change to XF86FullScreen or XF86XK_FullScreen when implemented
         F4
