@@ -44,6 +44,11 @@ fi
 # NEEDED FOR CHROMEBOOK
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
+# CREATE SRC DEV FOLDER IF IT DOESNT EXIST
+if [[ ! -d ~/src ]]; then
+  mkdir ~/src
+fi
+
 xrandr --auto
 #xrandr -s 1920x1080 &
 
