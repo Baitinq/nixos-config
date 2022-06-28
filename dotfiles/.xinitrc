@@ -41,6 +41,9 @@ if [ -x "$(command -v nvidia-smi)" ]; then
   xrandr --setprovideroutputsource modesetting NVIDIA-0
 fi
 
+# NEEDED FOR CHROMEBOOK
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+
 xrandr --auto
 #xrandr -s 1920x1080 &
 
