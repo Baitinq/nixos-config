@@ -11,7 +11,7 @@ pkgs.python39.pkgs.buildPythonApplication rec {
   #bug with fetchFromGithub?
   src = pkgs.fetchgit {
     url = "https://github.com/z411/${pname}.git";
-    rev = "v"+version;
+    rev = "v" + version;
     sha256 = "sha256-OoPnOqq2havXc726nXpvoO00BEnjauw8zdXYDltBbsg=";
   };
 
