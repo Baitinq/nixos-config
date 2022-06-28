@@ -10,7 +10,6 @@ in
     calibre
     qtcreator
     kcc
-    custom.anime-downloader
     custom.adl
     custom.trackma
     custom.kindlegen
