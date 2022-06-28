@@ -6,5 +6,6 @@ final: prev:
     trackma = prev.callPackage ./trackma { };
     adl = prev.callPackage ./adl { inherit (final.custom) trackma; };
     kindlegen = prev.callPackage ./kindlegen { };
+    manga-cli = prev.callPackage ./manga-cli { };
   };
 }

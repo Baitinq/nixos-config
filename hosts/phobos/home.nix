@@ -12,6 +12,7 @@ in
     custom.adl
     custom.trackma
     custom.kindlegen
+    custom.manga-cli
   ];
 
   programs.firefox.profiles.default.settings = {
