@@ -49,5 +49,7 @@
     xf86_input_cmt #chromebook touchpad drivers
   ];
 
+  environment.etc."nix-index/files".source = inputs.nix-index.legacyPackages.x86_64-linux.database;
+
 }
 
