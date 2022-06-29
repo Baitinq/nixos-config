@@ -185,5 +185,8 @@ in
     };
   };
 
+  # For disabling the automatic creation of $HOME/Desktop
+  xdg.userDirs.desktop = "$HOME/";
+
   home.stateVersion = "22.05";
 }
