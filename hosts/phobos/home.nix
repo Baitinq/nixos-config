@@ -117,10 +117,6 @@ in
         XF86TouchpadToggle
         	exec ~/.config/i3/scripts/toggletouchpad.sh
       '';
-
-    "mpv/mpv.conf".text = ''
-      hwdec
-    '';
   };
 
 }
