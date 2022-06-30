@@ -15,6 +15,7 @@ in
     trackma
     kindlegen
     manga-cli
+    mov-cli
   ]);
 
   programs.firefox.profiles.default.settings = {
