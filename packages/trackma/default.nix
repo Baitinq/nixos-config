@@ -1,15 +1,15 @@
-{ pkgs, lib }:
+{ lib, python39, fetchgit, gobject-introspection, gtk3, gnome, wrapGAppsHook }:
 
-pkgs.python39.pkgs.buildPythonApplication rec {
+python39.pkgs.buildPythonApplication rec {
   pname = "trackma";
   version = "0.8.4";
 
-  buildInputs = with pkgs; [ gobject-introspection gtk3 gnome.adwaita-icon-theme ];
-  nativeBuildInputs = with pkgs; [ wrapGAppsHook ];
-  propagatedBuildInputs = with pkgs.python39.pkgs; [ setuptools pygobject3 pycairo pillow ];
+  buildInputs = [ gobject-introspection gtk3 gnome.adwaita-icon-theme ];
+  nativeBuildInputs = [ wrapGAppsHook ];
+  propagatedBuildInputs = with python39.pkgs; [ setuptools pygobject3 pycairo pillow ];
 
   #bug with fetchFromGithub?
-  src = pkgs.fetchgit {
+  src = fetchgit {
     url = "https://github.com/z411/${pname}.git";
     rev = "v" + version;
     sha256 = "sha256-OoPnOqq2havXc726nXpvoO00BEnjauw8zdXYDltBbsg=";
