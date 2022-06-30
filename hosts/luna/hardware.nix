@@ -49,6 +49,8 @@ in
       # Enable touchpad support (enabled default in most desktopManager).
       synaptics.enable = true;
     };
+    fstrim.enable = true;
+    tlp.enable = true;
   };
 
   hardware = {

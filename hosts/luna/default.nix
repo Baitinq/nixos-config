@@ -12,7 +12,6 @@
   services = {
     # Configure keymap in X11
     xserver.layout = "gb";
-    fstrim.enable = true;
     logind.extraConfig = ''
       # don’t shutdown when power button is short-pressed
       HandlePowerKey=ignore
