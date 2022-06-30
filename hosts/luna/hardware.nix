@@ -42,11 +42,13 @@ in
 
   powerManagement.cpuFreqGovernor = powerMode;
 
-  services.xserver = {
-    videoDrivers = [ "intel" ];
+  services = {
+    xserver = {
+      videoDrivers = [ "intel" ];
 
-    # Enable touchpad support (enabled default in most desktopManager).
-    libinput.enable = true;
+      # Enable touchpad support (enabled default in most desktopManager).
+      synaptics.enable = true;
+    };
   };
 
   hardware = {
