@@ -33,6 +33,7 @@ in
       statix
       nixpkgs-fmt
       paperkey
+      openjdk8
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
