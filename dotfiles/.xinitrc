@@ -55,7 +55,7 @@ xrandr --auto
 sxhkd &
 clipmenud &
 unclutter &
-redshift -l $LOCATION &
+redshift &
 numlockx on
 
 systemctl --user start graphical-session.target
@@ -64,7 +64,7 @@ dunst &
 
 dwmbar &
 
-while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -l $LOCATION -r; done &
+while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -r; done &
 
 exec dwm 2> /tmp/dwm.log
 
