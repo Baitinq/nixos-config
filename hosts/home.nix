@@ -159,6 +159,8 @@ in
       extensions = with pkgs.vscode-extensions; [
         esbenp.prettier-vscode
         bbenoist.nix
+        haskell.haskell
+        justusadam.language-haskell
       ];
     };
   };
