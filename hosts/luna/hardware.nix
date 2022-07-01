@@ -47,7 +47,10 @@ in
       videoDrivers = [ "intel" ];
 
       # Enable touchpad support (enabled default in most desktopManager).
-      synaptics.enable = true;
+      synaptics = {
+        enable = true;
+        twoFingerScroll = true;
+      };
     };
     fstrim.enable = true;
     tlp.enable = true;
