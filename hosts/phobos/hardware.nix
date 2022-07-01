@@ -47,7 +47,10 @@ in
       videoDrivers = [ "nvidia" ];
 
       # Enable touchpad support (enabled default in most desktopManager).
-      synaptics.enable = true;
+      synaptics = {
+        enable = true;
+        twoFingerScroll = true;
+      };
     };
   };
 
