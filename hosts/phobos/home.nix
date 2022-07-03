@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, user, hostname, secrets, ... }:
+{ config, lib, pkgs, inputs, user, hostname, location, secrets, ... }:
 let
   dotfiles = ../../dotfiles;
 in
@@ -17,6 +17,10 @@ in
     manga-cli
     mov-cli
   ]);
+
+  home.sessionVariables = {
+    LOCATION = "${location}";
+  };
 
   programs.firefox.profiles.default.settings = {
     "media.ffmpeg.vaapi.enabled" = true; #Hardware acceleration
