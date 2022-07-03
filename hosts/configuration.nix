@@ -54,12 +54,12 @@
 
   users.mutableUsers = false;
 
-  users.users.root.hashedPassword = secrets.root_hashed_password;
+  users.users.root.hashedPassword = secrets.root.hashed_password;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.baitinq = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
-    hashedPassword = secrets.baitinq_hashed_password;
+    hashedPassword = secrets.baitinq.hashed_password;
   };
 
   environment.variables = {
