@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, user, hostname, secrets, ... }:
+{ config, lib, pkgs, inputs, user, hostname, location, secrets, ... }:
 let
   dotfiles = ../../dotfiles;
 in

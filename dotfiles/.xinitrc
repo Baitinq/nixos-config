@@ -1,7 +1,6 @@
 #!/bin/sh
 
 export LC_CTYPE="en_US.UTF-8"
-export LOCATION="52.954784:-1.158109"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 userresources=$HOME/.Xresources
@@ -55,7 +54,7 @@ xrandr --auto
 sxhkd &
 clipmenud &
 unclutter &
-redshift &
+redshift -l $LOCATION &
 numlockx on
 
 systemctl --user start graphical-session.target
@@ -64,7 +63,7 @@ dunst &
 
 dwmbar &
 
-while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -r; done &
+while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -l $LOCATION -r; done &
 
 exec dwm 2> /tmp/dwm.log
 
