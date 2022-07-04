@@ -16,11 +16,8 @@ in
     kindlegen
     manga-cli
     mov-cli
+    xmonadctl
   ]);
-
-  home.sessionVariables = {
-    LOCATION = "${location}";
-  };
 
   programs.firefox.profiles.default.settings = {
     "media.ffmpeg.vaapi.enabled" = true; #Hardware acceleration
@@ -51,7 +48,7 @@ in
     '';
 
     "sxhkd/sxhkdrc".text =
-      builtins.readFile (dotfiles + "/sxhkd/dwm") +
+      builtins.readFile (dotfiles + "/sxhkd/xmonad") +
       builtins.readFile (dotfiles + "/sxhkd/base") +
       ''
       

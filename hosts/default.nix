@@ -1,7 +1,7 @@
 { user, lib, nixpkgs, nur, inputs, home-manager, ... }:
 let
   secrets = import ../secrets;
-  
+
   hosts = [
     { hostname = "phobos"; system = "x86_64-linux"; location = secrets.main_location; }
     { hostname = "luna"; system = "x86_64-linux"; location = secrets.main_location; }

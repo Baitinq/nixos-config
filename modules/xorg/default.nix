@@ -4,7 +4,6 @@
     enable = true;
 
     displayManager.startx.enable = true;
-    windowManager.dwm.enable = true;
 
     dpi = 96;
   };
