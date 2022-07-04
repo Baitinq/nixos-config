@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, user, hostname, secrets, ... }:
+{ config, lib, pkgs, inputs, user, hostname, secrets, location, ... }:
 let
   dotfiles = ../dotfiles;
 in
@@ -17,7 +17,7 @@ in
       discord
       mpv
       sxiv
-      dwm
+      #dwm
       st
       dmenu
       unclutter
@@ -39,6 +39,22 @@ in
       smart-wallpaper
       dwmbar
     ]);
+  };
+
+  xsession.windowManager.xmonad = {
+    enable = true;
+    enableContribAndExtras = true;
+    #extraPackages = pkgs: [pkgs.xmonadctl];
+    config = dotfiles + "/xmonad.hs";
+  };
+
+  programs.xmobar = {
+    enable = true;
+    extraConfig = builtins.readFile (dotfiles + "/xmobar.hs");
+  };
+
+  home.sessionVariables = {
+    LOCATION = "${location}";
   };
 
   services = {

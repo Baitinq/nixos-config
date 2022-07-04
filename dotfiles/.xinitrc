@@ -51,6 +51,8 @@ fi
 xrandr --auto
 #xrandr -s 1920x1080 &
 
+xsetroot -cursor_name left_ptr
+
 sxhkd &
 clipmenud &
 unclutter &
@@ -65,5 +67,6 @@ dwmbar &
 
 while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -l $LOCATION -r; done &
 
-exec dwm 2> /tmp/dwm.log
+exec xmonad 2> /tmp/xmonad.log
+#exec dwm 2> /tmp/dwm.log
 

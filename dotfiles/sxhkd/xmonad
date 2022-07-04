@@ -1,0 +1,46 @@
+##################################
+#
+##### DWM #####
+##################################
+
+alt + shift + q
+    xmonadctl quit
+
+alt + q
+    xmonadctl kill-window
+
+alt + {1-9}
+    xmonadctl focus-workspace-{1-9}
+
+alt + shift + {1-9}
+    xmonadctl send-to-workspace-{1-9}
+
+#alt + Tab
+#   dwmc view
+
+#alt + 0
+#    dwmc viewall
+
+#alt + shift + 0
+#    dwmc tagall
+
+#move clockwise & anticlockwise
+alt + {h,j,k}
+    xmonadctl focus-{master,next,prev}
+
+#move windows clockwise and anticlockwsie
+alt + shift + {h,j,k}
+    xmonadctl swap-with-{master,next,prev}
+
+alt + f
+    xmonadctl togglefullscreen
+alt + F11
+    xmonadctl togglefullscreen
+
+alt + ctrl + period
+    xmonadctl next-layout
+alt + space
+    xmonadctl next-layout
+
+##################################
+##################################
