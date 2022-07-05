@@ -16,6 +16,7 @@ in
     kindlegen
     manga-cli
     mov-cli
+    xmonadctl
   ]);
 
   programs.firefox.profiles.default.settings = {
@@ -47,7 +48,7 @@ in
     '';
 
     "sxhkd/sxhkdrc".text =
-      builtins.readFile (dotfiles + "/sxhkd/dwm") +
+      builtins.readFile (dotfiles + "/sxhkd/xmonad") +
       builtins.readFile (dotfiles + "/sxhkd/base") +
       ''
       
