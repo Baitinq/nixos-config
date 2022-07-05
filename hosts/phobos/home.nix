@@ -16,7 +16,7 @@ in
     kindlegen
     manga-cli
     mov-cli
-    xmonadctl
+    xmonadctl #in extraPackages
   ]);
 
   programs.firefox.profiles.default.settings = {

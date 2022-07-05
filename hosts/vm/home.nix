@@ -6,7 +6,10 @@ in
   home.packages = with pkgs; [
     jetbrains.idea-community
     qtcreator
-  ];
+  ] ++
+  (with pkgs.custom; [
+    xmonadctl
+  ]);
 
   xdg.configFile = {
     "dwmbar/config".text = ''
@@ -33,7 +36,7 @@ in
     '';
 
     "sxhkd/sxhkdrc".text =
-      builtins.readFile (dotfiles + "/sxhkd/dwm") +
+      builtins.readFile (dotfiles + "/sxhkd/xmonad") +
       builtins.readFile (dotfiles + "/sxhkd/base") +
       ''
 
