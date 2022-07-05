@@ -15,8 +15,8 @@ alt + {1-9}
 alt + shift + {1-9}
     xmonadctl send-to-workspace-{1-9}
 
-#alt + Tab
-#   dwmc view
+alt + Tab
+   xmonadctl cycle-workspace
 
 #alt + 0
 #    dwmc viewall
