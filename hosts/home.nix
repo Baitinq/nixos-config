@@ -34,6 +34,7 @@ in
       nixpkgs-fmt
       paperkey
       openjdk8
+      virt-manager
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
