@@ -6,5 +6,5 @@
     libvirtd.enable = true;
   };
 
-  users.users.${user}.extraGroups = [ "docker" ];
+  users.users.${user}.extraGroups = [ "docker" "libvirtd" ];
 }
