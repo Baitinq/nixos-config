@@ -206,7 +206,6 @@ myStatusBar = statusBarProp "xmobar" (do
 
 main :: IO ()
 main = do
-  spawn "xmobar"
   xmonad . withSB myStatusBar . docks
          $ def {
                 focusFollowsMouse  = myFocusFollowsMouse,
