@@ -45,6 +45,8 @@ import XMonad.Actions.WorkspaceNames
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 
+import XMonad.Actions.CycleWS
+
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
@@ -135,6 +137,7 @@ myCommands =
         , ("swap-with-master"          , windows W.swapMaster                             )
         , ("togglefullscreen"          , sendMessage $ Toggle FULL                        )
         , ("next-layout"               , sendMessage NextLayout                           )
+        , ("cycle-workspace"           , toggleWS                                         )
         , ("kill-window"               , kill                                             )
         , ("quit"                      , io $ exitWith ExitSuccess                        )
         , ("restart"                   , spawn "xmonad --recompile; xmonad --restart"     )
