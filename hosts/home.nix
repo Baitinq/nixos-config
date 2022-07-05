@@ -100,6 +100,12 @@ in
 
     obs-studio = { enable = true; };
 
+    bash = {
+      enable = true;
+      bashrcExtra = builtins.readFile (dotfiles + "/.bashrc");
+      profileExtra = builtins.readFile (dotfiles + "/.bash_profile");
+    };
+
     zsh = {
       enable = true;
       zplug = {
@@ -187,10 +193,8 @@ in
   };
 
   home.file = {
-    ".bash_profile".source = dotfiles + "/.bash_profile";
     ".xinitrc".source = dotfiles + "/.xinitrc";
     ".Xresources".source = dotfiles + "//.Xresources/";
-    ".bashrc".source = dotfiles + "/.bashrc";
 
     ".scripts/".source = dotfiles + "/scripts/";
   };
