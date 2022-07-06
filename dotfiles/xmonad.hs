@@ -44,6 +44,8 @@ import XMonad.Hooks.StatusBar.PP
 
 import XMonad.Actions.CycleWS
 
+import XMonad.Hooks.EwmhDesktops
+
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
@@ -211,7 +213,7 @@ myStatusBar = statusBarProp "xmobar" (do
 
 main :: IO ()
 main = do
-  xmonad . withSB myStatusBar . docks
+  xmonad . withSB myStatusBar . docks . ewmhFullscreen . ewmh
          $ def {
                 focusFollowsMouse  = myFocusFollowsMouse,
                 borderWidth        = myBorderWidth,
@@ -222,6 +224,6 @@ main = do
                 mouseBindings      = myMouseBindings,
 
                 layoutHook         = myLayout,
-                handleEventHook    = fullscreenEventHook <+> myServerModeEventHook,
-                manageHook         = manageDocks <+> myManageHook
+                handleEventHook    = myServerModeEventHook,
+                manageHook         = myManageHook
                 }
