@@ -199,13 +199,15 @@ myStatusBar = statusBarProp "xmobar" (do
                                                                         then ((xmobarBorder "Top" "#bbbbbb" 4 . xmobarColor "#bbbbbb" "#005577") ("  " ++ s ++ "  "))
                                                                         else (xmobarColor "#bbbbbb" "#005577" ("  " ++ s ++ "  "))
                                                                 )
-                                                  , ppTitle = shorten 77
+                                                  , ppTitle = id
                                                   , ppSep = " |  "
                                                   , ppLayout = (\_ -> "")
-                                                  , ppHidden = (\s -> xmobarBorder "Top" "#bbbbbb" 2 ("  " ++ s ++ "  ")) --probs better way to do this
-                                                  , ppHiddenNoWindows =  wrap "  " "  "
+                                                  , ppHidden = (\s -> createDwmBox "#bbbbbb" ("  " ++ s ++ "  ")) --probs better way to do this
+                                                  , ppHiddenNoWindows = wrap "  " "  "
                                           }
                                       )
+                                      where
+                                        createDwmBox color prefix = "<box type=HBoth offset=L19 color="++color++"><box type=Top mt=3 color="++color++"><box type=Top color="++color++">" ++ prefix ++ "</box></box></box>"
 
 main :: IO ()
 main = do
