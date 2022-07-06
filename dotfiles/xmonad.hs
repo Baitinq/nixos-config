@@ -1,6 +1,3 @@
--- xmonad config used by Malcolm MD
--- https://github.com/randomthought/xmonad-config
-
 import System.IO
 import System.Exit
 
@@ -194,15 +191,13 @@ getNumberOfWindowsInWorkpace = withWindowSet (pure . length . W.index)
 myStatusBar = statusBarProp "xmobar" (do 
                                         numWindows <- getNumberOfWindowsInWorkpace
                                         return $ xmobarPP {
-                                                    ppCurrent = (\s -> 
-                                                                      if numWindows > 0
-                                                                        then ((xmobarBorder "Top" "#bbbbbb" 4 . xmobarColor "#bbbbbb" "#005577") ("  " ++ s ++ "  "))
-                                                                        else (xmobarColor "#bbbbbb" "#005577" ("  " ++ s ++ "  "))
-                                                                )
+                                                    ppCurrent = if numWindows > 0
+                                                                        then xmobarBorder "Top" "#bbbbbb" 4 . xmobarColor "#bbbbbb" "#005577" . wrap "  " "  "
+                                                                        else xmobarColor "#bbbbbb" "#005577" . wrap "  " "  "
                                                   , ppTitle = id
                                                   , ppSep = " |  "
                                                   , ppLayout = (\_ -> "")
-                                                  , ppHidden = (\s -> createDwmBox "#bbbbbb" ("  " ++ s ++ "  ")) --probs better way to do this
+                                                  , ppHidden = createDwmBox "#bbbbbb" . wrap "  " "  "
                                                   , ppHiddenNoWindows = wrap "  " "  "
                                           }
                                       )
