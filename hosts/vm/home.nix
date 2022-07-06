@@ -8,7 +8,6 @@ in
     qtcreator
   ] ++
   (with pkgs.custom; [
-    xmonadctl
   ]);
 
   xdg.configFile = {

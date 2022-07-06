@@ -35,18 +35,18 @@ in
       paperkey
       openjdk8
       virt-manager
-      xdotool#needed for xmobar clickable workspaces
+      xdotool #needed for xmobar clickable workspaces
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
       dwmbar
+      xmonadctl
     ]);
   };
 
   xsession.windowManager.xmonad = {
     enable = true;
     enableContribAndExtras = true;
-    #extraPackages = pkgs: [pkgs.xmonadctl];
     config = dotfiles + "/xmonad.hs";
   };
 
