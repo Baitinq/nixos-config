@@ -46,6 +46,8 @@ import XMonad.Actions.CycleWS
 
 import XMonad.Hooks.EwmhDesktops
 
+import XMonad.Util.ClickableWorkspaces
+
 ------------------------------------------------------------------------
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
@@ -224,8 +226,8 @@ myStatusBar = statusBarProp "xmobar" (do
                                                   , ppTitle = id
                                                   , ppSep = " |  "
                                                   , ppLayout = (\_ -> "")
-                                                  , ppHidden = createDwmBox "#bbbbbb" . wrap "  " "  "
-                                                  , ppHiddenNoWindows = wrap "  " "  "
+                                                  , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox "#bbbbbb" ("  " ++ s ++ "  "))) --better way to clickablewrap . 
+                                                  , ppHiddenNoWindows = (\s -> clickableWrap ((read s::Int) - 1) ("  " ++ s ++ "  "))
                                           }
                                       )
                                       where
