@@ -107,7 +107,7 @@ setFullscreenProp b win = withDisplay $ \dpy -> do
                         else io $ changeProperty32 dpy win state 4 propModeReplace []
 
 --Hide xmobar -> Hide borders -> Set fullscreen -> Set fullscreenprops
-toggleFullScreen :: X()
+toggleFullScreen :: X ()
 toggleFullScreen = do
                     mIsFullScreen <- withWindowSet (isToggleActive NBFULL . W.workspace . W.current)
                     case mIsFullScreen of
@@ -189,9 +189,6 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- Run xmonad with all the defaults we set up.
 --
 
-getNumberOfWindowsInWorkpace :: X Int
-getNumberOfWindowsInWorkpace = withWindowSet (pure . length . W.index)
-
 myStatusBar = statusBarProp "xmobar" (do 
                                         numWindows <- getNumberOfWindowsInWorkpace
                                         return $ xmobarPP {
@@ -206,6 +203,7 @@ myStatusBar = statusBarProp "xmobar" (do
                                           }
                                       )
                                       where
+                                        getNumberOfWindowsInWorkpace = withWindowSet (pure . length . W.index)
                                         createDwmBox color prefix = "<box type=HBoth offset=L19 color="++color++"><box type=Top mt=3 color="++color++"><box type=Top color="++color++">" ++ prefix ++ "</box></box></box>"
 
 main :: IO ()
