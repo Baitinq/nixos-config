@@ -4,7 +4,7 @@ alt + Return
 
 # program launcher
 alt + d
-	dmenu_run -i -h 22
+	dmenu_run -i
 
 # exit menu
 alt + shift + e
