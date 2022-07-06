@@ -16,6 +16,8 @@ final: prev:
       rev = "4935902378d321c465f5f8ec18619b22da75527b";
       sha256 = "sha256-MyNMxdaWtgjClZGIHUtYwwx51u5NII5Ce4BnOnUojo8=";
     };
+
+    patches = [ ../../patches/dmenu_height.patch ];
   });
 
   st = prev.st.overrideAttrs (old: {
