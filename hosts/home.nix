@@ -35,6 +35,7 @@ in
       paperkey
       openjdk8
       virt-manager
+      xdotool#needed for xmobar clickable workspaces
     ] ++
     (with pkgs.custom; [
       smart-wallpaper

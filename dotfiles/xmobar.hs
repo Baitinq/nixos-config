@@ -12,7 +12,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%XMonadLog% }{ %WM_NAME%"
+   , template = "%UnsafeXMonadLog% }{ %WM_NAME%"
 
    -- general behavior
    , lowerOnStart =     False    -- send to bottom of window stack on start
@@ -22,6 +22,6 @@ Config {
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       False    -- enable/disable hiding (True = disabled)
 
-   , commands = [ Run XMonadLog,
+   , commands = [ Run UnsafeXMonadLog,
                   Run XPropertyLog "WM_NAME" ]
    }
