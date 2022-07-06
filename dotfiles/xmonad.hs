@@ -106,8 +106,7 @@ tiledLayout = renamed [Replace "[]"]  $ tiled
 
 layouts      =  tiledLayout
 
-myLayout    = smartBorders
-              $ mkToggle (NOBORDERS ?? FULL ?? EOT)
+myLayout    = mkToggle (NOBORDERS ?? NBFULL ?? EOT)
               $ avoidStruts $ myGaps $ addSpace
               $ layouts
 
@@ -119,6 +118,27 @@ myBorderWidth = 1
 
 myNormalBorderColor     = "#000000"
 myFocusedBorderColor    = "#005577"
+
+--This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust acoordingly to fullscreen mode
+--In a perfect world we shouldnt need to do this manually but it seems like ewmhFullscreen/others dont implement this functionality
+setFullscreenProp :: Bool -> Window -> X ()
+setFullscreenProp b win = withDisplay $ \dpy -> do
+                      state  <- getAtom "_NET_WM_STATE"
+                      fullsc <- getAtom "_NET_WM_STATE_FULLSCREEN"
+                      if b
+                        then io $ changeProperty32 dpy win state 4 propModeReplace [fromIntegral fullsc]
+                        else io $ changeProperty32 dpy win state 4 propModeReplace []
+
+--Hide xmobar -> Hide borders -> Set fullscreen -> Set fullscreenprops
+toggleFullScreen :: X()
+toggleFullScreen = do
+                    mIsFullScreen <- withWindowSet (isToggleActive NBFULL . W.workspace . W.current)
+                    case mIsFullScreen of
+                      Just isFullScreen -> if isFullScreen
+                                            then withFocused (setFullscreenProp False) >> sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts 
+                                            else sendMessage ToggleStruts >> sendMessage (Toggle NBFULL)  >> withFocused (setFullscreenProp True)
+                      Nothing -> return ()
+
 
     ------------------------------------------------------------------------
 -- External commands
@@ -134,7 +154,7 @@ myCommands =
         , ("swap-with-prev"            , windows W.swapUp                                 )
         , ("swap-with-next"            , windows W.swapDown                               )
         , ("swap-with-master"          , windows W.swapMaster                             )
-        , ("togglefullscreen"          , sendMessage $ Toggle FULL                        )
+        , ("togglefullscreen"          , toggleFullScreen                                 )
         , ("togglefloating"            , withFocused toggleFloat                          )
         , ("next-layout"               , sendMessage NextLayout                           )
         , ("cycle-workspace"           , toggleWS                                         )
