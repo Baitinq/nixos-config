@@ -18,6 +18,9 @@ alt + shift + {1-9}
 alt + Tab
    xmonadctl cycle-workspace
 
+alt + space
+   xmonadctl togglefloating
+
 #alt + 0
 #    dwmc viewall
 
