@@ -133,6 +133,7 @@ myCommands =
         , ("swap-with-next"            , windows W.swapDown                               )
         , ("swap-with-master"          , windows W.swapMaster                             )
         , ("togglefullscreen"          , sendMessage $ Toggle FULL                        )
+        , ("togglefloating"            , withFocused toggleFloat                          )
         , ("next-layout"               , sendMessage NextLayout                           )
         , ("cycle-workspace"           , toggleWS                                         )
         , ("kill-window"               , kill                                             )
@@ -164,15 +165,19 @@ listMyServerCmds = spawn ("echo '" ++ asmc ++ "' | xmessage -file -")
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
 
+toggleFloat w = windows (\s -> if M.member w (W.floating s)
+                            then W.sink w s
+                            else (W.float w (W.RationalRect 0.125 0.125 0.75 0.75) s))
+
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   [
     -- mod-button1, Set the window to floating mode and move by dragging
     ((modMask, button1),
      (\w -> focus w >> mouseMoveWindow w))
 
-    -- mod-button2, Raise the window to the top of the stack
+    -- mod-button2, Toggle float on the window
     , ((modMask, button2),
-       (\w -> focus w >> windows W.swapMaster))
+       (\w -> focus w >> toggleFloat w))
 
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modMask, button3),
