@@ -2,49 +2,25 @@ import System.IO
 import System.Exit
 
 import qualified Data.List as L
+import qualified Data.Map  as M
 
 import XMonad
-import XMonad.Actions.Navigation2D
-import XMonad.Actions.UpdatePointer
 
-import XMonad.Hooks.DynamicLog
+import qualified XMonad.StackSet as W
+
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.SetWMName
+import XMonad.Hooks.ServerMode
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.EwmhDesktops
 
 import XMonad.Layout.Gaps
-import XMonad.Layout.Fullscreen
-import XMonad.Layout.BinarySpacePartition as BSP
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Tabbed
-import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Spacing
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.NoFrillsDecoration
-import XMonad.Layout.Renamed
-import XMonad.Layout.Simplest
-import XMonad.Layout.SubLayouts
-import XMonad.Layout.WindowNavigation
-import XMonad.Layout.ZoomRow
-
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
-import XMonad.Util.Cursor
-
-import Graphics.X11.ExtraTypes.XF86
-import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
-
-import XMonad.Hooks.ServerMode
-import XMonad.Actions.WorkspaceNames
-
-import XMonad.Hooks.StatusBar
-import XMonad.Hooks.StatusBar.PP
 
 import XMonad.Actions.CycleWS
-
-import XMonad.Hooks.EwmhDesktops
 
 import XMonad.Util.ClickableWorkspaces
 
@@ -72,7 +48,6 @@ myWorkspaces = map show [1..9]
 --
 myManageHook = composeAll
     [
-      isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
 
 
@@ -90,9 +65,9 @@ myManageHook = composeAll
 gap         = 7
 
 myGaps       = gaps [(U, gap), (R, gap), (L, gap), (D, gap)]
-addSpace     = renamed [CutWordsLeft 2] . spacing gap
+addSpace     = spacing gap
 
-tiledLayout = renamed [Replace "[]"]  $ tiled
+tiledLayout = tiled
                 where
                   -- default tiling algorithm partitions the screen into two panes
                   tiled   = Tall nmaster delta ratio
