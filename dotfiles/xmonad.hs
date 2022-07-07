@@ -99,7 +99,7 @@ layouts =  tiledLayout
   2. Create NBFULL (No borders fullscreen toggle)
   3. Configure layouts to avoid struts
 -}
-myLayout = lessBorders OnlyFloat
+myLayout = lessBorders OnlyLayoutFloat
             $ mkToggle (NBFULL ?? EOT)
             $ avoidStruts $ myGaps $ addSpace
             $ layouts
