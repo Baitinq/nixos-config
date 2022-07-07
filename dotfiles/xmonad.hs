@@ -14,6 +14,7 @@ import XMonad.Hooks.ServerMode
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.UrgencyHook
 
 import XMonad.Layout.Gaps
 import XMonad.Layout.NoBorders
@@ -111,6 +112,9 @@ backgroundColor = "#005577"
 
 foregroundColor :: String
 foregroundColor = "#bbbbbb"
+
+urgentColor :: String
+urgentColor = "#ff0000"
 
 --This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust acoordingly to fullscreen mode
 --In a perfect world we shouldnt need to do this manually but it seems like ewmhFullscreen/others dont implement this functionality
@@ -223,6 +227,7 @@ myStatusBar = statusBarProp "xmobar" (do
                                                   , ppLayout = (\_ -> "")
                                                   , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox foregroundColor ("  " ++ s ++ "  "))) --better way to clickablewrap . 
                                                   , ppHiddenNoWindows = (\s -> clickableWrap ((read s::Int) - 1) ("  " ++ s ++ "  "))
+                                                  , ppUrgent = (\s -> clickableWrap ((read s::Int) - 1) (xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  ")))
                                           }
                                       )
                                       where
@@ -232,6 +237,7 @@ myStatusBar = statusBarProp "xmobar" (do
 main :: IO ()
 main = do
   xmonad . withSB myStatusBar . docks . ewmhFullscreen . ewmh
+         $ withUrgencyHookC BorderUrgencyHook { urgencyBorderColor = urgentColor } urgencyConfig { suppressWhen = XMonad.Hooks.UrgencyHook.Never }
          $ def {
                 focusFollowsMouse  = myFocusFollowsMouse,
                 borderWidth        = myBorderWidth,
