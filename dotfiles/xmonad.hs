@@ -21,6 +21,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.NoBorders
 
 import XMonad.Util.ClickableWorkspaces
 
@@ -83,7 +84,8 @@ tiledLayout = tiled
 
 layouts      =  tiledLayout
 
-myLayout    = mkToggle (NOBORDERS ?? NBFULL ?? EOT)
+myLayout    = lessBorders OnlyFloat
+              $ mkToggle (NOBORDERS ?? NBFULL ?? EOT)
               $ avoidStruts $ myGaps $ addSpace
               $ layouts
 
