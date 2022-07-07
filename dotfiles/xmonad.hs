@@ -106,8 +106,11 @@ myBorderWidth = 2
 myNormalBorderColor :: String
 myNormalBorderColor = "#444444"
 
-myFocusedBorderColor :: String
-myFocusedBorderColor = "#005577"
+backgroundColor :: String
+backgroundColor = "#005577"
+
+foregroundColor :: String
+foregroundColor = "#bbbbbb"
 
 --This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust acoordingly to fullscreen mode
 --In a perfect world we shouldnt need to do this manually but it seems like ewmhFullscreen/others dont implement this functionality
@@ -115,9 +118,10 @@ setFullscreenProp :: Bool -> Window -> X ()
 setFullscreenProp b win = withDisplay $ \dpy -> do
                       state  <- getAtom "_NET_WM_STATE"
                       fullsc <- getAtom "_NET_WM_STATE_FULLSCREEN"
+                      let replaceWMStateProperty = changeProperty32 dpy win state 4 propModeReplace
                       if b
-                        then io $ changeProperty32 dpy win state 4 propModeReplace [fromIntegral fullsc]
-                        else io $ changeProperty32 dpy win state 4 propModeReplace []
+                        then io $ replaceWMStateProperty [fromIntegral fullsc]
+                        else io $ replaceWMStateProperty []
 
 --Hide xmobar -> Hide borders -> Set fullscreen -> Set fullscreenprops
 toggleFullScreen :: X ()
@@ -212,12 +216,12 @@ myStatusBar = statusBarProp "xmobar" (do
                                         numWindows <- getNumberOfWindowsInWorkpace
                                         return $ xmobarPP {
                                                     ppCurrent = if numWindows > 0
-                                                                        then xmobarBorder "Top" "#bbbbbb" 4 . xmobarColor "#bbbbbb" "#005577" . wrap "  " "  "
-                                                                        else xmobarColor "#bbbbbb" "#005577" . wrap "  " "  "
+                                                                        then xmobarBorder "Top" foregroundColor 4 . xmobarColor foregroundColor backgroundColor . wrap "  " "  "
+                                                                        else xmobarColor foregroundColor backgroundColor . wrap "  " "  "
                                                   , ppTitle = id
                                                   , ppSep = " |  "
                                                   , ppLayout = (\_ -> "")
-                                                  , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox "#bbbbbb" ("  " ++ s ++ "  "))) --better way to clickablewrap . 
+                                                  , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox foregroundColor ("  " ++ s ++ "  "))) --better way to clickablewrap . 
                                                   , ppHiddenNoWindows = (\s -> clickableWrap ((read s::Int) - 1) ("  " ++ s ++ "  "))
                                           }
                                       )
@@ -233,7 +237,7 @@ main = do
                 borderWidth        = myBorderWidth,
                 workspaces         = myWorkspaces,
                 normalBorderColor  = myNormalBorderColor,
-                focusedBorderColor = myFocusedBorderColor,
+                focusedBorderColor = backgroundColor,
 
                 mouseBindings      = myMouseBindings,
 
