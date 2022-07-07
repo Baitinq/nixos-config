@@ -101,10 +101,10 @@ myLayout = lessBorders OnlyFloat
 
 -- Width of the window border in pixels.
 myBorderWidth :: Dimension
-myBorderWidth = 1
+myBorderWidth = 2
 
 myNormalBorderColor :: String
-myNormalBorderColor = "#000000"
+myNormalBorderColor = "#444444"
 
 myFocusedBorderColor :: String
 myFocusedBorderColor = "#005577"
