@@ -249,7 +249,7 @@ myStatusBar = statusBarProp "xmobar" (do
                                       )
                                       where
                                         getNumberOfWindowsInWorkpace = withWindowSet (pure . length . W.index)
-                                        createDwmBox color prefix = "<box type=HBoth offset=L19 color="++color++"><box type=Top mt=3 color="++color++"><box type=Top color="++color++">" ++ prefix ++ "</box></box></box>"
+                                        createDwmBox color prefix = "<box type=HBoth offset=L20 color="++color++"><box type=Top mt=3 color="++color++"><box type=Top color="++color++">" ++ prefix ++ "</box></box></box>"
 
 ------------------------------------------------------------------------
 -- Launch xmonad with the aforementioned settings
