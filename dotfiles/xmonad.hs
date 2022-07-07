@@ -1,6 +1,7 @@
 import System.IO
 import System.Exit
 
+import Data.Semigroup(All)
 import qualified Data.List as L
 import qualified Data.Map  as M
 
@@ -19,6 +20,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.LayoutModifier
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.NoBorders
@@ -47,11 +49,10 @@ myWorkspaces = map show [1..9]
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
+myManageHook :: ManageHook
 myManageHook = composeAll
     [
     ]
-
-
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -63,11 +64,16 @@ myManageHook = composeAll
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 
-gap         = 7
+gap :: Int
+gap = 7
 
-myGaps       = gaps [(U, gap), (R, gap), (L, gap), (D, gap)]
-addSpace     = spacing gap
+myGaps :: l a -> ModifiedLayout Gaps l a
+myGaps = gaps [(U, gap), (R, gap), (L, gap), (D, gap)]
 
+addSpace :: l a -> ModifiedLayout Spacing l a
+addSpace = spacing gap
+
+tiledLayout :: Tall Window
 tiledLayout = tiled
                 where
                   -- default tiling algorithm partitions the screen into two panes
@@ -82,21 +88,26 @@ tiledLayout = tiled
                   -- Percent of screen to increment by when resizing panes
                   delta   = 3/100
 
-layouts      =  tiledLayout
+layouts :: Tall Window
+layouts =  tiledLayout
 
-myLayout    = lessBorders OnlyFloat
-              $ mkToggle (NOBORDERS ?? NBFULL ?? EOT)
-              $ avoidStruts $ myGaps $ addSpace
-              $ layouts
+myLayout = lessBorders OnlyFloat
+            $ mkToggle (NBFULL ?? EOT)
+            $ avoidStruts $ myGaps $ addSpace
+            $ layouts
 
 ------------------------------------------------------------------------
 -- Colors and borders
 
 -- Width of the window border in pixels.
+myBorderWidth :: Dimension
 myBorderWidth = 1
 
-myNormalBorderColor     = "#000000"
-myFocusedBorderColor    = "#005577"
+myNormalBorderColor :: String
+myNormalBorderColor = "#000000"
+
+myFocusedBorderColor :: String
+myFocusedBorderColor = "#005577"
 
 --This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust acoordingly to fullscreen mode
 --In a perfect world we shouldnt need to do this manually but it seems like ewmhFullscreen/others dont implement this functionality
@@ -145,8 +156,11 @@ myCommands =
 -----------------------------------------------------------------------
 -- Custom server mode
 
+myServerModeEventHook :: Event -> X All
 myServerModeEventHook = serverModeEventHookCmd' $ return myCommands'
-myCommands' = ("list-commands", listMyServerCmds) : myCommands ++ wscs ++ sccs -- ++ spcs
+
+myCommands' :: [(String, X ())]
+myCommands' = ("list-commands", listMyServerCmds) : myCommands ++ wscs ++ sccs
     where
         wscs = [((m ++ s), windows $f s) | s <- myWorkspaces
                , (f, m) <- [(W.view, "focus-workspace-"), (W.shift, "send-to-workspace-")] ]
@@ -166,10 +180,12 @@ listMyServerCmds = spawn ("echo '" ++ asmc ++ "' | xmessage -file -")
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
 
+toggleFloat :: Window -> X ()
 toggleFloat w = windows (\s -> if M.member w (W.floating s)
                             then W.sink w s
                             else (W.float w (W.RationalRect 0.125 0.125 0.75 0.75) s))
 
+myMouseBindings :: XConfig l -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   [
     -- mod-button1, Set the window to floating mode and move by dragging
@@ -191,6 +207,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- Run xmonad with all the defaults we set up.
 --
 
+myStatusBar :: StatusBarConfig
 myStatusBar = statusBarProp "xmobar" (do 
                                         numWindows <- getNumberOfWindowsInWorkpace
                                         return $ xmobarPP {
