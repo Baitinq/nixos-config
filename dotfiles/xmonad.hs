@@ -92,6 +92,13 @@ tiledLayout = tiled
 layouts :: Tall Window
 layouts =  tiledLayout
 
+{-
+  Set up layouts.
+
+  1. Remove borders on floating windows.
+  2. Create NBFULL (No borders fullscreen toggle)
+  3. Configure layouts to avoid struts
+-}
 myLayout = lessBorders OnlyFloat
             $ mkToggle (NBFULL ?? EOT)
             $ avoidStruts $ myGaps $ addSpace
@@ -100,7 +107,6 @@ myLayout = lessBorders OnlyFloat
 ------------------------------------------------------------------------
 -- Colors and borders
 
--- Width of the window border in pixels.
 myBorderWidth :: Dimension
 myBorderWidth = 2
 
@@ -116,8 +122,12 @@ foregroundColor = "#bbbbbb"
 urgentColor :: String
 urgentColor = "#ff0000"
 
---This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust acoordingly to fullscreen mode
---In a perfect world we shouldnt need to do this manually but it seems like ewmhFullscreen/others dont implement this functionality
+------------------------------------------------------------------------
+
+{-
+  This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust acoordingly to fullscreen mode
+  In a perfect world we shouldnt need to do this manually but it seems like ewmhFullscreen/others dont implement this functionality
+-}
 setFullscreenProp :: Bool -> Window -> X ()
 setFullscreenProp b win = withDisplay $ \dpy -> do
                       state  <- getAtom "_NET_WM_STATE"
@@ -126,8 +136,10 @@ setFullscreenProp b win = withDisplay $ \dpy -> do
                       if b
                         then io $ replaceWMStateProperty [fromIntegral fullsc]
                         else io $ replaceWMStateProperty []
-
---Hide xmobar -> Hide borders -> Set fullscreen -> Set fullscreenprops
+{- 
+  Fullscreen: Hide xmobar -> Hide borders -> Set fullscreen -> Set fullscreenprops
+  Unfullscreen: ^^ but reverse
+-}
 toggleFullScreen :: X ()
 toggleFullScreen = do
                     mIsFullScreen <- withWindowSet (isToggleActive NBFULL . W.workspace . W.current)
@@ -137,9 +149,14 @@ toggleFullScreen = do
                                             else sendMessage ToggleStruts >> sendMessage (Toggle NBFULL)  >> withFocused (setFullscreenProp True)
                       Nothing -> return ()
 
+toggleFloat :: Window -> X ()
+toggleFloat w = windows (\s -> if M.member w (W.floating s)
+                            then W.sink w s
+                            else (W.float w (W.RationalRect 0.125 0.125 0.75 0.75) s))
 
-    ------------------------------------------------------------------------
+------------------------------------------------------------------------
 -- External commands
+
 myCommands :: [(String, X ())]
 myCommands =
         [ ("decrease-master-size"      , sendMessage Shrink                               )
@@ -182,16 +199,9 @@ listMyServerCmds = spawn ("echo '" ++ asmc ++ "' | xmessage -file -")
 
 ------------------------------------------------------------------------
 -- Mouse bindings
---
--- Focus rules
--- True if your focus should follow your mouse cursor.
+
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
-
-toggleFloat :: Window -> X ()
-toggleFloat w = windows (\s -> if M.member w (W.floating s)
-                            then W.sink w s
-                            else (W.float w (W.RationalRect 0.125 0.125 0.75 0.75) s))
 
 myMouseBindings :: XConfig l -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -212,18 +222,25 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   ]
 
 ------------------------------------------------------------------------
--- Run xmonad with all the defaults we set up.
---
+-- Status bar
 
+{-
+  Configure xmobar in a dwm style with statusBarPP
+
+  1. Get the active, inactive, urgent and full rectangles above workspace numbers.
+  2. Make workspaces clickable.
+  3. Set a 2 space separation between workspaces.
+-}
 myStatusBar :: StatusBarConfig
 myStatusBar = statusBarProp "xmobar" (do 
                                         numWindows <- getNumberOfWindowsInWorkpace
-                                        return $ xmobarPP {
+                                        return $ def {
                                                     ppCurrent = if numWindows > 0
                                                                         then xmobarBorder "Top" foregroundColor 4 . xmobarColor foregroundColor backgroundColor . wrap "  " "  "
                                                                         else xmobarColor foregroundColor backgroundColor . wrap "  " "  "
                                                   , ppTitle = id
                                                   , ppSep = " |  "
+                                                  , ppWsSep = ""
                                                   , ppLayout = (\_ -> "")
                                                   , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox foregroundColor ("  " ++ s ++ "  "))) --better way to clickablewrap . 
                                                   , ppHiddenNoWindows = (\s -> clickableWrap ((read s::Int) - 1) ("  " ++ s ++ "  "))
@@ -234,9 +251,24 @@ myStatusBar = statusBarProp "xmobar" (do
                                         getNumberOfWindowsInWorkpace = withWindowSet (pure . length . W.index)
                                         createDwmBox color prefix = "<box type=HBoth offset=L19 color="++color++"><box type=Top mt=3 color="++color++"><box type=Top color="++color++">" ++ prefix ++ "</box></box></box>"
 
+------------------------------------------------------------------------
+-- Launch xmonad with the aforementioned settings
+
+{-
+  Main function (Launch xmonad)
+
+  1. Setup statusbar (with docks).
+  2. Enable fullscreen hook.
+  3. Enable urgency hook.
+  4. Setup xmonad defaults.
+-}
 main :: IO ()
 main = do
-  xmonad . withSB myStatusBar . docks . ewmhFullscreen . ewmh
+         xmonad
+         . withSB myStatusBar
+         . docks
+         . ewmhFullscreen
+         . ewmh
          $ withUrgencyHookC BorderUrgencyHook { urgencyBorderColor = urgentColor } urgencyConfig { suppressWhen = XMonad.Hooks.UrgencyHook.Never }
          $ def {
                 focusFollowsMouse  = myFocusFollowsMouse,
