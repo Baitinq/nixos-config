@@ -87,7 +87,26 @@ in
       };
     };
 
-    emacs.enable = true;
+    emacs = {
+      enable = true;
+      extraPackages = epkgs: with epkgs; [
+        use-package
+
+        evil
+        evil-collection
+
+        doom-modeline
+        dashboard
+
+        nix-mode
+        haskell-mode
+        typescript-mode
+        jq-mode
+
+        doom-themes
+      ];
+      extraConfig = builtins.readFile (dotfiles + "/.emacs");
+    };
 
     firefox = {
       enable = true;
@@ -203,7 +222,7 @@ in
 
   home.file = {
     ".xinitrc".source = dotfiles + "/.xinitrc";
-    ".Xresources".source = dotfiles + "//.Xresources/";
+    ".Xresources".source = dotfiles + "/.Xresources/";
 
     ".scripts/".source = dotfiles + "/scripts/";
   };
