@@ -69,6 +69,11 @@ in
       maxCacheTtl = 86400; #24h
       maxCacheTtlSsh = 86400;
     };
+
+    emacs = {
+      enable = true;
+      startWithUserSession = true;
+    };
   };
 
   programs = {
@@ -81,6 +86,8 @@ in
         key = "18BE4F736F27FC190C1E1000BB3C0BC698650937";
       };
     };
+
+    emacs.enable = true;
 
     firefox = {
       enable = true;
