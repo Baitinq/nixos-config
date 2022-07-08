@@ -135,8 +135,10 @@
     };
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
-    maxJobs = "auto";
-    buildCores = 0;
+    settings = {
+      max-jobs = "auto";
+      cores = 0;
+    };
   };
 
   # Copy the NixOS configuration file and link it from the resulting system
