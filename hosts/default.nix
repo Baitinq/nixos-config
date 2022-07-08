@@ -1,4 +1,4 @@
-{ user, lib, nixpkgs, nur, inputs, home-manager, ... }:
+{ user, lib, nixpkgs, inputs, home-manager, ... }:
 let
   secrets = import ../secrets;
 
@@ -14,7 +14,7 @@ let
         inherit system;
         config.allowUnfree = true; # Allow proprietary software
         overlays = [
-          nur.overlay
+          inputs.nur.overlay
           (import ../packages)
           (import ../overlays)
         ];
