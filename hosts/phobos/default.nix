@@ -13,7 +13,7 @@
   networking = {
     wireless = {
       enable = true; # Enables wireless support via wpa_supplicant.
-      networks = secrets.wifi;
+      networks = secrets.main_wifi;
     };
     # networkmanager.enable = true;  # Easiest to use and most distros use this by default.
     # Configure network proxy if necessary
