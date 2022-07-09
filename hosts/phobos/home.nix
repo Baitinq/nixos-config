@@ -7,7 +7,6 @@ in
     minecraft
     jetbrains.idea-community
     calibre
-    qtcreator
     kcc
   ] ++
   (with pkgs.custom; [
