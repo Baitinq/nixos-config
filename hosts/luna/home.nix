@@ -7,7 +7,6 @@ in
     jetbrains.idea-community
     xorg.xmodmap
     calibre
-    qtcreator
     kcc
   ] ++
   (with pkgs.custom; [
