@@ -9,5 +9,6 @@ final: prev:
     manga-cli = prev.callPackage ./manga-cli { };
     mov-cli = prev.callPackage ./mov-cli { };
     xmonadctl = prev.callPackage ./xmonadctl { };
+    lemacs = prev.callPackage ./lemacs { };
   };
 }
