@@ -8,7 +8,7 @@ let
     { hostname = "vm"; system = "x86_64-linux"; location = secrets.main_location; }
   ];
 
-  mkHost = hostname: system: location:
+  mkHost = { hostname, system, location }:
     let
       pkgs = import nixpkgs {
         inherit system;
@@ -44,4 +44,4 @@ in
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map ({ hostname, system, location }: { name = hostname; value = mkHost hostname system location; }) hosts)
+builtins.listToAttrs (map ({ hostname, system, location }: { name = hostname; value = mkHost { inherit hostname system location; }; }) hosts)
