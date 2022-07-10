@@ -41,6 +41,7 @@ in
       smart-wallpaper
       dwmbar
       xmonadctl
+      lemacs
     ]);
   };
 
