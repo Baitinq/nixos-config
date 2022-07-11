@@ -204,16 +204,6 @@ in
       '';
     };
 
-    vscode = {
-      enable = true;
-      mutableExtensionsDir = false; #needed for bug with installing extensions
-      extensions = with pkgs.vscode-extensions; [
-        esbenp.prettier-vscode
-        bbenoist.nix
-        haskell.haskell
-        justusadam.language-haskell
-      ];
-    };
   };
 
   xdg = {
