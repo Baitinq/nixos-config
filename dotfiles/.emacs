@@ -35,6 +35,10 @@
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
 
+;; One line scrolling
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+
 (global-display-line-numbers-mode)
 
 (global-visual-line-mode t)
@@ -51,7 +55,9 @@
   :config
   (dashboard-setup-startup-hook))
 
-  ;;(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+(setq dashboard-footer-messages '("I showed you my source code, plz respond."))
+
+;;(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 
 ;;TODO, make it work with directories
 (setq initial-buffer-choice
@@ -59,3 +65,12 @@
     (if (buffer-file-name)
       (current-buffer) ;; leave as-is
       (get-buffer-create "*dashboard*"))))
+
+(use-package nix-mode
+    :mode "\\.nix\\'")
+
+(use-package haskell-mode)
+
+(use-package typescript-mode)
+
+(use-package jq-mode)
