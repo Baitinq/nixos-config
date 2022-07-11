@@ -21,6 +21,9 @@ alt + Tab
 alt + space
    xmonadctl togglefloating
 
+alt + b
+   dbus-send --session --dest=org.Xmobar.Control --type=method_call '/org/Xmobar/Control' org.Xmobar.Control.SendSignal "string:Toggle 0"
+
 #alt + 0
 #    dwmc viewall
 
