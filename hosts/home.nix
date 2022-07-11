@@ -95,11 +95,20 @@ in
       extraPackages = epkgs: with epkgs; [
         use-package
 
+        direnv
+
         evil
         evil-collection
 
         doom-modeline
         dashboard
+
+        lsp-ui
+        projectile
+
+        lsp-mode
+        company
+        lsp-haskell
 
         nix-mode
         haskell-mode
