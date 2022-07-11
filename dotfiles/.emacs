@@ -66,6 +66,10 @@
       (current-buffer) ;; leave as-is
       (get-buffer-create "*dashboard*"))))
 
+(use-package direnv
+  :config
+  (direnv-mode))
+
 (use-package nix-mode
     :mode "\\.nix\\'")
 
@@ -74,3 +78,9 @@
 (use-package typescript-mode)
 
 (use-package jq-mode)
+
+(use-package lsp-mode
+  :hook ((haskell-mode . lsp-deferred))
+  :commands (lsp lsp-deferred))
+
+(use-package lsp-haskell)
