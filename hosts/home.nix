@@ -88,6 +88,8 @@ in
       };
     };
 
+    direnv.enable = true;
+
     emacs = {
       enable = true;
       extraPackages = epkgs: with epkgs; [
