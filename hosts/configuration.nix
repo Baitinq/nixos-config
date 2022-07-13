@@ -1,4 +1,4 @@
-{ secrets, lib, pkgs, config, hostname, inputs, user, ... }: {
+{ secrets, lib, pkgs, config, hostname, inputs, user, timezone, ... }: {
 
   imports = [
     ../modules/doas
@@ -25,7 +25,7 @@
   };
 
   # Set your time zone.
-  time.timeZone = "Europe/Madrid";
+  time.timeZone = timezone;
 
   networking = {
     hostName = hostname; # Define your hostname.
