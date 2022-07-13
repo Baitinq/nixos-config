@@ -3,12 +3,12 @@ let
   secrets = import ../secrets;
 
   hosts = [
-    { hostname = "phobos"; system = "x86_64-linux"; location = secrets.main_location; }
-    { hostname = "luna"; system = "x86_64-linux"; location = secrets.main_location; }
-    { hostname = "vm"; system = "x86_64-linux"; location = secrets.main_location; }
+    { hostname = "phobos"; system = "x86_64-linux"; timezone=secrets.main_timezone; location = secrets.main_location; }
+    { hostname = "luna"; system = "x86_64-linux"; timezone=secrets.main_timezone; location = secrets.main_location; }
+    { hostname = "vm"; system = "x86_64-linux"; timezone=secrets.main_timezone; location = secrets.main_location; }
   ];
 
-  mkHost = { hostname, system, location }:
+  mkHost = { hostname, system, timezone, location }:
     let
       pkgs = import nixpkgs {
         inherit system;
@@ -19,7 +19,7 @@ let
           (import ../overlays)
         ];
       };
-      extraArgs = { inherit pkgs inputs user secrets hostname location; };
+      extraArgs = { inherit pkgs inputs user secrets hostname timezone location; };
     in
     nixpkgs.lib.nixosSystem {
       inherit system;
@@ -44,4 +44,4 @@ in
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map ({ hostname, system, location }: { name = hostname; value = mkHost { inherit hostname system location; }; }) hosts)
+builtins.listToAttrs (map ({ hostname, system, timezone, location }: { name = hostname; value = mkHost { inherit hostname system timezone location; }; }) hosts)
