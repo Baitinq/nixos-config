@@ -76,10 +76,8 @@
     python
     killall
     wget
-    nano
     git
     git-crypt
-    fzf
     htop
     pfetch
     unzip
@@ -90,8 +88,6 @@
     pciutils
     gnupg
     neovim
-    steam-run
-    compsize #used to check btrfs space savings
     comma
   ];
 

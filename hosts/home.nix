@@ -32,7 +32,6 @@ in
       xorg.xev
       statix
       nixpkgs-fmt
-      paperkey
       openjdk8
       virt-manager
       xdotool #needed for xmobar clickable workspaces
