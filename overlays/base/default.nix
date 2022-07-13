@@ -33,19 +33,6 @@ final: prev:
   neovim = prev.neovim.override {
     vimAlias = true;
     viAlias = true;
-    configure = {
-      packages.myPlugins = with prev.vimPlugins; {
-        start = [
-          vim-addon-nix
-          YouCompleteMe
-          nerdtree
-          rainbow_parentheses
-          base16-vim
-          vim-orgmode
-        ];
-        opt = [ ];
-      };
-    };
   };
 
   minecraft = prev.minecraft.override { jre = prev.jdk8; };
