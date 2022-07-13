@@ -3,9 +3,9 @@ let
   secrets = import ../secrets;
 
   hosts = [
-    { hostname = "phobos"; system = "x86_64-linux"; timezone=secrets.main_timezone; location = secrets.main_location; }
-    { hostname = "luna"; system = "x86_64-linux"; timezone=secrets.main_timezone; location = secrets.main_location; }
-    { hostname = "vm"; system = "x86_64-linux"; timezone=secrets.main_timezone; location = secrets.main_location; }
+    { hostname = "phobos"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { hostname = "luna"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { hostname = "vm"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
   ];
 
   mkHost = { hostname, system, timezone, location }:
