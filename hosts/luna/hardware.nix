@@ -21,21 +21,21 @@ in
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/285219b7-4351-4a29-927e-7beabe7131f7";
+    device = "/dev/disk/by-uuid/8fba0f8d-f0a4-4c5f-88cf-3f23ff848a5e";
     fsType = "btrfs";
-    options = [ "subvol=root" ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/6d852aa1-81de-43f5-9c45-567a68b99b0b";
-    fsType = "btrfs";
-    options = [ "subvol=home" ];
+    options = [ "subvol=root" "compress-force=zstd" "noatime" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/2fbd48bf-9ee6-4e60-8d65-8a89fc696655";
+    device = "/dev/disk/by-uuid/8fba0f8d-f0a4-4c5f-88cf-3f23ff848a5e";
     fsType = "btrfs";
-    options = [ "subvol=nix" ];
+    options = [ "subvol=nix" "compress-force=zstd" "noatime" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/1de6d3b2-a51a-4217-9a71-c0dbd645e364";
+    fsType = "btrfs";
+    options = [ "subvol=home" "compress-force=zstd" ];
   };
 
   swapDevices = [ ];
