@@ -87,7 +87,6 @@
     usbutils
     pciutils
     gnupg
-    neovim
     comma
   ];
 
@@ -108,6 +107,12 @@
 
   programs = {
     ssh.askPassword = "";
+
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+    };
 
     light.enable = true;
 

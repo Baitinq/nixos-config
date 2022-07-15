@@ -30,11 +30,6 @@ final: prev:
     };
   });
 
-  neovim = prev.neovim.override {
-    vimAlias = true;
-    viAlias = true;
-  };
-
   minecraft = prev.minecraft.override { jre = prev.jdk8; };
 
   xwinwrap = prev.xwinwrap.overrideAttrs (old: {
