@@ -134,6 +134,8 @@ in
       };
     };
 
+    rtorrent = { enable = true; };
+
     obs-studio = { enable = true; };
 
     bash = {
