@@ -4,15 +4,15 @@ let
 in
 {
   home.packages = with pkgs; [
-    jetbrains.idea-community
+    #jetbrains.idea-community
     xorg.xmodmap
-    calibre
-    kcc
+    #calibre
+    #kcc
   ] ++
   (with pkgs.custom; [
     adl
     trackma
-    kindlegen
+    #kindlegen
     manga-cli
     mov-cli
   ]);

@@ -11,9 +11,7 @@ in
 
     packages = with pkgs; [
       scrot
-      qemu
       redshift
-      xwinwrap
       discord
       mpv
       sxiv
@@ -24,15 +22,11 @@ in
       clipmenu
       dunst
       sxhkd
+      zathura
       feh
       pavucontrol
       polkit_gnome
-      progress
-      qbittorrent
-      xorg.xev
-      statix
       nixpkgs-fmt
-      openjdk8
       virt-manager
       xdotool #needed for xmobar clickable workspaces
     ] ++

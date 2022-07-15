@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub, makeWrapper, bash, xdpyinfo, killall }:
+{ stdenv, lib, fetchFromGitHub, makeWrapper, bash, xdpyinfo, killall, xwinwrap }:
 stdenv.mkDerivation {
   pname = "smart-wallpaper";
   version = "1.0";
@@ -14,6 +14,6 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     cp smart-wallpaper $out/bin/smart-wallpaper  
     wrapProgram $out/bin/smart-wallpaper \
-      --prefix PATH : ${lib.makeBinPath [ bash xdpyinfo killall ]}
+      --prefix PATH : ${lib.makeBinPath [ bash xdpyinfo killall xwinwrap ]}
   '';
 }
