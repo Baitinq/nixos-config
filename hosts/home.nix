@@ -81,7 +81,10 @@ in
       };
     };
 
-    direnv.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
 
     emacs = {
       enable = true;
