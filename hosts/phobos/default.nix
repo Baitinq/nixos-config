@@ -29,6 +29,12 @@
     steam.enable = true;
   };
 
+  /*  services.udev.extraRules = ''
+    SUBSYSTEM=="input", ACTION=="add", ATTRS{bInterfaceProtocol}=="02", ATTRS{bInterfaceClass}=="03", ATTRS{bInterfaceSubClass}=="01", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${user}/.Xauthority", RUN+="${pkgs.xorg.xf86inputsynaptics}/bin/synclient TouchpadOff=1"
+    SUBSYSTEM=="input", ACTION=="remove", ATTRS{bInterfaceProtocol}=="02", ATTRS{bInterfaceClass}=="03", ATTRS{bInterfaceSubClass}=="01", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${user}/.Xauthority", RUN+="${pkgs.xorg.xf86inputsynaptics}/bin/synclient TouchpadOff=0"
+    '';
+  */
+
   environment.etc."nix-index/files".source = inputs.nix-index.legacyPackages.x86_64-linux.database;
 
 }

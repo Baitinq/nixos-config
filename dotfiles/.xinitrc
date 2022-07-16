@@ -65,6 +65,10 @@ dunst &
 
 dwmbar &
 
+if lsusb --verbose 2>&1 | grep --quiet "Mouse"; then
+        synclient TouchPadOff="1"
+fi
+
 while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -l $LOCATION -r; done &
 
 exec xmonad 2> /tmp/xmonad.log
