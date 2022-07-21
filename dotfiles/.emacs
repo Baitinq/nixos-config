@@ -1,7 +1,16 @@
-(eval-when-compile
-  (require 'use-package))
+;; load package manager, add the Melpa package registry
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+;; bootstrap use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
 
 (use-package evil
+  :ensure t 
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
@@ -10,22 +19,26 @@
 
 (use-package evil-collection
   :after evil
+  :ensure t 
   :config
   (evil-collection-init))
 
-(use-package doom-themes)
+(use-package doom-themes
+  :ensure t )
 (setq doom-themes-enable-bold t
       doom-themes-enable-italic t)
 (load-theme 'doom-one t)
 
-(set-face-attribute 'default nil
-                    :font "Inconsolata LGC Nerd Font 11"
-                    :weight 'medium)
+(cond
+ ((find-font (font-spec :name "Inconsolata LGC Nerd Font"))
+ (set-face-attribute 'default nil
+                     :font "Inconsolata LGC Nerd Font 11"
+                     :weight 'medium)
+   ;; Needed for emacsclient or fonts will be smaller than expected
+  (add-to-list 'default-frame-alist '(font . "Inconsolata LGC Nerd Font 11")))
+)
 
 (setq-default line-spacing 0.10)
-
-;; Needed for emacsclient or fonts will be smaller than expected
-(add-to-list 'default-frame-alist '(font . "Inconsolata LGC Nerd Font 11"))
 
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
@@ -33,6 +46,7 @@
 (scroll-bar-mode -1)
 
 (use-package doom-modeline
+  :ensure t 
   :init (doom-modeline-mode 1))
 
 ;; One line scrolling
@@ -44,6 +58,7 @@
 (global-visual-line-mode t)
       
 (use-package dashboard
+  :ensure t 
   :init
   (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
   (setq dashboard-center-content nil)
@@ -68,20 +83,27 @@
       (get-buffer-create "*dashboard*"))))
 
 (use-package direnv
+  :ensure t 
   :config
   (direnv-mode))
 
 (use-package nix-mode
-    :mode "\\.nix\\'")
+  :ensure t 
+  :mode "\\.nix\\'")
 
-(use-package haskell-mode)
+(use-package haskell-mode
+  :ensure t )
 
-(use-package typescript-mode)
+(use-package typescript-mode
+  :ensure t )
 
-(use-package jq-mode)
+(use-package jq-mode
+  :ensure t )
 
 (use-package lsp-mode
+  :ensure t 
   :hook ((haskell-mode . lsp-deferred))
   :commands (lsp lsp-deferred))
 
-(use-package lsp-haskell)
+(use-package lsp-haskell
+  :ensure t )
