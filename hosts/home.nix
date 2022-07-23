@@ -123,6 +123,7 @@ in
         darkreader
         https-everywhere
         bypass-paywalls-clean
+        h264ify
       ];
       profiles.default = {
         id = 0;
