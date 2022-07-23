@@ -1,17 +1,48 @@
-# mkfs.fat -F 32 /dev/sdX1
+## DESCRIPTION ##
 
-# mkfs.btrfs /dev/sdX2
-# mkdir -p /mnt
-# mount /dev/sdX2 /mnt
-# btrfs subvolume create /mnt/root
-# btrfs subvolume create /mnt/home
-# btrfs subvolume create /mnt/nix
-# umount /mnt
+## mount /dev/sdX1 /mnt/boot## sd as home and persist (4 and 60GB) (encrypted) (in btrfs subvols)
 
-# mount -o compress=zstd,noatime,subvol=root /dev/sdX2 /mnt
-# mkdir /mnt/{home,nix}
-# mount -o compress=zstd,subvol=home /dev/sdX2 /mnt/home
-# mount -o compress=zstd,noatime,subvol=nix /dev/sdX2 /mnt/nix
+## root as nix and (encrypted) and boot (150M)
 
-# mkdir /mnt/boot
-# mount /dev/sdX1 /mnt/boot
+## tmpfs as root
+
+
+## TUTORIAL ## 
+
+# Create and Format EFI Boot Partition
+mkfs.fat -F 32 /dev/$BOOTPARTITION
+
+# Create and Encrypt /nix Partition
+cryptsetup --verify-passphrase -v luksFormat /dev/$NIXPARTITION
+cryptsetup open /dev/$NIXPARTITION encrypted_nix
+mkfs.btrfs /dev/mapper/encrypted_nix
+
+# Format /nix Partition
+mount -t btrfs /dev/mapper/encrypted_nix /mnt
+btrfs subvolume create /mnt/nix
+umount /mnt
+
+
+# Create and Encrypt /home and /persist Partitions
+cryptsetup --verify-passphrase -v luksFormat /dev/$HOME_AND_PERSIST_PARTITION
+cryptsetup open /dev/$NIXPARTITION encrypted_home_and_persist
+mkfs.btrfs /dev/mapper/encrypted_home_and_persist
+
+# Format /home and /persist Partitions
+mount -t btrfs /dev/mapper/encrypted_home_and_persist /mnt
+btrfs subvolume create /mnt/home
+btrfs subvolume create /mnt/persist
+umount /mnt
+
+# Mount tmpfs in /
+mount -t tmpfs none /mnt
+mkdir -p /mnt/{boot,nix,persist,home}
+
+# Mount all partitions in /
+mount /dev/$BOOTPARTITION /mnt/boot
+mount -o subvol=nix,compress-force=zstd,noatime /dev/mapper/encrypted_nix /mnt/nix
+mount -o subvol=home,compress-force=zstd /dev/mapper/encrypted_home_and_persist /mnt/home
+mount -o subvol=persist,compress-force=zstd,noatime /dev/mapper/encrypted_home_and_persist /mnt/persist
+
+# Install nixos
+nixos-install --flake .#HOST
