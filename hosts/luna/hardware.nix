@@ -16,24 +16,34 @@ in
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3187-3464";
+    device = "/dev/disk/by-uuid/4D55-C906";
     fsType = "vfat";
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/8fba0f8d-f0a4-4c5f-88cf-3f23ff848a5e";
-    fsType = "btrfs";
-    options = [ "subvol=root" "compress-force=zstd" "noatime" ];
+    device = "none";
+    fsType = "tmpfs";
   };
 
+  boot.initrd.luks.devices."encrypted_nix".device = "/dev/disk/by-uuid/e1b9b878-e1de-4311-98b6-681874831a5e";
+
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/8fba0f8d-f0a4-4c5f-88cf-3f23ff848a5e";
+    device = "/dev/mapper/encrypted_nix";
     fsType = "btrfs";
     options = [ "subvol=nix" "compress-force=zstd" "noatime" ];
   };
 
+  boot.initrd.luks.devices."encrypted_home_and_persist".device = "/dev/disk/by-uuid/47a8ddde-1237-4a0f-84c4-f17fbd22ea3f";
+
+  fileSystems."/persist" = {
+    device = "/dev/mapper/encrypted_home_and_persist";
+    fsType = "btrfs";
+    neededForBoot = true;
+    options = [ "subvol=persist" "compress-force=zstd" "noatime" ];
+  };
+
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/1de6d3b2-a51a-4217-9a71-c0dbd645e364";
+    device = "/dev/mapper/encrypted_home_and_persist";
     fsType = "btrfs";
     options = [ "subvol=home" "compress-force=zstd" ];
   };
