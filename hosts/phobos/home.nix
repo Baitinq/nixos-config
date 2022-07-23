@@ -18,6 +18,7 @@ in
   ]);
 
   programs.firefox.profiles.default.settings = {
+    "gfx.webrender.all" = true;
     "media.ffmpeg.vaapi.enabled" = true; #Hardware acceleration
   };
 
