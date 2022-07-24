@@ -7,7 +7,7 @@ in
 
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "usb_storage" "sd_mod" "sdhci_acpi" ];
+      availableKernelModules = [ "xhci_pci" "usb_storage" "sd_mod" "sdhci_acpi" "aesni_intel" "cryptd" ];
       kernelModules = [ ];
     };
     kernelModules = [ "kvm_intel" ];
