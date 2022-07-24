@@ -89,7 +89,8 @@
         "impermanence": "impermanence",
         "nix-index": "nix-index",
         "nixpkgs": "nixpkgs",
-        "nur": "nur"
+        "nur": "nur",
+        "wallpapers": "wallpapers"
       }
     },
     "utils": {
@@ -104,6 +105,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "wallpapers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1602330464,
+        "narHash": "sha256-YKpIno5QSJM/GGp5DwQeuhKmTU5S96+IhLr0O0V8PDI=",
+        "owner": "Baitinq",
+        "repo": "Wallpapers",
+        "rev": "291f9a4cf78a6ad862da151139ea026ea72968e5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Baitinq",
+        "repo": "Wallpapers",
         "type": "github"
       }
     }

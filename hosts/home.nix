@@ -257,12 +257,7 @@ in
   };
 
   home.file = {
-    "./Images/Wallpapers".source = pkgs.fetchFromGitHub {
-      owner = "Baitinq";
-      repo = "Wallpapers";
-      rev = "291f9a4cf78a6ad862da151139ea026ea72968e5";
-      sha256 = "sha256-YKpIno5QSJM/GGp5DwQeuhKmTU5S96+IhLr0O0V8PDI=";
-    };
+    "./Images/Wallpapers".source = inputs.wallpapers;
   };
 
   # For disabling the automatic creation of $HOME/Desktop

@@ -14,6 +14,11 @@
     nur.url = "github:nix-community/NUR";
 
     nix-index.url = "github:Mic92/nix-index-database";
+
+    wallpapers = {
+      url = "github:Baitinq/Wallpapers";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, ... }:
