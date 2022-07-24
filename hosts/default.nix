@@ -1,5 +1,7 @@
-{ user, lib, nixpkgs, inputs, home-manager, ... }:
+{ lib, nixpkgs, inputs, home-manager, ... }:
 let
+  user = "baitinq";
+
   secrets = import ../secrets;
 
   hosts = [
