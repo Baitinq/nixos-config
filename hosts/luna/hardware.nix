@@ -30,6 +30,7 @@ in
   fileSystems."/nix" = {
     device = "/dev/mapper/encrypted_nix";
     fsType = "btrfs";
+    neededForBoot = true;
     options = [ "subvol=nix" "compress-force=zstd" "noatime" ];
   };
 
