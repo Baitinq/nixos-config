@@ -29,6 +29,7 @@ in
       nixpkgs-fmt
       virt-manager
       xdotool #needed for xmobar clickable workspaces
+      xlockmore
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
@@ -67,6 +68,12 @@ in
     emacs = {
       enable = true;
       startWithUserSession = true;
+    };
+
+    screen-locker = {
+      enable = true;
+      lockCmd = "${pkgs.xlockmore}/bin/xlock -mode blank";
+      xautolock.enable = false;
     };
   };
 
