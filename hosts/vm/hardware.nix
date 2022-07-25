@@ -10,7 +10,7 @@
     };
     kernelModules = [ ];
     extraModulePackages = [ ];
-    kernelParams = [ "net.ifnames=0" "biosdevname=0" ];
+    kernelParams = [ "net.ifnames=0" "biosdevname=0" "mitigations=off" ];
   };
 
   fileSystems."/boot" = {

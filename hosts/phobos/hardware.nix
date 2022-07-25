@@ -12,7 +12,7 @@ in
     };
     kernelModules = [ "kvm_intel" ];
     extraModulePackages = [ ];
-    kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" ];
+    kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off" ];
   };
 
   fileSystems."/boot" = {
