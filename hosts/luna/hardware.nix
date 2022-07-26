@@ -84,4 +84,5 @@ in
     };
   };
 
+  zramSwap.enable = true;
 }
