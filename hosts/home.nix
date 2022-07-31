@@ -87,6 +87,10 @@ in
         signByDefault = true;
         key = "18BE4F736F27FC190C1E1000BB3C0BC698650937";
       };
+      extraConfig = {
+        push.autoSetupRemote = true;
+        init.defaultBranch = "master";
+      };
     };
 
     direnv = {
