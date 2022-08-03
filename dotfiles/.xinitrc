@@ -53,6 +53,8 @@ xrandr --auto
 
 xsetroot -cursor_name left_ptr
 
+xset s off -dpms
+
 sxhkd &
 clipmenud &
 unclutter &
