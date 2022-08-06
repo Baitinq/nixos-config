@@ -1,6 +1,8 @@
 { config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
 
   imports = [
+    "${inputs.impermanence}/nixos.nix"
+
     ./hardware.nix
 
     ../../modules/bluetooth
@@ -34,6 +36,17 @@
     SUBSYSTEM=="input", ACTION=="remove", ATTRS{bInterfaceProtocol}=="02", ATTRS{bInterfaceClass}=="03", ATTRS{bInterfaceSubClass}=="01", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${user}/.Xauthority", RUN+="${pkgs.xorg.xf86inputsynaptics}/bin/synclient TouchpadOff=0"
     '';
   */
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/log"
+      "/var/lib"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/nix/id_rsa"
+    ];
+  };
 
   environment.etc."nix-index/files".source = inputs.nix-index.legacyPackages.x86_64-linux.database;
 
