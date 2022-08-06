@@ -15,27 +15,35 @@ in
     kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off" ];
   };
 
+  fileSystems."/" = {
+    device = "none";
+    fsType = "tmpfs";
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/0A8B-3968";
     fsType = "vfat";
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9a450653-8369-4850-af4f-cbec7cac8a99";
-    fsType = "btrfs";
-    options = [ "subvol=root" "compress-force=zstd" "noatime" ];
-  };
+  boot.initrd.luks.devices."encrypted_root".device = "/dev/disk/by-uuid/095dc267-9281-4535-9491-b3fcded614a8";
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/9a450653-8369-4850-af4f-cbec7cac8a99";
+  fileSystems."/persist" = {
+    device = "/dev/mapper/encrypted_root";
     fsType = "btrfs";
-    options = [ "subvol=home" "compress-force=zstd" ];
+    neededForBoot = true;
+    options = [ "subvol=persist" "compress-force=zstd" "noatime" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/9a450653-8369-4850-af4f-cbec7cac8a99";
+    device = "/dev/mapper/encrypted_root";
     fsType = "btrfs";
     options = [ "subvol=nix" "compress-force=zstd" "noatime" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/mapper/encrypted_root";
+    fsType = "btrfs";
+    options = [ "subvol=home" "compress-force=zstd" ];
   };
 
   swapDevices = [ ];
