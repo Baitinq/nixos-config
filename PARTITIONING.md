@@ -9,8 +9,14 @@
 
 ## TUTORIAL ## 
 
-# Create and Format EFI Boot Partition
-mkfs.fat -F 32 /dev/$BOOTPARTITION
+# Create and Format 64M EFI Partition
+mkfs.fat -F 32 /dev/$EFIPARTITION
+
+# Create and Encrypt 200M /boot Partition
+cryptsetup --verify-passphrase -v luksFormat --type luks1 /dev/$BOOTPARTITION
+cryptsetup open /dev/$BOOTPARTITION encrypted_boot
+mkfs.ext4 /dev/mapper/encrypted_boot
+
 
 # Create and Encrypt /nix Partition
 cryptsetup --verify-passphrase -v luksFormat /dev/$NIXPARTITION
@@ -39,7 +45,8 @@ mount -t tmpfs none /mnt
 mkdir -p /mnt/{boot,nix,persist,home}
 
 # Mount all partitions in /
-mount /dev/$BOOTPARTITION /mnt/boot
+mount /dev/mapper/encrypted_boot /mnt/boot
+mount /dev/$EFIPARTITION /mnt/boot/efi
 mount -o subvol=nix,compress-force=zstd,noatime /dev/mapper/encrypted_nix /mnt/nix
 mount -o subvol=home,compress-force=zstd /dev/mapper/encrypted_home_and_persist /mnt/home
 mount -o subvol=persist,compress-force=zstd,noatime /dev/mapper/encrypted_home_and_persist /mnt/persist

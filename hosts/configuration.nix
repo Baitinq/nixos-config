@@ -10,13 +10,17 @@
 
   boot = {
     loader = {
-      systemd-boot = {
-        enable = true;
-        editor = false;
-      };
       efi = {
-        efiSysMountPoint = "/boot";
         canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+      grub = {
+        enable = true;
+        version = 2;
+        efiSupport = true;
+        device = "nodev";
+        enableCryptodisk = true;
+        splashImage = null;
       };
       timeout = 0;
     };

@@ -15,17 +15,27 @@ in
     kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off" ];
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/4D55-C906";
-    fsType = "vfat";
-  };
-
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
   };
 
-  boot.initrd.luks.devices."encrypted_nix".device = "/dev/disk/by-uuid/e1b9b878-e1de-4311-98b6-681874831a5e";
+  boot.initrd.luks.devices."encrypted_boot" = {
+    device = "/dev/disk/by-uuid/4f5ba100-5c69-49ce-b0cf-2f219a5e9e51";
+    preLVM = true;
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/mapper/encrypted_boot";
+    fsType = "vfat";
+  };
+
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/BD51-1431";
+    fsType = "vfat";
+  };
+
+  boot.initrd.luks.devices."encrypted_nix".device = "/dev/disk/by-uuid/596e43d3-ccda-4f06-bce9-58d6a8c0dd79";
 
   fileSystems."/nix" = {
     device = "/dev/mapper/encrypted_nix";
