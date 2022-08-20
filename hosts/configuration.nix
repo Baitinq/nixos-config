@@ -8,6 +8,8 @@
     ../modules/xorg
     ../modules/fonts
     ../modules/virtualisation
+
+    ../secrets/wireguard
   ];
 
   boot = {
