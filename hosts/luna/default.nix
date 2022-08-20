@@ -1,8 +1,6 @@
 { config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
 
   imports = [
-    "${inputs.impermanence}/nixos.nix"
-
     ./hardware.nix
 
     ../../modules/power-save
@@ -34,17 +32,6 @@
     dmidecode #needed for updating coreboot bios
     xf86_input_cmt #chromebook touchpad drivers
   ];
-
-  environment.persistence."/persist" = {
-    directories = [
-      "/var/log"
-      "/var/lib"
-    ];
-    files = [
-      "/etc/machine-id"
-      "/etc/nix/id_rsa"
-    ];
-  };
 
   environment.etc."nix-index/files".source = inputs.nix-index.legacyPackages.x86_64-linux.database;
 
