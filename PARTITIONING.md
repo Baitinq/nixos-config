@@ -15,7 +15,7 @@ mkfs.fat -F 32 /dev/$EFIPARTITION
 # Create and Encrypt 200M /boot Partition
 cryptsetup --verify-passphrase -v luksFormat --type luks1 /dev/$BOOTPARTITION
 cryptsetup open /dev/$BOOTPARTITION encrypted_boot
-mkfs.ext4 /dev/mapper/encrypted_boot
+mkfs.fat -F 32 /dev/mapper/encrypted_boot
 
 
 # Create and Encrypt /nix Partition
