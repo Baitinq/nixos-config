@@ -1,6 +1,8 @@
 { secrets, lib, pkgs, config, hostname, inputs, user, timezone, ... }: {
 
   imports = [
+    "${inputs.impermanence}/nixos.nix"
+
     ../modules/doas
     ../modules/pipewire
     ../modules/xorg
@@ -138,6 +140,17 @@
         };
       };
     };
+  };
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/log"
+      "/var/lib"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/nix/id_rsa"
+    ];
   };
 
   nix = {
