@@ -3,7 +3,23 @@ let
   partitionsConfig = {
     type = "devices";
     content = {
-      sda = {
+      "disk/by-id/mmc-AGND3R_0x48d44fdc" = {
+        type = "table";
+        format = "msdos";
+        partitions = [{
+          type = "partition";
+          part-type = "primary";
+          start = "1M";
+          end = "100%";
+          bootable = true;
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/";
+          };
+        }];
+      };
+      "disk/by-id/usb-Generic_STORAGE_DEVICE_000000000208-0:0" = {
         type = "table";
         format = "msdos";
         partitions = [{
