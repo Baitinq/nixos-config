@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub, makeWrapper, bash, anime-downloader, trackma, mpv, fzf }:
+{ stdenv, lib, fetchFromGitHub, makeWrapper, bash, anime-downloader, trackma, mpv, fzf, perl }:
 stdenv.mkDerivation {
   pname = "adl";
   version = "1.0";
@@ -14,6 +14,6 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     cp adl $out/bin/adl  
     wrapProgram $out/bin/adl \
-      --prefix PATH : ${lib.makeBinPath [ bash anime-downloader trackma mpv fzf ]}
+      --prefix PATH : ${lib.makeBinPath [ bash anime-downloader trackma mpv fzf perl ]}
   '';
 }
