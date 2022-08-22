@@ -1,5 +1,34 @@
 { config, lib, inputs, pkgs, modulesPath, ... }:
+let
+  partitionsConfig = {
+    type = "devices";
+    content = {
+      sda = {
+        type = "table";
+        format = "msdos";
+        partitions = [{
+          type = "partition";
+          part-type = "primary";
+          start = "1M";
+          end = "100%";
+          bootable = true;
+          content = {
+            type = "filesystem";
+            format = "ext4";
+            mountpoint = "/";
+          };
+        }];
+      };
+    };
+  };
+in
 {
+  environment.systemPackages = with pkgs;[
+    parted
+    (pkgs.writeScriptBin "disko-create" (inputs.disko.lib.create partitionsConfig))
+    (pkgs.writeScriptBin "disko-mount" (inputs.disko.lib.mount partitionsConfig))
+  ];
+
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";

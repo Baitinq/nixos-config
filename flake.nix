@@ -11,6 +11,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    disko.url = "github:nix-community/disko";
+
     nur.url = "github:nix-community/NUR";
 
     nix-index.url = "github:Mic92/nix-index-database";
