@@ -28,7 +28,6 @@ let
             content = {
               type = "luks";
               name = "encrypted_boot";
-              keyfile = "/tmp/secret2.key";
               extraArgs = [ "--type luks1" ];
               content = {
                 type = "filesystem";
@@ -46,7 +45,6 @@ let
             content = {
               type = "luks";
               name = "encrypted_nix";
-              keyfile = "/tmp/secret.key";
               extraArgs = [ "--type luks2" ];
               content = {
                 type = "filesystem";
@@ -70,7 +68,6 @@ let
             content = {
               type = "luks";
               name = "encrypted_home_and_persist";
-              keyfile = "/tmp/secret.key";
               extraArgs = [ "--type luks2" ];
               content = {
                 type = "lvm";
