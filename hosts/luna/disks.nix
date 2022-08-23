@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, modulesPath, ... }:
+{ inputs, pkgs, ... }:
 let
   partitionsConfig = {
     type = "devices";
