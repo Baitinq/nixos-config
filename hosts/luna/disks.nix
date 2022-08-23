@@ -76,7 +76,7 @@ let
                 type = "lvm";
                 name = "pool";
                 lvs = {
-                  persist = {
+                  _persist = {
                     type = "lv";
                     size = "4G";
                     content = {
