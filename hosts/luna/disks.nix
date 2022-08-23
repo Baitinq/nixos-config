@@ -3,7 +3,7 @@ let
   partitionsConfig = {
     type = "devices";
     content = {
-      "disk/by-id/mmc-AGND3R_0x48d44fdc" = {
+      "disk/by-path/platform-80860F14:00" = {
         type = "table";
         format = "gpt";
         partitions = [
@@ -58,7 +58,7 @@ let
 
         ];
       };
-      "disk/by-id/usb-Generic_STORAGE_DEVICE_000000000208-0:0" = {
+      "disk/by-path/pci-0000:00:14.0-usb-0:2.3:1.0-scsi-0:0:0:0" = {
         type = "table";
         format = "gpt";
         partitions = [
