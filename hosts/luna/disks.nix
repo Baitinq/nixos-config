@@ -1,4 +1,106 @@
-{ config, lib, inputs, pkgs, modulesPath, ... }:
+{ inputs, pkgs, ... }:
+let
+  partitionsConfig = {
+    type = "devices";
+    content = {
+      "disk/by-path/platform-80860F14:00" = {
+        type = "table";
+        format = "gpt";
+        partitions = [
+          {
+            type = "partition";
+            part-type = "ESP";
+            label = "efi";
+            start = "0";
+            end = "64M";
+            fs-type = "fat32";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot/esp";
+            };
+          }
+          {
+            type = "partition";
+            start = "64M";
+            end = "264M";
+            part-type = "primary";
+            label = "boot";
+            content = {
+              type = "luks";
+              name = "encrypted_boot";
+              extraArgs = [ "--type luks1" ];
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/boot";
+              };
+            };
+          }
+          {
+            type = "partition";
+            start = "264M";
+            end = "100%";
+            part-type = "primary";
+            label = "nix";
+            content = {
+              type = "luks";
+              name = "encrypted_nix";
+              extraArgs = [ "--type luks2" ];
+              content = {
+                type = "filesystem";
+                format = "btrfs";
+                mountpoint = "/nix";
+              };
+            };
+          }
+        ];
+      };
+      "disk/by-path/pci-0000:00:14.0-usb-0:2.3:1.0-scsi-0:0:0:0" = {
+        type = "table";
+        format = "gpt";
+        partitions = [
+          {
+            type = "partition";
+            part-type = "primary";
+            label = "home_and_persist";
+            start = "0";
+            end = "100%";
+            content = {
+              type = "luks";
+              name = "encrypted_home_and_persist";
+              extraArgs = [ "--type luks2" ];
+              content = {
+                type = "lvm";
+                name = "pool";
+                lvs = {
+                  _persist = {
+                    type = "lv";
+                    size = "4G";
+                    content = {
+                      type = "filesystem";
+                      format = "btrfs";
+                      mountpoint = "/persist";
+                    };
+                  };
+                  home = {
+                    type = "lv";
+                    size = "100%FREE";
+                    content = {
+                      type = "filesystem";
+                      format = "btrfs";
+                      mountpoint = "/home";
+                    };
+                  };
+                };
+              };
+            };
+          }
+        ];
+      };
+    };
+  };
+in
 {
   fileSystems."/" = {
     device = "none";
@@ -50,4 +152,10 @@
 
   zramSwap.enable = true;
 
+
+  environment.systemPackages = with pkgs;[
+    parted
+    (pkgs.writeScriptBin "disko-create" (inputs.disko.lib.create partitionsConfig))
+    (pkgs.writeScriptBin "disko-mount" (inputs.disko.lib.mount partitionsConfig))
+  ];
 }
