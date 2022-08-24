@@ -10,6 +10,7 @@ let
           {
             type = "partition";
             part-type = "ESP";
+            label = "efi";
             start = "0";
             end = "64M";
             fs-type = "fat32";
@@ -21,10 +22,10 @@ let
           }
           {
             type = "partition";
-            # leave space for the grub aka BIOS boot
             start = "64M";
             end = "264M";
             part-type = "primary";
+            label = "boot";
             content = {
               type = "luks";
               name = "encrypted_boot";
@@ -38,10 +39,10 @@ let
           }
           {
             type = "partition";
-            # leave space for the grub aka BIOS boot
             start = "264M";
             end = "100%";
             part-type = "primary";
+            label = "nix";
             content = {
               type = "luks";
               name = "encrypted_nix";
@@ -53,7 +54,6 @@ let
               };
             };
           }
-
         ];
       };
       "disk/by-path/pci-0000:00:14.0-usb-0:2.3:1.0-scsi-0:0:0:0" = {
@@ -63,6 +63,7 @@ let
           {
             type = "partition";
             part-type = "primary";
+            label = "home_and_persist";
             start = "0";
             end = "100%";
             content = {
