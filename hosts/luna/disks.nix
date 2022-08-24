@@ -9,8 +9,8 @@ let
         partitions = [
           {
             type = "partition";
-            part-type = "ESP";
-            label = "efi";
+            part-label = "efi";
+            flags = [ "esp" ];
             start = "0";
             end = "64M";
             fs-type = "fat32";
@@ -24,8 +24,7 @@ let
             type = "partition";
             start = "64M";
             end = "264M";
-            part-type = "primary";
-            label = "boot";
+            part-label = "boot";
             content = {
               type = "luks";
               name = "encrypted_boot";
@@ -41,8 +40,7 @@ let
             type = "partition";
             start = "264M";
             end = "100%";
-            part-type = "primary";
-            label = "nix";
+            part-label = "nix";
             content = {
               type = "luks";
               name = "encrypted_nix";
@@ -62,8 +60,7 @@ let
         partitions = [
           {
             type = "partition";
-            part-type = "primary";
-            label = "home_and_persist";
+            part-label = "home_and_persist";
             start = "0";
             end = "100%";
             content = {
