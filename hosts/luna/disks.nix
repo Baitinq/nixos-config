@@ -160,7 +160,7 @@ in
 
   options.disko-create = with lib; mkOption {
     type = types.package;
-    default = pkgs.buildEnv {
+    default = pkgs.symlinkJoin {
       name = "disko-create";
       paths = [ (pkgs.writeScriptBin "disko-create" (inputs.disko.lib.create partitionsConfig)) pkgs.parted ];
     };
@@ -168,7 +168,7 @@ in
 
   options.disko-mount = with lib; mkOption {
     type = types.package;
-    default = pkgs.buildEnv {
+    default = pkgs.symlinkJoin {
       name = "disko-mount";
       paths = [ (pkgs.writeScriptBin "disko-mount" (inputs.disko.lib.mount partitionsConfig)) pkgs.parted ];
     };
