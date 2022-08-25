@@ -9,6 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hardware.url = "github:NixOS/nixos-hardware";
+
     impermanence.url = "github:nix-community/impermanence";
 
     disko.url = "github:nix-community/disko";
