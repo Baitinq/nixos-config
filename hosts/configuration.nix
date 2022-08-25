@@ -103,6 +103,7 @@
     pciutils
     gnupg
     comma
+    xclip
   ];
 
   environment.defaultPackages = [ ];
