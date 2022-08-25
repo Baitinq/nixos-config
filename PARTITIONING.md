@@ -9,6 +9,12 @@
 
 ## TUTORIAL ## 
 
+# New method
+```
+nix run .#nixosConfigurations.HOST.config.disko-create
+nix run .#nixosConfigurations.HOST.config.disko-mount
+```
+
 # Create and Format 64M EFI Partition
 mkfs.fat -F 32 /dev/$EFIPARTITION
 
