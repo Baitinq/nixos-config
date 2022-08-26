@@ -157,7 +157,6 @@
   };
 
   nix = {
-    settings.auto-optimise-store = true;
     gc = {
       automatic = true;
       dates = "daily";
@@ -166,6 +165,7 @@
     package = pkgs.nixFlakes;
     settings = {
       experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+      auto-optimise-store = true;
       max-jobs = "auto";
       cores = 0;
     };
