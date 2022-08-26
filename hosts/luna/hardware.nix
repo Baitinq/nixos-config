@@ -12,6 +12,7 @@ in
       availableKernelModules = [ "xhci_pci" "usb_storage" "sd_mod" "sdhci_acpi" "aesni_intel" "cryptd" ];
       kernelModules = [ "i915" ];
     };
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "kvm_intel" ];
     extraModulePackages = [ ];
     kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off" ];
