@@ -164,8 +164,8 @@
       options = "-d";
     };
     package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes ca-derivations";
     settings = {
+      experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
       max-jobs = "auto";
       cores = 0;
     };
