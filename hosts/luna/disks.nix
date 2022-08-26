@@ -158,19 +158,19 @@ in
     ];
   };
 
-  options.disko-create = with lib; mkOption {
+  options.disko-create = with lib; mkOption rec {
     type = types.package;
     default = pkgs.symlinkJoin {
       name = "disko-create";
-      paths = [ (pkgs.writeScriptBin "disko-create" (inputs.disko.lib.create partitionsConfig)) pkgs.parted ];
+      paths = [ (pkgs.writeScriptBin default.name (inputs.disko.lib.create partitionsConfig)) pkgs.parted ];
     };
   };
 
-  options.disko-mount = with lib; mkOption {
+  options.disko-mount = with lib; mkOption rec {
     type = types.package;
     default = pkgs.symlinkJoin {
       name = "disko-mount";
-      paths = [ (pkgs.writeScriptBin "disko-mount" (inputs.disko.lib.mount partitionsConfig)) pkgs.parted ];
+      paths = [ (pkgs.writeScriptBin default.name (inputs.disko.lib.mount partitionsConfig)) pkgs.parted ];
     };
   };
 
