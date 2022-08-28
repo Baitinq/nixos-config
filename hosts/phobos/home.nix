@@ -5,7 +5,6 @@ in
 {
   home.packages = with pkgs; [
     minecraft
-    jetbrains.idea-community
     calibre
     kcc
   ] ++
