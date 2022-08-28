@@ -1,5 +1,5 @@
 {
-  description = "My NixOS configuration";
+  description = "My Nix(\"OS\" or \"\") configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -28,6 +28,14 @@
   outputs = inputs @ { self, nixpkgs, home-manager, ... }:
     {
       nixosConfigurations = import ./hosts {
+        isNixOS = true;
+        inherit (nixpkgs) lib;
+        inherit inputs nixpkgs home-manager;
+      };
+
+      homeConfigurations = import ./hosts {
+        isNixOS = false;
+        #no COde duplication here: TODO
         inherit (nixpkgs) lib;
         inherit inputs nixpkgs home-manager;
       };
