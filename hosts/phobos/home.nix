@@ -7,10 +7,10 @@ in
     minecraft
     calibre
     kcc
+    trackma
   ] ++
   (with pkgs.custom; [
     adl
-    trackma
     kindlegen
     manga-cli
     mov-cli

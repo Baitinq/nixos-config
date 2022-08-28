@@ -5,12 +5,12 @@ in
 {
   home.packages = with pkgs; [
     xorg.xmodmap
+    trackma
     #calibre
     #kcc
   ] ++
   (with pkgs.custom; [
     adl
-    trackma
     #kindlegen
     manga-cli
     mov-cli

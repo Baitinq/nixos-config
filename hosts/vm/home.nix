@@ -4,10 +4,10 @@ let
 in
 {
   home.packages = with pkgs; [
+    trackma
   ] ++
   (with pkgs.custom; [
     adl
-    trackma
   ]);
 
   xdg.configFile = {
