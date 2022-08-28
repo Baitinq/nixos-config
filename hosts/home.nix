@@ -28,6 +28,7 @@ in
       polkit_gnome
       nixpkgs-fmt
       virt-manager
+      xmonadctl
       xdotool #needed for xmobar clickable workspaces
       xlockmore
       arandr
@@ -35,7 +36,6 @@ in
     (with pkgs.custom; [
       smart-wallpaper
       dwmbar
-      xmonadctl
       lemacs
     ]);
   };
