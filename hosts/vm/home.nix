@@ -5,9 +5,9 @@ in
 {
   home.packages = with pkgs; [
     trackma
+    adl
   ] ++
   (with pkgs.custom; [
-    adl
   ]);
 
   xdg.configFile = {

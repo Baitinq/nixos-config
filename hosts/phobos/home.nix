@@ -8,9 +8,9 @@ in
     calibre
     kcc
     trackma
+    adl
   ] ++
   (with pkgs.custom; [
-    adl
     kindlegen
     manga-cli
     mov-cli
