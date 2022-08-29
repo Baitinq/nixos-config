@@ -86,6 +86,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     (uutils-coreutils.override { prefix = ""; })
+    dash
     lm_sensors
     pulseaudio # used for tools
     python
@@ -107,6 +108,8 @@
   ];
 
   environment.defaultPackages = [ ];
+
+  environment.binsh = "${pkgs.dash}/bin/dash";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
