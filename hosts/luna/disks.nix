@@ -1,102 +1,56 @@
 { inputs, lib, config, pkgs, ... }:
 let
-  partitionsConfig = {
-    type = "devices";
-    content = {
-      "disk/by-path/platform-80860F14:00" = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            type = "partition";
-            part-label = "efi";
-            flags = [ "esp" ];
-            start = "0";
-            end = "64M";
-            fs-type = "fat32";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot/esp";
-            };
-          }
-          {
-            type = "partition";
-            start = "64M";
-            end = "264M";
-            part-label = "boot";
-            content = {
-              type = "luks";
-              name = "encrypted_boot";
-              extraArgs = [ "--type luks1" ];
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/boot";
-              };
-            };
-          }
-          {
-            type = "partition";
-            start = "264M";
-            end = "100%";
-            part-label = "nix";
-            content = {
-              type = "luks";
-              name = "encrypted_nix";
-              extraArgs = [ "--type luks2" ];
-              content = {
-                type = "filesystem";
-                format = "btrfs";
-                mountpoint = "/nix";
-              };
-            };
-          }
-        ];
-      };
-      "disk/by-path/pci-0000:00:14.0-usb-0:2.3:1.0-scsi-0:0:0:0" = {
-        type = "table";
-        format = "gpt";
-        partitions = [
-          {
-            type = "partition";
-            part-label = "home_and_persist";
-            start = "0";
-            end = "100%";
-            content = {
-              type = "luks";
-              name = "encrypted_home_and_persist";
-              extraArgs = [ "--type luks2" ];
-              content = {
-                type = "lvm";
-                name = "pool";
-                lvs = {
-                  _persist = {
-                    type = "lv";
-                    size = "4G";
-                    content = {
-                      type = "filesystem";
-                      format = "btrfs";
-                      mountpoint = "/persist";
-                    };
-                  };
-                  home = {
-                    type = "lv";
-                    size = "100%FREE";
-                    content = {
-                      type = "filesystem";
-                      format = "btrfs";
-                      mountpoint = "/home";
-                    };
-                  };
-                };
-              };
-            };
-          }
-        ];
-      };
-    };
-  };
+  partitionsCreateScript = ''
+    # TODO: New cryptsetup open syntax
+    MMC="/dev/disk/by-id/mmc-AGND3R_0x48d44fdc"
+    parted -s "''${MMC}" mklabel gpt
+    parted -s "''${MMC}" mkpart "efi" fat32 1024KiB 64M
+    parted -s "''${MMC}" set 1 esp on
+    udevadm trigger --subsystem-match=block; udevadm settle
+    mkfs.vfat "''${MMC}"-part1
+    parted -s -a optimal "''${MMC}" mkpart  "boot" 64M 264M
+    udevadm trigger --subsystem-match=block; udevadm settle
+    cryptsetup -q luksFormat "''${MMC}"-part2  --type luks1
+    cryptsetup luksOpen "''${MMC}"-part2 encrypted_boot
+    mkfs.ext4 /dev/mapper/encrypted_boot
+    cryptsetup close encrypted_boot
+    parted -s -a optimal "''${MMC}" mkpart "nix" 264M 100%
+    udevadm trigger --subsystem-match=block; udevadm settle
+    cryptsetup -q luksFormat "''${MMC}"-part3  --type luks2
+    cryptsetup luksOpen "''${MMC}"-part3 encrypted_nix
+    mkfs.btrfs -f /dev/mapper/encrypted_nix
+    cryptsetup close encrypted_nix
+
+    SD="/dev/disk/by-id/usb-Generic_STORAGE_DEVICE_000000000208-0:0"
+    parted -s "''${SD}" mklabel gpt
+    parted -s -a optimal "''${SD}" mkpart "home_and_persist" 1024KiB 100%
+    udevadm trigger --subsystem-match=block; udevadm settle
+    cryptsetup -q luksFormat "''${SD}"-part1  --type luks2
+    cryptsetup luksOpen "''${SD}"-part1 encrypted_home_and_persist
+    pvcreate /dev/mapper/encrypted_home_and_persist
+    vgcreate encrypted_home_and_persist_pool /dev/mapper/encrypted_home_and_persist
+    lvcreate -L 4G -n persist encrypted_home_and_persist_pool
+    mkfs.btrfs -f /dev/mapper/encrypted_home_and_persist_pool-persist
+    lvcreate -l 100%FREE -n home encrypted_home_and_persist_pool
+    mkfs.btrfs -f /dev/mapper/encrypted_home_and_persist_pool-home
+    vgchange -a n encrypted_home_and_persist_pool
+    cryptsetup close encrypted_home_and_persist
+  '';
+  partitionsMountScript = ''
+    mount -t tmpfs none /mnt
+    mkdir -p /mnt/{boot,nix,persist,home}
+    
+    cryptsetup luksOpen /dev/disk/by-partlabel/boot encrypted_boot
+    mount /dev/mapper/encrypted_boot /mnt/boot
+    mkdir -p /mnt/boot/efi
+    mount /dev/disk/by-partlabel/efi /mnt/boot/efi
+    cryptsetup luksOpen /dev/disk/by-partlabel/nix encrypted_nix
+    mount -o compress-force=zstd,noatime /dev/mapper/encrypted_nix /mnt/nix
+    cryptsetup luksOpen /dev/disk/by-partlabel/home_and_persist encrypted_home_and_persist
+    vgchange -ay encrypted_home_and_persist_pool
+    mount -o compress-force=zstd /dev/mapper/encrypted_home_and_persist_pool-home /mnt/home
+    mount -o compress-force=zstd,noatime /dev/mapper/encrypted_home_and_persist_pool-persist /mnt/persist
+  '';
 in
 {
   config = {
@@ -107,42 +61,42 @@ in
     };
 
     boot.initrd.luks.devices."encrypted_boot" = {
-      device = "/dev/disk/by-uuid/4f5ba100-5c69-49ce-b0cf-2f219a5e9e51";
+      device = "/dev/disk/by-partlabel/boot";
       preLVM = true;
     };
 
     fileSystems."/boot" = {
       device = "/dev/mapper/encrypted_boot";
-      fsType = "vfat";
+      fsType = "ext4";
     };
 
     fileSystems."/boot/efi" = {
-      device = "/dev/disk/by-uuid/BD51-1431";
+      device = "/dev/disk/by-partlabel/efi";
       fsType = "vfat";
     };
 
-    boot.initrd.luks.devices."encrypted_nix".device = "/dev/disk/by-uuid/596e43d3-ccda-4f06-bce9-58d6a8c0dd79";
+    boot.initrd.luks.devices."encrypted_nix".device = "/dev/disk/by-partlabel/nix";
 
     fileSystems."/nix" = {
       device = "/dev/mapper/encrypted_nix";
       fsType = "btrfs";
       neededForBoot = true;
-      options = [ "subvol=nix" "compress-force=zstd" "noatime" ];
+      options = [ "compress-force=zstd" "noatime" ];
     };
 
-    boot.initrd.luks.devices."encrypted_home_and_persist".device = "/dev/disk/by-uuid/47a8ddde-1237-4a0f-84c4-f17fbd22ea3f";
+    boot.initrd.luks.devices."encrypted_home_and_persist".device = "/dev/disk/by-partlabel/home_and_persist";
 
     fileSystems."/persist" = {
-      device = "/dev/mapper/encrypted_home_and_persist";
+      device = "/dev/mapper/encrypted_home_and_persist_pool-persist";
       fsType = "btrfs";
       neededForBoot = true;
-      options = [ "subvol=persist" "compress-force=zstd" "noatime" ];
+      options = [ "compress-force=zstd" "noatime" ];
     };
 
     fileSystems."/home" = {
-      device = "/dev/mapper/encrypted_home_and_persist";
+      device = "/dev/mapper/encrypted_home_and_persist_pool-home";
       fsType = "btrfs";
-      options = [ "subvol=home" "compress-force=zstd" ];
+      options = [ "compress-force=zstd" ];
     };
 
     services.btrfs.autoScrub.enable = true;
@@ -153,24 +107,24 @@ in
 
 
     environment.systemPackages = [
-      config.disko-create
-      config.disko-mount
+      config.disks-create
+      config.disks-mount
     ];
   };
 
-  options.disko-create = with lib; mkOption rec {
+  options.disks-create = with lib; mkOption rec {
     type = types.package;
     default = pkgs.symlinkJoin {
-      name = "disko-create";
-      paths = [ (pkgs.writeScriptBin default.name (inputs.disko.lib.create partitionsConfig)) pkgs.parted ];
+      name = "disks-create";
+      paths = [ (pkgs.writeScriptBin default.name partitionsCreateScript) pkgs.parted ];
     };
   };
 
-  options.disko-mount = with lib; mkOption rec {
+  options.disks-mount = with lib; mkOption rec {
     type = types.package;
     default = pkgs.symlinkJoin {
-      name = "disko-mount";
-      paths = [ (pkgs.writeScriptBin default.name (inputs.disko.lib.mount partitionsConfig)) pkgs.parted ];
+      name = "disks-mount";
+      paths = [ (pkgs.writeScriptBin default.name partitionsMountScript) pkgs.parted ];
     };
   };
 

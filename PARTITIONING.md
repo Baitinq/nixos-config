@@ -11,8 +11,8 @@
 
 # New method
 ```
-nix run .#nixosConfigurations.HOST.config.disko-create
-nix run .#nixosConfigurations.HOST.config.disko-mount
+nix run .#nixosConfigurations.HOST.config.disks-create
+nix run .#nixosConfigurations.HOST.config.disks-mount
 ```
 
 # Create and Format 64M EFI Partition
