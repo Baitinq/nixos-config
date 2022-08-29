@@ -38,7 +38,10 @@ let
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = extraArgs;
               home-manager.users.${user} = {
-                imports = [ ./home.nix ] ++ [ (import ./${ hostname }/home.nix) ];
+                imports = [
+                  ./home.nix
+                  ./${ hostname }/home.nix
+                ];
               };
             }
           ];
@@ -48,7 +51,10 @@ let
         {
           inherit pkgs;
           extraSpecialArgs = extraArgs;
-          modules = [ ./home.nix ] ++ [ (import ./${ hostname }/home.nix) ];
+          modules = [
+            ./home.nix
+            ./${ hostname }/home.nix
+          ];
         };
 in
   /*
