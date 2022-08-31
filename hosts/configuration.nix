@@ -160,6 +160,7 @@
   };
 
   nix = {
+    registry.nixpkgs.flake = inputs.nixpkgs;
     gc = {
       automatic = true;
       dates = "daily";
