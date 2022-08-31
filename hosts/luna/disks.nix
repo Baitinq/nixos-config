@@ -116,7 +116,7 @@ in
     type = types.package;
     default = pkgs.symlinkJoin {
       name = "disks-create";
-      paths = [ (pkgs.writeScriptBin default.name partitionsCreateScript) pkgs.parted ];
+      paths = [ (pkgs.writeScriptBin default.name partitionsCreateScript) pkgs.parted pkgs.cryptsetup pkgs.lvm2 pkgs.dosfstools pkgs.e2fsprogs pkgs.btrfs-progs ];
     };
   };
 
@@ -124,7 +124,7 @@ in
     type = types.package;
     default = pkgs.symlinkJoin {
       name = "disks-mount";
-      paths = [ (pkgs.writeScriptBin default.name partitionsMountScript) pkgs.parted ];
+      paths = [ (pkgs.writeScriptBin default.name partitionsMountScript) pkgs.parted pkgs.cryptsetup pkgs.lvm2 ];
     };
   };
 
