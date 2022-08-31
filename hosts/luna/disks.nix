@@ -11,13 +11,13 @@ let
     parted -s -a optimal "''${MMC}" mkpart  "boot" 64M 264M
     udevadm trigger --subsystem-match=block; udevadm settle
     cryptsetup -q luksFormat "''${MMC}"-part2  --type luks1
-    cryptsetup luksOpen "''${MMC}"-part2 encrypted_boot
+    cryptsetup open --type luks "''${MMC}"-part2 encrypted_boot
     mkfs.ext4 /dev/mapper/encrypted_boot
     cryptsetup close encrypted_boot
     parted -s -a optimal "''${MMC}" mkpart "nix" 264M 100%
     udevadm trigger --subsystem-match=block; udevadm settle
     cryptsetup -q luksFormat "''${MMC}"-part3  --type luks2
-    cryptsetup luksOpen "''${MMC}"-part3 encrypted_nix
+    cryptsetup open --type luks "''${MMC}"-part3 encrypted_nix
     mkfs.btrfs -f /dev/mapper/encrypted_nix
     cryptsetup close encrypted_nix
 
@@ -26,7 +26,7 @@ let
     parted -s -a optimal "''${SD}" mkpart "home_and_persist" 1024KiB 100%
     udevadm trigger --subsystem-match=block; udevadm settle
     cryptsetup -q luksFormat "''${SD}"-part1  --type luks2
-    cryptsetup luksOpen "''${SD}"-part1 encrypted_home_and_persist
+    cryptsetup open --type luks "''${SD}"-part1 encrypted_home_and_persist
     pvcreate /dev/mapper/encrypted_home_and_persist
     vgcreate encrypted_home_and_persist_pool /dev/mapper/encrypted_home_and_persist
     lvcreate -L 4G -n persist encrypted_home_and_persist_pool
@@ -40,13 +40,13 @@ let
     mount -t tmpfs none /mnt
     mkdir -p /mnt/{boot,nix,persist,home}
     
-    cryptsetup luksOpen /dev/disk/by-partlabel/boot encrypted_boot
+    cryptsetup open --type luks /dev/disk/by-partlabel/boot encrypted_boot
     mount /dev/mapper/encrypted_boot /mnt/boot
     mkdir -p /mnt/boot/efi
     mount /dev/disk/by-partlabel/efi /mnt/boot/efi
-    cryptsetup luksOpen /dev/disk/by-partlabel/nix encrypted_nix
+    cryptsetup open --type luks /dev/disk/by-partlabel/nix encrypted_nix
     mount -o compress-force=zstd,noatime /dev/mapper/encrypted_nix /mnt/nix
-    cryptsetup luksOpen /dev/disk/by-partlabel/home_and_persist encrypted_home_and_persist
+    cryptsetup open --type luks /dev/disk/by-partlabel/home_and_persist encrypted_home_and_persist
     vgchange -ay encrypted_home_and_persist_pool
     mount -o compress-force=zstd /dev/mapper/encrypted_home_and_persist_pool-home /mnt/home
     mount -o compress-force=zstd,noatime /dev/mapper/encrypted_home_and_persist_pool-persist /mnt/persist
