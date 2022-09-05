@@ -29,6 +29,7 @@
       timeout = 0;
     };
 
+    supportedFilesystems = [ "ntfs" ];
     cleanTmpDir = true;
   };
 
