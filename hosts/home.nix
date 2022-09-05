@@ -32,6 +32,7 @@ in
       xdotool #needed for xmobar clickable workspaces
       xlockmore
       arandr
+      jrnl
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
