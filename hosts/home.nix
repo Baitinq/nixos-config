@@ -33,6 +33,7 @@ in
       xlockmore
       arandr
       jrnl
+      todo-txt-cli
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
