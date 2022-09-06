@@ -122,6 +122,7 @@
         port = 2222;
       }];
     };
+    fwupd.enable = true;
   };
 
   programs = {
