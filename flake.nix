@@ -27,12 +27,25 @@
     {
       nixosConfigurations = import ./hosts {
         isNixOS = true;
+        extraModules = [ ];
+        isIso = false;
         inherit (nixpkgs) lib;
         inherit inputs nixpkgs home-manager;
       };
 
       homeConfigurations = import ./hosts {
         isNixOS = false;
+        extraModules = [ ];
+        isIso = false;
+        #no COde duplication here: TODO
+        inherit (nixpkgs) lib;
+        inherit inputs nixpkgs home-manager;
+      };
+
+      isoConfigurations = import ./hosts {
+        isNixOS = true;
+        extraModules = [ ];
+        isIso = true;
         #no COde duplication here: TODO
         inherit (nixpkgs) lib;
         inherit inputs nixpkgs home-manager;

@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, modulesPath, ... }:
+{ config, lib, inputs, pkgs, modulesPath, isIso, ... }:
 {
   fileSystems."/" = {
     device = "none";
@@ -33,7 +33,7 @@
 
   swapDevices = [ ];
 
-  services.btrfs.autoScrub.enable = true;
+  services.btrfs.autoScrub.enable = if !isIso then true else false;
 
   zramSwap.enable = true;
 
