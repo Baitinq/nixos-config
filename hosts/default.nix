@@ -1,4 +1,4 @@
-{ lib, inputs, isNixOS, nixpkgs, home-manager, ... }:
+{ lib, inputs, extraModules, isNixOS, isIso, nixpkgs, home-manager, ... }:
 let
   user = "baitinq";
 
@@ -10,18 +10,22 @@ let
     { hostname = "vm"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
   ];
 
-  mkHost = { hostname, system, timezone, location }: isNixOS:
+  mkHost = { hostname, system, timezone, location }: extraModules: isNixOS: isIso:
     let
       pkgs = import nixpkgs {
         inherit system;
-        config.allowUnfree = true; # Allow proprietary software
+        config = {
+          allowUnfree = true;
+          allowBroken = true;
+        };
         overlays = [
           inputs.nur.overlay
           (import ../packages)
           (import ../overlays)
         ];
       };
-      extraArgs = { inherit pkgs inputs user secrets hostname timezone location; };
+      extraArgs = { inherit pkgs inputs isIso user secrets hostname timezone location; };
+      extraSpecialModules = if isIso then extraModules ++ [ "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ] else extraModules;
     in
     if isNixOS
     then
@@ -44,7 +48,7 @@ let
                 ];
               };
             }
-          ];
+          ] ++ extraSpecialModules;
         }
     else
       home-manager.lib.homeManagerConfiguration
@@ -62,4 +66,4 @@ in
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map ({ hostname, system, timezone, location }: { name = hostname; value = mkHost { inherit hostname system timezone location; } isNixOS; }) hosts)
+builtins.listToAttrs (map ({ hostname, system, timezone, location }: { name = hostname; value = mkHost { inherit hostname system timezone location; } extraModules isNixOS isIso; }) hosts)

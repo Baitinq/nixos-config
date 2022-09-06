@@ -28,3 +28,9 @@ nix build .#homeManagerConfigurations.HOST.activationPackage
 ```
 home-manager switch --flake .#HOST
 ```
+
+# ISO
+## Building
+```
+nix build .#nixosConfigurations.HOST.config.system.build.isoImage
+```
