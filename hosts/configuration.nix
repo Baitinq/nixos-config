@@ -122,6 +122,7 @@
         port = 2222;
       }];
     };
+    irqbalance.enable = true;
     fwupd.enable = true;
   };
 
