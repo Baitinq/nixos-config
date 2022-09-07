@@ -4,15 +4,7 @@
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
-    virtualbox = {
-      host = {
-        enable = true;
-      };
-      guest = {
-        enable = true;
-        x11 = true;
-      };
-    };
+    virtualbox.host.enable = true;
   };
 
   users.users.${user}.extraGroups = [ "docker" "libvirtd" ];
