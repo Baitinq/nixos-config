@@ -10,7 +10,7 @@
     fsType = "vfat";
   };
 
-  boot.initrd.luks.devices."encrypted_root".device = "/dev/disk/by-uuid/095dc267-9281-4535-9491-b3fcded614a8";
+  boot.initrd.luks.devices."encrypted_root".device = "/dev/disk/by-uuid/6db0e43d-f73f-4cf0-81f6-9391f9d03ca0";
 
   fileSystems."/persist" = {
     device = "/dev/mapper/encrypted_root";
