@@ -124,7 +124,10 @@
   };
 
   programs = {
-    ssh.askPassword = "";
+    ssh = {
+      enableAskPassword = false;
+      forwardX11 = true;
+    };
 
     neovim = {
       enable = true;
