@@ -56,7 +56,7 @@
 
   users.users.root.hashedPassword = secrets.root.hashed_password;
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.baitinq = {
+  users.users.${user} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
     hashedPassword = secrets.baitinq.hashed_password;
