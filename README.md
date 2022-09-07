@@ -32,5 +32,5 @@ home-manager switch --flake .#HOST
 # ISO
 ## Building
 ```
-nix build .#nixosConfigurations.HOST.config.system.build.isoImage
+nix build .#isoConfigurations.HOST.config.system.build.isoImage
 ```
