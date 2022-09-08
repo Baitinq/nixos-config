@@ -1,14 +1,15 @@
-{ lib, inputs, extraModules, isNixOS, isIso, user, nixpkgs, home-manager, ... }:
+{ lib, inputs, extraModules, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
 let
   secrets = import ../secrets;
 
+  #TODO: Better implementation of hardare (not having to declare here but just in command)
   hosts = [
-    { hostname = "phobos"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
-    { hostname = "luna"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
-    { hostname = "vm"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "phobos"; hardware = "laptop"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "luna"; hardware = "chromebook"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "vm"; hardware = "virtualbox"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
   ];
 
-  mkHost = { hostname, system, timezone, location }: extraModules: isNixOS: isIso:
+  mkHost = { host, hardware, system, timezone, location }: extraModules: isNixOS: isIso: isHardware:
     let
       pkgs = import nixpkgs {
         inherit system;
@@ -22,8 +23,10 @@ let
           (import ../overlays)
         ];
       };
-      extraArgs = { inherit pkgs inputs isIso user secrets hostname timezone location; };
+      extraArgs = { inherit pkgs inputs isIso isHardware user secrets timezone location; hostname = host; };
+      #TODO: FIXME
       extraSpecialModules = if isIso then extraModules ++ [ "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ] else extraModules;
+      megaSpecialModules = if isHardware then extraSpecialModules ++ [ ./${ host}/hardware/${hardware} ] else extraSpecialModules;
     in
     if isNixOS
     then
@@ -33,7 +36,7 @@ let
           specialArgs = extraArgs;
           modules = [
             ./configuration.nix
-            ./${hostname}
+            ./${host}
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -42,11 +45,11 @@ let
               home-manager.users.${user} = {
                 imports = [
                   ./home.nix
-                  ./${ hostname }/home.nix
+                  ./${ host }/home.nix
                 ];
               };
             }
-          ] ++ extraSpecialModules;
+          ] ++ megaSpecialModules;
         }
     else
       home-manager.lib.homeManagerConfiguration
@@ -55,7 +58,7 @@ let
           extraSpecialArgs = extraArgs;
           modules = [
             ./home.nix
-            ./${ hostname }/home.nix
+            ./${ host }/home.nix
           ];
         };
 in
@@ -64,4 +67,4 @@ in
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map ({ hostname, system, timezone, location }: { name = hostname; value = mkHost { inherit hostname system timezone location; } extraModules isNixOS isIso; }) hosts)
+builtins.listToAttrs (map ({ host, hardware, system, timezone, location }: { name = host; value = mkHost { inherit host hardware system timezone location; } extraModules isNixOS isIso isHardware; }) hosts)

@@ -1,8 +1,6 @@
 { config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
 
   imports = [
-    ./hardware.nix
-
     ../../modules/bluetooth
   ];
 
