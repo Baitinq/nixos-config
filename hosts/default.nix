@@ -1,7 +1,5 @@
-{ lib, inputs, extraModules, isNixOS, isIso, nixpkgs, home-manager, ... }:
+{ lib, inputs, extraModules, isNixOS, isIso, user, nixpkgs, home-manager, ... }:
 let
-  user = "baitinq";
-
   secrets = import ../secrets;
 
   hosts = [

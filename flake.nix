@@ -24,13 +24,16 @@
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, ... }:
+    let
+      user = "baitinq";
+    in
     {
       nixosConfigurations = import ./hosts {
         isNixOS = true;
         extraModules = [ ];
         isIso = false;
         inherit (nixpkgs) lib;
-        inherit inputs nixpkgs home-manager;
+        inherit inputs user nixpkgs home-manager;
       };
 
       homeConfigurations = import ./hosts {
@@ -39,13 +42,14 @@
         isIso = false;
         #no COde duplication here: TODO
         inherit (nixpkgs) lib;
-        inherit inputs nixpkgs home-manager;
+        inherit inputs user nixpkgs home-manager;
       };
 
       isoConfigurations = import ./hosts {
         isNixOS = true;
         extraModules = [ ];
         isIso = true;
+        user = "nixos";
         #no COde duplication here: TODO
         inherit (nixpkgs) lib;
         inherit inputs nixpkgs home-manager;
