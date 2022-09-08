@@ -56,6 +56,17 @@ in
 {
   config = {
 
+    environment.persistence."/persist" = {
+      directories = [
+        "/var/log"
+        "/var/lib"
+      ];
+      files = [
+        "/etc/machine-id"
+        "/etc/nix/id_rsa"
+      ];
+    };
+
     fileSystems."/" = {
       device = "none";
       fsType = "tmpfs";

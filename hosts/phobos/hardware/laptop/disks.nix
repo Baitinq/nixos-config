@@ -1,5 +1,17 @@
 { config, lib, inputs, pkgs, modulesPath, isIso, ... }:
 {
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/log"
+      "/var/lib"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/nix/id_rsa"
+    ];
+  };
+
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
@@ -33,7 +45,7 @@
 
   swapDevices = [ ];
 
-  services.btrfs.autoScrub.enable = if !isIso then true else false;
+  services.btrfs.autoScrub.enable = true;
 
   zramSwap.enable = true;
 
