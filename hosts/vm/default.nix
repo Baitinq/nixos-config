@@ -1,8 +1,6 @@
 { config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
 
   imports = [
-    # Include the results of the hardware scan.
-    ./hardware.nix
   ];
 
   # Configure keymap in X11
