@@ -38,7 +38,7 @@
 
   networking = {
     hostName = hostname; # Define your hostname.
-    extraHosts = builtins.readFile ../dotfiles/hosts;
+    extraHosts = builtins.readFile "${inputs.dotfiles}/hosts";
     nameservers = [ "9.9.9.9" ];
     firewall = {
       enable = true;
