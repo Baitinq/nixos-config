@@ -1,32 +1,33 @@
 { inputs, lib, config, pkgs, ... }:
 let
+  MMC = "/dev/disk/by-id/mmc-AGND3R_0x48d44fdc";
+  SD = "/dev/disk/by-id/usb-Generic_STORAGE_DEVICE_000000000208-0:0";
+
   partitionsCreateScript = ''
-    # TODO: New cryptsetup open syntax
-    MMC="/dev/disk/by-id/mmc-AGND3R_0x48d44fdc"
-    parted -s "''${MMC}" mklabel gpt
-    parted -s "''${MMC}" mkpart "efi" fat32 1024KiB 64M
-    parted -s "''${MMC}" set 1 esp on
+    parted -s "${MMC}" mklabel gpt
+    parted -s "${MMC}" mkpart "efi" fat32 1024KiB 64M
+    parted -s "${MMC}" set 1 esp on
+    parted -s -a optimal "${MMC}" mkpart  "boot" 64M 264M
+    parted -s -a optimal "${MMC}" mkpart "nix" 264M 100%
+
+    parted -s "${SD}" mklabel gpt
+    parted -s -a optimal "${SD}" mkpart "home_and_persist" 1024KiB 100%
+
     udevadm trigger --subsystem-match=block; udevadm settle
-    mkfs.vfat "''${MMC}"-part1
-    parted -s -a optimal "''${MMC}" mkpart  "boot" 64M 264M
-    udevadm trigger --subsystem-match=block; udevadm settle
-    cryptsetup -q luksFormat "''${MMC}"-part2  --type luks1
-    cryptsetup open --type luks "''${MMC}"-part2 encrypted_boot
+  '';
+  partitionsFormatScript = ''
+    mkfs.vfat "${MMC}"-part1
+    cryptsetup -q luksFormat "${MMC}"-part2  --type luks1
+    cryptsetup open --type luks "${MMC}"-part2 encrypted_boot
     mkfs.ext4 /dev/mapper/encrypted_boot
     cryptsetup close encrypted_boot
-    parted -s -a optimal "''${MMC}" mkpart "nix" 264M 100%
-    udevadm trigger --subsystem-match=block; udevadm settle
-    cryptsetup -q luksFormat "''${MMC}"-part3  --type luks2
-    cryptsetup open --type luks "''${MMC}"-part3 encrypted_nix
+    cryptsetup -q luksFormat "${MMC}"-part3  --type luks2
+    cryptsetup open --type luks "${MMC}"-part3 encrypted_nix
     mkfs.btrfs -f /dev/mapper/encrypted_nix
     cryptsetup close encrypted_nix
 
-    SD="/dev/disk/by-id/usb-Generic_STORAGE_DEVICE_000000000208-0:0"
-    parted -s "''${SD}" mklabel gpt
-    parted -s -a optimal "''${SD}" mkpart "home_and_persist" 1024KiB 100%
-    udevadm trigger --subsystem-match=block; udevadm settle
-    cryptsetup -q luksFormat "''${SD}"-part1  --type luks2
-    cryptsetup open --type luks "''${SD}"-part1 encrypted_home_and_persist
+    cryptsetup -q luksFormat "${SD}"-part1  --type luks2
+    cryptsetup open --type luks "${SD}"-part1 encrypted_home_and_persist
     pvcreate /dev/mapper/encrypted_home_and_persist
     vgcreate encrypted_home_and_persist_pool /dev/mapper/encrypted_home_and_persist
     lvcreate -L 4G -n persist encrypted_home_and_persist_pool
@@ -108,23 +109,32 @@ in
 
     environment.systemPackages = [
       config.disks-create
+      config.disks-format
       config.disks-mount
     ];
   };
 
   options.disks-create = with lib; mkOption rec {
     type = types.package;
-    default = pkgs.symlinkJoin {
+    default = with pkgs; symlinkJoin {
       name = "disks-create";
-      paths = [ (pkgs.writeScriptBin default.name partitionsCreateScript) pkgs.parted pkgs.cryptsetup pkgs.lvm2 pkgs.dosfstools pkgs.e2fsprogs pkgs.btrfs-progs ];
+      paths = [ (writeScriptBin default.name partitionsCreateScript) parted ];
+    };
+  };
+
+  options.disks-format = with lib; mkOption rec {
+    type = types.package;
+    default = with pkgs; symlinkJoin {
+      name = "disks-format";
+      paths = [ (writeScriptBin default.name partitionsFormatScript) cryptsetup lvm2 dosfstools e2fsprogs btrfs-progs ];
     };
   };
 
   options.disks-mount = with lib; mkOption rec {
     type = types.package;
-    default = pkgs.symlinkJoin {
+    default = with pkgs; symlinkJoin {
       name = "disks-mount";
-      paths = [ (pkgs.writeScriptBin default.name partitionsMountScript) pkgs.parted pkgs.cryptsetup pkgs.lvm2 ];
+      paths = [ (writeScriptBin default.name partitionsMountScript) cryptsetup lvm2 ];
     };
   };
 
