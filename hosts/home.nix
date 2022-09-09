@@ -1,7 +1,4 @@
 { config, lib, pkgs, inputs, user, hostname, secrets, location, ... }:
-let
-  dotfiles = ../dotfiles;
-in
 {
   imports = [ ];
 
@@ -45,12 +42,12 @@ in
   xsession.windowManager.xmonad = {
     enable = true;
     enableContribAndExtras = true;
-    config = dotfiles + "/xmonad.hs";
+    config = "${inputs.dotfiles}/xmonad.hs";
   };
 
   programs.xmobar = {
     enable = true;
-    extraConfig = builtins.readFile (dotfiles + "/xmobar.hs");
+    extraConfig = builtins.readFile "${inputs.dotfiles}/xmobar.hs";
   };
 
   home.sessionVariables = {
@@ -127,7 +124,7 @@ in
 
         doom-themes
       ];
-      extraConfig = builtins.readFile (dotfiles + "/.emacs");
+      extraConfig = builtins.readFile "${inputs.dotfiles}/.emacs";
     };
 
     firefox = {
@@ -154,8 +151,8 @@ in
 
     bash = {
       enable = true;
-      bashrcExtra = builtins.readFile (dotfiles + "/.bashrc");
-      profileExtra = builtins.readFile (dotfiles + "/.bash_profile");
+      bashrcExtra = builtins.readFile "${inputs.dotfiles}/.bashrc";
+      profileExtra = builtins.readFile "${inputs.dotfiles}/.bash_profile";
     };
 
     zsh = {
@@ -258,15 +255,15 @@ in
   };
 
   xdg = {
-    configFile."zathura/zathurarc".source = dotfiles + "/zathurarc";
-    configFile."dunst/dunstrc".source = dotfiles + "/dunstrc";
+    configFile."zathura/zathurarc".source = "${inputs.dotfiles}/zathurarc";
+    configFile."dunst/dunstrc".source = "${inputs.dotfiles}/dunstrc";
   };
 
   home.file = {
-    ".xinitrc".source = dotfiles + "/.xinitrc";
-    ".Xresources".source = dotfiles + "/.Xresources/";
+    ".xinitrc".source = "${inputs.dotfiles}/.xinitrc";
+    ".Xresources".source = "${inputs.dotfiles}/.Xresources";
 
-    ".scripts/".source = dotfiles + "/scripts/";
+    ".scripts/".source = "${inputs.dotfiles}/scripts/";
   };
 
   home.file = {

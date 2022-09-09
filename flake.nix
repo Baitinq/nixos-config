@@ -17,6 +17,11 @@
 
     nix-index.url = "github:Mic92/nix-index-database";
 
+    dotfiles = {
+      url = "path:./dotfiles";
+      flake = false;
+    };
+
     wallpapers = {
       url = "github:Baitinq/Wallpapers";
       flake = false;

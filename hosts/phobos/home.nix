@@ -1,7 +1,4 @@
 { config, lib, pkgs, inputs, user, hostname, location, secrets, ... }:
-let
-  dotfiles = ../../dotfiles;
-in
 {
   home.packages = with pkgs; [
     minecraft
@@ -47,8 +44,8 @@ in
     '';
 
     "sxhkd/sxhkdrc".text =
-      builtins.readFile (dotfiles + "/sxhkd/xmonad") +
-      builtins.readFile (dotfiles + "/sxhkd/base") +
+      builtins.readFile "${inputs.dotfiles}/sxhkd/xmonad" +
+      builtins.readFile "${inputs.dotfiles}/sxhkd/base" +
       ''
       
         #enter and leave game mode
