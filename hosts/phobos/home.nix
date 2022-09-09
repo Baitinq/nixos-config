@@ -6,7 +6,6 @@
     kcc
     trackma
     adl
-    element-desktop
   ] ++
   (with pkgs.custom; [
     kindlegen

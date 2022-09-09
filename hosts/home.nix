@@ -31,6 +31,7 @@
       arandr
       jrnl
       todo-txt-cli
+      element-desktop
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
