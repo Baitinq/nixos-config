@@ -75,7 +75,7 @@
 
     screen-locker = {
       enable = true;
-      lockCmd = "${pkgs.xlockmore}/bin/xlock -mode blank";
+      lockCmd = "${pkgs.xlockmore}/bin/xlock +resetsaver -dpmsoff 5 -mode blank";
       xautolock.enable = false;
     };
   };
