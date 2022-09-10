@@ -32,10 +32,10 @@
       jrnl
       todo-txt-cli
       element-desktop
+      dwmbar
     ] ++
     (with pkgs.custom; [
       smart-wallpaper
-      dwmbar
       lemacs
     ]);
   };
