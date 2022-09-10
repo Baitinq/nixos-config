@@ -33,6 +33,7 @@
       todo-txt-cli
       element-desktop
       dwmbar
+      manga-cli
     ] ++
     (with pkgs.custom; [
       smart-wallpaper

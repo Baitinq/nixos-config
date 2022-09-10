@@ -9,7 +9,6 @@
   ] ++
   (with pkgs.custom; [
     #kindlegen
-    manga-cli
     mov-cli
   ]);
 
