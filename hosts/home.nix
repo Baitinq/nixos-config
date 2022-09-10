@@ -35,9 +35,9 @@
       dwmbar
       manga-cli
       mov-cli
+      smart-wallpaper
     ] ++
     (with pkgs.custom; [
-      smart-wallpaper
       lemacs
     ]);
   };
