@@ -34,6 +34,7 @@
       element-desktop
       dwmbar
       manga-cli
+      mov-cli
     ] ++
     (with pkgs.custom; [
       smart-wallpaper

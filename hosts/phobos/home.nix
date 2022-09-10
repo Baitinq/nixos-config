@@ -9,7 +9,6 @@
   ] ++
   (with pkgs.custom; [
     kindlegen
-    mov-cli
   ]);
 
   programs.firefox.profiles.default.settings = {
