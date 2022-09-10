@@ -2,7 +2,6 @@ final: prev:
 {
   custom = {
     smart-wallpaper = prev.callPackage ./smart-wallpaper { };
-    dwmbar = prev.callPackage ./dwmbar { };
     adl = prev.callPackage ./adl { };
     kindlegen = prev.callPackage ./kindlegen { };
     manga-cli = prev.callPackage ./manga-cli { };
