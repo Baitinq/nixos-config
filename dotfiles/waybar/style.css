@@ -1,0 +1,58 @@
+* {
+	font-size: 12px;
+	font-family: JetBrainsMono;
+	border: none;
+	border-radius: 0;
+}
+
+window#waybar {
+	background: #222222;
+	color: #bbbbbb;
+}
+
+#clock,
+#battery,
+#backlight,
+#pulseaudio {
+	padding: 0 10px;
+	margin: 0 4px;
+}
+
+#window,
+#tags {
+	padding: 0 0;
+	margin: 0 0;
+}
+
+#tags button {
+	padding: 0 7px;
+	margin: 0;
+	color: #bbbbbb;
+}
+
+#tags button.occupied {
+	border-top: 4px solid #bbbbbb;
+	margin: 0;
+	padding: 0 7px;
+}
+
+#tags button.focused {
+	border-top: 0;
+	margin: 0;
+	padding: 0 7px;
+	color: #222222;
+	background: #bbbbbb;
+}
+
+#tags button:hover {
+	background: inherit;
+	color: inherit;
+	box-shadow: inherit;
+	text-shadow: inherit;
+}
+
+#battery.critical:not(.charging) {
+    background-color: darkred;
+    color: #ffffff;
+}
+

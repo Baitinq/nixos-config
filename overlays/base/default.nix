@@ -64,4 +64,14 @@ final: prev:
     ];
   });
 
+  river = prev.river.overrideAttrs (old: {
+    src = prev.fetchFromGitHub {
+      owner = "riverwm";
+      repo = "river";
+      rev = "c0e64829f0517f6512438cbf80ae27bd21986b47";
+      sha256 = "sha256-vvK9DjgChf32fkzFRT+eJhRb00YYwZJYO48+HwRyIkM=";
+      fetchSubmodules = true;
+    };
+  });
+
 }
