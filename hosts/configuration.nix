@@ -66,6 +66,8 @@
     TERMINAL = "st";
     EDITOR = "nvim";
     VISUAL = "nvim";
+
+    XKB_DEFAULT_LAYOUT = "gb";
   };
 
   environment.sessionVariables = rec {
@@ -110,6 +112,11 @@
   # started in user sessions.
   # programs.mtr.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+  };
+
   # List services that you want to enable:
   services = {
     openssh = {
@@ -119,6 +126,7 @@
         port = 2222;
       }];
     };
+    dbus.enable = true;
     irqbalance.enable = true;
     fwupd.enable = true;
   };

@@ -36,6 +36,12 @@
       manga-cli
       mov-cli
       smart-wallpaper
+      waybar
+      wl-clipboard
+      sway
+      swaybg
+      river
+      wlr-randr
     ] ++
     (with pkgs.custom; [
       lemacs
@@ -48,9 +54,11 @@
     config = "${inputs.dotfiles}/xmonad.hs";
   };
 
-  programs.xmobar = {
-    enable = true;
-    extraConfig = builtins.readFile "${inputs.dotfiles}/xmobar.hs";
+  programs = {
+    xmobar = {
+      enable = true;
+      extraConfig = builtins.readFile "${inputs.dotfiles}/xmobar.hs";
+    };
   };
 
   home.sessionVariables = {
@@ -258,6 +266,9 @@
   };
 
   xdg = {
+    configFile."sway/config".source = "${inputs.dotfiles}/sway_config";
+    configFile."river/".source = "${inputs.dotfiles}/river/";
+    configFile."waybar/".source = "${inputs.dotfiles}/waybar/";
     configFile."zathura/zathurarc".source = "${inputs.dotfiles}/zathurarc";
     configFile."dunst/dunstrc".source = "${inputs.dotfiles}/dunstrc";
   };
@@ -277,4 +288,5 @@
   xdg.userDirs.desktop = "$HOME/";
 
   home.stateVersion = "22.05";
+
 }
