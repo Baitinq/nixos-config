@@ -39,6 +39,8 @@
       waybar
       wl-clipboard
       sway
+      swayidle
+      swaylock
       swaybg
       river
       wlr-randr

@@ -12,6 +12,12 @@
 
 xrdb ~/.Xresources &
 swaybg -i ~/Images/Wallpapers/Day/wave.jpg &
+swayidle -w \
+        timeout 300 'swaylock -f -F -c 000000' \
+	timeout 400 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --off' \
+	resume 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --on' \
+        before-sleep 'swaylock -f -F -c 000000' &
+
 
 riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
