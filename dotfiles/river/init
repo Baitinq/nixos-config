@@ -12,7 +12,6 @@
 
 riverctl spawn "xrdb ~/.Xresources"
 riverctl spawn "xmodmap ~/.Xmodmap"
-riverctl spawn "swaybg -i ~/Images/Wallpapers/Day/wave.jpg"
 riverctl spawn "swayidle -w \
         timeout 300 'swaylock --clock --indicator -f -F -c 000000' \
 	timeout 400 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --off' \
@@ -26,6 +25,7 @@ riverctl spawn "dunst"
 #riverctl spawn "numlockx on"
 riverctl spawn "systemctl --user start graphical-session.target"
 riverctl spawn "sxhkd"
+riverctl spawn 'while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -l $LOCATION -r; done'
 riverctl spawn "waybar"
 
 riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
@@ -166,7 +166,7 @@ do
 done
 
 # Set background and border color
-#riverctl background-color 0x002b36
+riverctl background-color 0x000000
 riverctl border-color-focused 0x005577
 riverctl border-color-unfocused 0x444444
 
