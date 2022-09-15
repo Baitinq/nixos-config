@@ -40,7 +40,7 @@
       wl-clipboard
       sway
       swayidle
-      swaylock
+      swaylock-effects
       swaybg
       river
       wlr-randr
