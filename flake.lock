@@ -4,7 +4,7 @@
       "flake": false,
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-d+2hHgeW6ATP3FIiiDPFQcUrJ9VC9e++jbHx3Ovwuu0=",
+        "narHash": "sha256-VKTfwJpoFDaG0YlgxYj8oGpldU0WNFFL2tRggXedvjY=",
         "path": "./dotfiles",
         "type": "path"
       },
