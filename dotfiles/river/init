@@ -10,17 +10,26 @@
 
 # Note: the "$mod" modifier is also known as Logo, GUI, Windows, Mod4, etc.
 
-xrdb ~/.Xresources &
-swaybg -i ~/Images/Wallpapers/Day/wave.jpg &
-swayidle -w \
+riverctl spawn "xrdb ~/.Xresources"
+riverctl spawn "xmodmap ~/.Xmodmap"
+riverctl spawn "swaybg -i ~/Images/Wallpapers/Day/wave.jpg"
+riverctl spawn "swayidle -w \
         timeout 300 'swaylock -f -F -c 000000' \
 	timeout 400 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --off' \
 	resume 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --on' \
-        before-sleep 'swaylock -f -F -c 000000' &
+        before-sleep 'swaylock -f -F -c 000000'"
 
+riverctl spawn "unclutter"
+riverctl spawn "clipmenud"
+riverctl spawn "dunst"
+#riverctl spawn "numlockx on"
+riverctl spawn "systemctl --user start graphical-session.target"
+riverctl spawn "sxhkd"
+riverctl spawn "waybar"
 
 riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
+
 
 # $mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 mod="Mod1"
@@ -170,7 +179,6 @@ riverctl float-filter-add title "popup title with spaces"
 # Set app-ids and titles of views which should use client side decorations
 riverctl csd-filter-add app-id "gedit"
 
-riverctl spawn "waybar &"
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
