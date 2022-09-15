@@ -74,4 +74,13 @@ final: prev:
     };
   });
 
+  smart-wallpaper = prev.smart-wallpaper.overrideAttrs (old: {
+    src = prev.fetchFromGitHub {
+      owner = "Baitinq";
+      repo = "smart-wallpaper";
+      rev = "a23e6ed658342a405544ebe055ec1ac2fd464484";
+      sha256 = "sha256-IymFjyfqNycTLalZBiqmjJP5U6AFefe9BSWn3Mpoz4c=";
+    };
+  });
+
 }
