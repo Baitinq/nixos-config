@@ -117,6 +117,13 @@
     wlr.enable = true;
   };
 
+  #fix swaylock
+  security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
+  };
+
   # List services that you want to enable:
   services = {
     openssh = {
