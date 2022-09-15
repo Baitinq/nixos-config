@@ -44,6 +44,7 @@
       swaybg
       river
       wlr-randr
+      wlsunset
     ] ++
     (with pkgs.custom; [
       lemacs
