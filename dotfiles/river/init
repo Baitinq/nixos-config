@@ -43,7 +43,7 @@ riverctl map normal $mod Tab focus-previous-tags
 riverctl map normal $mod Q close
 
 # $mod+Shift+E to exit river
-riverctl map normal $mod+Shift E exit
+riverctl map normal $mod+Ctrl+Shift E exit
 
 # $mod+J and $mod+K to focus the next/previous view in the layout stack
 riverctl map normal $mod J focus-view next
