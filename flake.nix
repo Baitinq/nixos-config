@@ -31,45 +31,36 @@
   outputs = inputs @ { self, nixpkgs, home-manager, ... }:
     let
       user = "baitinq";
+      commonInherits = {
+        inherit (nixpkgs) lib;
+        inherit inputs user nixpkgs home-manager;
+        extraModules = [ ];
+      };
     in
     {
-      nixosConfigurations = import ./hosts {
-        isNixOS = true;
-        extraModules = [ ];
+      nixosConfigurations = import ./hosts (commonInherits // {
+	isNixOS = true;
         isIso = false;
         isHardware = true;
-        inherit (nixpkgs) lib;
-        inherit inputs user nixpkgs home-manager;
-      };
+      });
 
-      homeConfigurations = import ./hosts {
+      homeConfigurations = import ./hosts (commonInherits // {
         isNixOS = false;
-        extraModules = [ ];
         isIso = false;
         isHardware = false;
-        #no COde duplication here: TODO
-        inherit (nixpkgs) lib;
-        inherit inputs user nixpkgs home-manager;
-      };
+      });
 
-      isoConfigurations = import ./hosts {
+      isoConfigurations = import ./hosts (commonInherits // {
         isNixOS = true;
-        extraModules = [ ];
         isIso = true;
         isHardware = false;
         user = "nixos";
-        #no COde duplication here: TODO
-        inherit (nixpkgs) lib;
-        inherit inputs nixpkgs home-manager;
-      };
+      });
 
-      nixosNoHardwareConfigurations = import ./hosts {
+      nixosNoHardwareConfigurations = import ./hosts (commonInherits // {
         isNixOS = true;
-        extraModules = [ ];
         isIso = false;
         isHardware = false;
-        inherit (nixpkgs) lib;
-        inherit inputs user nixpkgs home-manager;
-      };
+      });
     };
 }
