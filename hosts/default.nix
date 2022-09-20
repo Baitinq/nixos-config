@@ -28,9 +28,7 @@ let
         ];
       };
       extraArgs = { inherit pkgs inputs isIso isHardware user secrets timezone location; hostname = host; };
-      #TODO: FIXME
-      extraSpecialModules = if isIso then extraModules ++ [ "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ] else extraModules;
-      megaSpecialModules = if isHardware then extraSpecialModules ++ [ ../hardware/${hardware} ] else extraSpecialModules;
+      extraSpecialModules = extraModules ++ lib.optional isHardware  ../hardware/${hardware} ++ lib.optional isIso "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
     in
     if isNixOS
     then
@@ -53,7 +51,7 @@ let
                 ];
               };
             }
-          ] ++ megaSpecialModules;
+          ] ++ extraSpecialModules;
         }
     else
       home-manager.lib.homeManagerConfiguration
