@@ -2,11 +2,16 @@
 let
   secrets = import ../secrets;
 
-  #TODO: Better implementation of hardare (not having to declare here but just in command)
   hosts = [
-    { host = "phobos"; hardware = "laptop"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
-    { host = "luna"; hardware = "chromebook"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
-    { host = "vm"; hardware = "virtualbox"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "phobos"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "luna"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "vm"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+  ];
+
+  hardwares = [
+    { hardware = "laptop"; }
+    { hardware = "chromebook"; }
+    { hardware = "virtualbox"; }
   ];
 
   mkHost = { host, hardware, system, timezone, location }: extraModules: isNixOS: isIso: isHardware:
@@ -26,7 +31,7 @@ let
       extraArgs = { inherit pkgs inputs isIso isHardware user secrets timezone location; hostname = host; };
       #TODO: FIXME
       extraSpecialModules = if isIso then extraModules ++ [ "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ] else extraModules;
-      megaSpecialModules = if isHardware then extraSpecialModules ++ [ ./${ host}/hardware/${hardware} ] else extraSpecialModules;
+      megaSpecialModules = if isHardware then extraSpecialModules ++ [ ../hardware/${hardware} ] else extraSpecialModules;
     in
     if isNixOS
     then
@@ -61,10 +66,12 @@ let
             ./${ host }/home.nix
           ];
         };
+
+  permutatedHosts = lib.concatMap (hardware: map (host: host // hardware) hosts) hardwares;
 in
   /*
     We have a list of sets.
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map ({ host, hardware, system, timezone, location }: { name = host; value = mkHost { inherit host hardware system timezone location; } extraModules isNixOS isIso isHardware; }) hosts)
+builtins.listToAttrs (map ({ host, hardware, system, timezone, location }: { name = host + "-" + hardware; value = mkHost { inherit host hardware system timezone location; } extraModules isNixOS isIso isHardware; }) permutatedHosts)
