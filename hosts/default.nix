@@ -5,7 +5,6 @@ let
   hosts = [
     { host = "phobos"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
     { host = "luna"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
-    { host = "vm"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
   ];
 
   hardwares = [
