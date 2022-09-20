@@ -13,10 +13,10 @@
 riverctl spawn "xrdb ~/.Xresources"
 riverctl spawn "xmodmap ~/.Xmodmap"
 riverctl spawn "swayidle -w \
-        timeout 300 'swaylock --clock --indicator -f -F -c 000000' \
+        timeout 300 'swaylock --clock --indicator -f -F -c 000000 --ring-color 005577 --key-hl-color 444444' \
 	timeout 400 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --off' \
 	resume 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --on' \
-        before-sleep 'swaylock --clock --indicator -f -F -c 000000'"
+        before-sleep 'swaylock --clock --indicator -f -F -c 000000 --ring-color 005577 --key-hl-color 444444'"
 
 riverctl spawn 'wlsunset -l $(echo $LOCATION | cut -d: -f1) -L $(echo $LOCATION | cut -d: -f2)'
 riverctl spawn "unclutter"
