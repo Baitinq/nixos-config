@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, user, hostname, secrets, location, ... }:
+{ config, lib, pkgs, inputs, user, hostname, secrets, dotfiles, location, ... }:
 {
   imports = [ ];
 
@@ -54,13 +54,13 @@
   xsession.windowManager.xmonad = {
     enable = true;
     enableContribAndExtras = true;
-    config = "${inputs.dotfiles}/xmonad.hs";
+    config = "${dotfiles}/xmonad.hs";
   };
 
   programs = {
     xmobar = {
       enable = true;
-      extraConfig = builtins.readFile "${inputs.dotfiles}/xmobar.hs";
+      extraConfig = builtins.readFile "${dotfiles}/xmobar.hs";
     };
   };
 
@@ -138,7 +138,7 @@
 
         doom-themes
       ];
-      extraConfig = builtins.readFile "${inputs.dotfiles}/.emacs";
+      extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };
 
     firefox = {
@@ -165,8 +165,8 @@
 
     bash = {
       enable = true;
-      bashrcExtra = builtins.readFile "${inputs.dotfiles}/.bashrc";
-      profileExtra = builtins.readFile "${inputs.dotfiles}/.bash_profile";
+      bashrcExtra = builtins.readFile "${dotfiles}/.bashrc";
+      profileExtra = builtins.readFile "${dotfiles}/.bash_profile";
     };
 
     zsh = {
@@ -269,18 +269,18 @@
   };
 
   xdg = {
-    configFile."sway/config".source = "${inputs.dotfiles}/sway_config";
-    configFile."river/".source = "${inputs.dotfiles}/river/";
-    configFile."waybar/".source = "${inputs.dotfiles}/waybar/";
-    configFile."zathura/zathurarc".source = "${inputs.dotfiles}/zathurarc";
-    configFile."dunst/dunstrc".source = "${inputs.dotfiles}/dunstrc";
+    configFile."sway/config".source = "${dotfiles}/sway_config";
+    configFile."river/".source = "${dotfiles}/river/";
+    configFile."waybar/".source = "${dotfiles}/waybar/";
+    configFile."zathura/zathurarc".source = "${dotfiles}/zathurarc";
+    configFile."dunst/dunstrc".source = "${dotfiles}/dunstrc";
   };
 
   home.file = {
-    ".xinitrc".source = "${inputs.dotfiles}/.xinitrc";
-    ".Xresources".source = "${inputs.dotfiles}/.Xresources";
+    ".xinitrc".source = "${dotfiles}/.xinitrc";
+    ".Xresources".source = "${dotfiles}/.Xresources";
 
-    ".scripts/".source = "${inputs.dotfiles}/scripts/";
+    ".scripts/".source = "${dotfiles}/scripts/";
   };
 
   home.file = {
