@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, user, hostname, location, secrets, ... }:
+{ config, lib, pkgs, inputs, user, hostname, location, secrets, dotfiles, ... }:
 {
   home.packages = with pkgs; [
     xorg.xmodmap
@@ -41,8 +41,8 @@
     '';
 
     "sxhkd/sxhkdrc".text =
-      builtins.readFile "${inputs.dotfiles}/sxhkd/xmonad" +
-      builtins.readFile "${inputs.dotfiles}/sxhkd/base" +
+      builtins.readFile "${dotfiles}/sxhkd/xmonad" +
+      builtins.readFile "${dotfiles}/sxhkd/base" +
       ''
       
         #enter and leave game mode

@@ -1,18 +1,5 @@
 {
   "nodes": {
-    "dotfiles": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-fIf6VTIvH5dT4yNzT7YIh0ca56M09UgU58PTTRBvzAM=",
-        "path": "./dotfiles",
-        "type": "path"
-      },
-      "original": {
-        "path": "./dotfiles",
-        "type": "path"
-      }
-    },
     "hardware": {
       "locked": {
         "lastModified": 1662714967,
@@ -113,7 +100,6 @@
     },
     "root": {
       "inputs": {
-        "dotfiles": "dotfiles",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",

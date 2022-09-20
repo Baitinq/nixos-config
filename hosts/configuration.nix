@@ -1,4 +1,4 @@
-{ secrets, lib, pkgs, config, hostname, inputs, user, timezone, ... }: {
+{ secrets, dotfiles, lib, pkgs, config, hostname, inputs, user, timezone, ... }: {
 
   imports = [
     "${inputs.impermanence}/nixos.nix"
@@ -38,7 +38,7 @@
 
   networking = {
     hostName = hostname; # Define your hostname.
-    extraHosts = builtins.readFile "${inputs.dotfiles}/hosts";
+    extraHosts = builtins.readFile "${dotfiles}/hosts";
     nameservers = [ "9.9.9.9" ];
     firewall = {
       enable = true;

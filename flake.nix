@@ -17,11 +17,6 @@
 
     nix-index.url = "github:Mic92/nix-index-database";
 
-    dotfiles = {
-      url = "path:./dotfiles";
-      flake = false;
-    };
-
     wallpapers = {
       url = "github:Baitinq/Wallpapers";
       flake = false;
@@ -39,7 +34,7 @@
     in
     {
       nixosConfigurations = import ./hosts (commonInherits // {
-	isNixOS = true;
+        isNixOS = true;
         isIso = false;
         isHardware = true;
       });
