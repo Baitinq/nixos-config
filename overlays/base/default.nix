@@ -17,7 +17,7 @@ final: prev:
       sha256 = "sha256-MyNMxdaWtgjClZGIHUtYwwx51u5NII5Ce4BnOnUojo8=";
     };
 
-    patches = [ ../../patches/dmenu_height.patch ];
+    patches = [ ./patches/dmenu_height.patch ];
   });
 
   st = prev.st.overrideAttrs (old: {
@@ -55,7 +55,7 @@ final: prev:
       sha256 = "sha256-vH3Cz7nL+sStogcCRLcN30Iap25f5hylXHECX52G4f0=";
     };
     patches = [
-      ../../patches/kcc.patch
+      ./patches/kcc.patch
       (prev.fetchpatch
         {
           url = "https://github.com/Baitinq/kcc/commit/73cd0dd107901bebe7d72e2b86ecf8b830a19758.diff";
