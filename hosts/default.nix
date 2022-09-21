@@ -1,20 +1,5 @@
-{ lib, inputs, extraModules, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
+{ lib, inputs, secrets, dotfiles, hosts, hardwares, extraModules, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
 let
-  secrets = import ../secrets;
-
-  dotfiles = ../dotfiles;
-
-  hosts = [
-    { host = "phobos"; system = "x86_64-linux"; extraOverlays = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
-    { host = "luna"; system = "x86_64-linux"; extraOverlays = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
-  ];
-
-  hardwares = [
-    { hardware = "laptop"; }
-    { hardware = "chromebook"; }
-    { hardware = "virtualbox"; }
-  ];
-
   mkHost = { host, hardware, system, timezone, location, extraOverlays }: extraModules: isNixOS: isIso: isHardware:
     let
       pkgs = import nixpkgs {
@@ -29,7 +14,9 @@ let
           (import ../overlays)
         ] ++ extraOverlays;
       };
+
       extraArgs = { inherit pkgs inputs isIso isHardware user secrets dotfiles timezone location; hostname = host; };
+
       extraSpecialModules = extraModules ++ lib.optional isHardware  ../hardware/${hardware} ++ lib.optional isIso "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
     in
     if isNixOS
