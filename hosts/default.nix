@@ -5,8 +5,8 @@ let
   dotfiles = ../dotfiles;
 
   hosts = [
-    { host = "phobos"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
-    { host = "luna"; system = "x86_64-linux"; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "phobos"; system = "x86_64-linux"; extraOverlays = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
+    { host = "luna"; system = "x86_64-linux"; extraOverlays = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
   ];
 
   hardwares = [
@@ -15,7 +15,7 @@ let
     { hardware = "virtualbox"; }
   ];
 
-  mkHost = { host, hardware, system, timezone, location }: extraModules: isNixOS: isIso: isHardware:
+  mkHost = { host, hardware, system, timezone, location, extraOverlays }: extraModules: isNixOS: isIso: isHardware:
     let
       pkgs = import nixpkgs {
         inherit system;
@@ -27,7 +27,7 @@ let
           inputs.nur.overlay
           (import ../packages)
           (import ../overlays)
-        ];
+        ] ++ extraOverlays;
       };
       extraArgs = { inherit pkgs inputs isIso isHardware user secrets dotfiles timezone location; hostname = host; };
       extraSpecialModules = extraModules ++ lib.optional isHardware  ../hardware/${hardware} ++ lib.optional isIso "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
@@ -73,4 +73,4 @@ in
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map ({ host, hardware, system, timezone, location }: { name = host + "-" + hardware; value = mkHost { inherit host hardware system timezone location; } extraModules isNixOS isIso isHardware; }) permutatedHosts)
+builtins.listToAttrs (map (mInput@{ host, hardware, system, timezone, location, extraOverlays }: { name = host + "-" + hardware; value = mkHost mInput extraModules isNixOS isIso isHardware; }) permutatedHosts)
