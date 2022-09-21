@@ -1,4 +1,4 @@
-{ secrets, dotfiles, lib, pkgs, config, hostname, inputs, user, timezone, ... }: {
+{ secrets, dotfiles, lib, pkgs, config, hostname, inputs, user, timezone, system, ... }: {
 
   imports = [
     "${inputs.impermanence}/nixos.nix"
@@ -107,6 +107,8 @@
   ];
 
   environment.defaultPackages = [ ];
+
+  environment.etc."nix-index/files".source = inputs.nix-index.legacyPackages.${system}.database;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
