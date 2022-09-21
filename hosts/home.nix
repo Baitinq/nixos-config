@@ -223,6 +223,7 @@
         vim = "nvim";
         q = "exit";
         c = "clear";
+        "," = ", --database '/etc/nix-index'";
         extract = ''
           () {
             if [ -f $1 ] ; then
