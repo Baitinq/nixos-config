@@ -26,9 +26,27 @@
   outputs = inputs @ { self, nixpkgs, home-manager, ... }:
     let
       user = "baitinq";
+
+      secrets = import ./secrets;
+
+      dotfiles = ./dotfiles;
+
+      hosts = [
+        { host = "phobos"; system = "x86_64-linux"; extraOverlays = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
+        { host = "luna"; system = "x86_64-linux"; extraOverlays = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
+      ];
+
+      hardwares = [
+        { hardware = "laptop"; }
+        { hardware = "chromebook"; }
+        { hardware = "virtualbox"; }
+      ];
+
+
       commonInherits = {
         inherit (nixpkgs) lib;
-        inherit inputs user nixpkgs home-manager;
+        inherit inputs nixpkgs home-manager;
+        inherit user secrets dotfiles hosts hardwares;
         extraModules = [ ];
       };
     in
