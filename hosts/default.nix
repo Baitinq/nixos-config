@@ -1,4 +1,4 @@
-{ lib, inputs, secrets, dotfiles, hosts, hardwares, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
+{ lib, inputs, secrets, dotfiles, hosts, hardwares, systems, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
 let
   mkHost = { host, hardware, system, timezone, location, extraOverlays, extraModules }: isNixOS: isIso: isHardware:
     let
@@ -7,6 +7,7 @@ let
         config = {
           allowUnfree = true;
           allowBroken = true;
+          allowUnsupportedSystem = true;
         };
         overlays = [
           inputs.nur.overlay
@@ -53,11 +54,13 @@ let
           ];
         };
 
-  permutatedHosts = lib.concatMap (hardware: map (host: host // hardware) hosts) hardwares;
+  hardwarePermutatedHosts = lib.concatMap (hardware: map (host: host // hardware) hosts) hardwares;
+  systemsPermutatedHosts = lib.concatMap (system: map (host: host // system) hardwarePermutatedHosts) systems;
+  permutatedHosts = systemsPermutatedHosts;
 in
   /*
     We have a list of sets.
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map (mInput@{ host, hardware, ... }: { name = host + "-" + hardware; value = mkHost mInput isNixOS isIso isHardware; }) permutatedHosts)
+builtins.listToAttrs (map (mInput@{ host, hardware, system, ... }: { name = host + "-" + hardware + "-" + system; value = mkHost mInput isNixOS isIso isHardware; }) permutatedHosts)

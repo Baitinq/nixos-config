@@ -6,7 +6,7 @@ My Personal NixOS Flake.
 ## Installing
 
 ```
-nixos-install --flake . #HOST-HARDWARE
+nixos-install --flake . #$HOST-$HARDWARE-ARCH
 ```
 
 ## Updating
@@ -14,23 +14,23 @@ nixos-install --flake . #HOST-HARDWARE
 ```
 nix flake update
 
-nixos-rebuild switch --flake . #HOST-HARDWARE
+nixos-rebuild switch --flake . #$HOST-$HARDWARE-ARCH
 ```
 
 # Non-Nixos
 ## Installing
 ```
-nix build .#homeManagerConfigurations.HOST-HARDWARE.activationPackage
+nix build .#homeManagerConfigurations.$HOST-$HARDWARE-$ARCH.activationPackage
 ./result/activate
 ```
 
 ## Updating
 ```
-home-manager switch --flake .#HOST-HARDWARE
+home-manager switch --flake .#$HOST-$HARDWARE-$ARCH
 ```
 
 # ISO
 ## Building
 ```
-nix build .#isoConfigurations.HOST-HARDWARE.config.system.build.isoImage
+nix build .#isoConfigurations.$HOST-$HARDWARE-$ARCH.config.system.build.isoImage
 ```

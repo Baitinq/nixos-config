@@ -32,8 +32,8 @@
       dotfiles = ./dotfiles;
 
       hosts = [
-        { host = "phobos"; system = "x86_64-linux"; extraOverlays = [ ]; extraModules = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
-        { host = "luna"; system = "x86_64-linux"; extraOverlays = [ ]; extraModules = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
+        { host = "phobos"; extraOverlays = [ ]; extraModules = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
+        { host = "luna"; extraOverlays = [ ]; extraModules = [ ]; timezone = secrets.main_timezone; location = secrets.main_location; }
       ];
 
       hardwares = [
@@ -42,11 +42,18 @@
         { hardware = "virtualbox"; }
       ];
 
+      systems = [
+        { system = "x86_64-linux"; }
+        { system = "x86_64-darwin"; }
+        { system = "aarch64-linux"; }
+        { system = "aarch64-darwin"; }
+      ];
+
 
       commonInherits = {
         inherit (nixpkgs) lib;
         inherit inputs nixpkgs home-manager;
-        inherit user secrets dotfiles hosts hardwares;
+        inherit user secrets dotfiles hosts hardwares systems;
       };
     in
     {
