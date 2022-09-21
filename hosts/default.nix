@@ -1,6 +1,6 @@
-{ lib, inputs, secrets, dotfiles, hosts, hardwares, extraModules, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
+{ lib, inputs, secrets, dotfiles, hosts, hardwares, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
 let
-  mkHost = { host, hardware, system, timezone, location, extraOverlays }: extraModules: isNixOS: isIso: isHardware:
+  mkHost = { host, hardware, system, timezone, location, extraOverlays, extraModules }: isNixOS: isIso: isHardware:
     let
       pkgs = import nixpkgs {
         inherit system;
@@ -60,4 +60,4 @@ in
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map (mInput@{ host, hardware, system, timezone, location, extraOverlays }: { name = host + "-" + hardware; value = mkHost mInput extraModules isNixOS isIso isHardware; }) permutatedHosts)
+builtins.listToAttrs (map (mInput@{ host, hardware, ... }: { name = host + "-" + hardware; value = mkHost mInput isNixOS isIso isHardware; }) permutatedHosts)
