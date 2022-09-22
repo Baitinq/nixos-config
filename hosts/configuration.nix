@@ -60,6 +60,9 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
     hashedPassword = secrets.baitinq.hashed_password;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
+    ];
   };
 
   environment.variables = {
@@ -129,6 +132,9 @@
   services = {
     openssh = {
       enable = true;
+      /* DOESNT WORK BECAUSE OF AUTHORIZEDKEYS BUG
+      passwordAuthentication = false;
+      kbdInteractiveAuthentication = false;*/
       listenAddresses = [{
         addr = "0.0.0.0";
         port = 2222;
