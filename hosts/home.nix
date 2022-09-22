@@ -104,6 +104,13 @@
       extraConfig = {
         push.autoSetupRemote = true;
         init.defaultBranch = "master";
+        sendemail = {
+          smtpserver = "smtp.gmail.com";
+          smtpserverport = "587";
+          smtpencryption = "tls";
+          smtpuser = "manuelpalenzuelamerino@gmail.com";
+          smtpPass = secrets.git.email.password;
+        };
       };
     };
 
