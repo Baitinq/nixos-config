@@ -94,6 +94,7 @@
   programs = {
     git = {
       enable = true;
+      package = pkgs.gitFull;
       userName = "Baitinq";
       userEmail = "manuelpalenzuelamerino@gmail.com";
       signing = {

@@ -91,7 +91,7 @@
     python
     killall
     wget
-    git
+    gitFull
     git-crypt
     htop
     pfetch
