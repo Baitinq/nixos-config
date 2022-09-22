@@ -74,15 +74,6 @@ final: prev:
     };
   });
 
-  smart-wallpaper = prev.smart-wallpaper.overrideAttrs (old: {
-    src = prev.fetchFromGitHub {
-      owner = "Baitinq";
-      repo = "smart-wallpaper";
-      rev = "a23e6ed658342a405544ebe055ec1ac2fd464484";
-      sha256 = "sha256-IymFjyfqNycTLalZBiqmjJP5U6AFefe9BSWn3Mpoz4c=";
-    };
-  });
-
   comma = prev.comma.overrideAttrs (old: rec {
     src = prev.fetchFromGitHub {
       owner = "baitinq";
@@ -92,7 +83,7 @@ final: prev:
     };
     cargoDeps = old.cargoDeps.overrideAttrs (prev.lib.const {
       inherit src;
-      outputHash = "sha256-nXzsqLPiO6Esv8l0Vom2i+HKIUEr1dPNVa2zkv1ovCE=";
+      outputHash = "sha256-ZtkQOp1rV7F0rJ8PwYh1lccKLF/cdEWeqxuINr/YdiQ=";
     });
   });
 
