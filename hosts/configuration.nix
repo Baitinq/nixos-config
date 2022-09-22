@@ -10,6 +10,8 @@
     ../modules/virtualisation
 
     ../secrets/wireguard
+
+    ../modules/git-server
   ];
 
   boot = lib.mkForce {
@@ -126,7 +128,6 @@
     '';
   };
 
-  # List services that you want to enable:
   services = {
     openssh = {
       enable = true;
