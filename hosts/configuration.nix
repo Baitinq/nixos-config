@@ -42,7 +42,7 @@
     nameservers = [ "9.9.9.9" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 2222 ];
+      allowedTCPPorts = [ 80 2222 ];
       # networking.firewall.allowedUDPPorts = [ ... ];
       # Or disable the firewall altogether.
     };
