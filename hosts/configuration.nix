@@ -132,9 +132,8 @@
   services = {
     openssh = {
       enable = true;
-      /* DOESNT WORK BECAUSE OF AUTHORIZEDKEYS BUG
       passwordAuthentication = false;
-      kbdInteractiveAuthentication = false;*/
+      kbdInteractiveAuthentication = false;
       listenAddresses = [{
         addr = "0.0.0.0";
         port = 22;
