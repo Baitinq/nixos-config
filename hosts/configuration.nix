@@ -42,7 +42,7 @@
     nameservers = [ "9.9.9.9" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 2222 ];
+      allowedTCPPorts = [ 80 22 ];
       # networking.firewall.allowedUDPPorts = [ ... ];
       # Or disable the firewall altogether.
     };
@@ -137,7 +137,7 @@
       kbdInteractiveAuthentication = false;*/
       listenAddresses = [{
         addr = "0.0.0.0";
-        port = 2222;
+        port = 22;
       }];
     };
     dbus.enable = true;
