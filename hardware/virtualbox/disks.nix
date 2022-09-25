@@ -15,6 +15,7 @@
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
+    options = [ "defaults" "mode=755" "size=512M" ];
   };
 
   boot.initrd.luks.devices."encrypted_boot".device = "/dev/disk/by-partlabel/boot";
