@@ -3,12 +3,12 @@
 
 [[ -f ~/.bashrc ]] && . "$HOME/.bashrc"
 
-if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
-    export MOZ_ENABLE_WAYLAND=1
-fi
-
 # Start River
 if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+    export SDL_VIDEODRIVER=wayland
+    export QT_QPA_PLATFORM=wayland
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+    export MOZ_ENABLE_WAYLAND=1
     exec river
 fi
 
