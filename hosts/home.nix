@@ -33,6 +33,7 @@
       todo-txt-cli
       element-desktop
       speedtest-cli
+      libnotify
       dwmbar
       manga-cli
       mov-cli
