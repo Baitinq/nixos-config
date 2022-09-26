@@ -1,6 +1,8 @@
 { config, lib, pkgs, inputs, user, hostname, secrets, dotfiles, location, ... }:
 {
-  imports = [ ];
+  imports = [
+    ../modules/email
+  ];
 
   home = {
     username = "${user}";
