@@ -32,6 +32,7 @@
       jrnl
       todo-txt-cli
       element-desktop
+      speedtest-cli
       dwmbar
       manga-cli
       mov-cli
