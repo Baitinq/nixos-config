@@ -113,7 +113,7 @@
           smtpserverport = "587";
           smtpencryption = "tls";
           smtpuser = "manuelpalenzuelamerino@gmail.com";
-          smtpPass = secrets.git.email.password;
+          smtpPass = secrets.email."manuelpalenzuelamerino@gmail.com".password;
         };
       };
     };
