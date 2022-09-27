@@ -46,11 +46,9 @@
         imapnotify = {
           enable = true;
           boxes = [ "Inbox" ];
-          onNotifyPost = {
-            mail = ''
-              ${pkgs.libnotify}/bin/notify-send "New mail arrived."
-            '';
-          };
+          onNotifyPost = ''
+            ${pkgs.libnotify}/bin/notify-send "New mail arrived."
+          '';
         };
         msmtp.enable = true;
         mbsync = {
