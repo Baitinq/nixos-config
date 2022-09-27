@@ -1,17 +1,13 @@
 { config, pkgs, lib, secrets, ... }:
 {
   services = {
-    mbsync = {
-      enable = true;
-      postExec = "${pkgs.notmuch}/bin/notmuch new";
-    };
+    mbsync.enable = true;
     imapnotify.enable = true;
   };
 
   programs = {
     mbsync.enable = true;
     msmtp.enable = true;
-    notmuch.enable = true;
     neomutt = {
       enable = true;
       sidebar.enable = true;
@@ -43,12 +39,11 @@
           boxes = [ "Inbox" ];
           onNotifyPost = {
             mail = ''
-              ${pkgs.notmuch}/bin/notmuch new && ${pkgs.libnotify}/bin/notify-send "New mail arrived."
+              ${pkgs.libnotify}/bin/notify-send "New mail arrived."
             '';
           };
         };
         msmtp.enable = true;
-        notmuch.enable = true;
         mbsync = {
           enable = true;
           create = "both";
