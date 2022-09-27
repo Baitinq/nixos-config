@@ -5,7 +5,7 @@
       enable = true;
       postExec = "${pkgs.notmuch}/bin/notmuch new";
     };
-    imapnotify.enable = false;
+    imapnotify.enable = true;
   };
 
   programs = {
