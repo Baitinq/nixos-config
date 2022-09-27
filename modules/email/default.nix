@@ -55,6 +55,12 @@
         };
         neomutt = {
           enable = true;
+          extraConfig = ''
+            set edit_headers = yes  # See the headers when editing
+            set charset = UTF-8     # value of $LANG; also fallback for send_charset
+            unset use_domain        # because joe@localhost is just embarrassing
+            set use_from = yes
+          '';
           /*extraConfig = ''
             set imap_user = 'manuelpalenzuelamerino@gmail.com'
             set imap_pass = '${secrets.email."manuelpalenzuelamerino@gmail.com".password}'
