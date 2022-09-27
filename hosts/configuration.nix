@@ -181,7 +181,7 @@
       dates = "daily";
       options = "-d";
     };
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     settings = {
       experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
       auto-optimise-store = true;
