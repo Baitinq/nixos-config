@@ -6,7 +6,7 @@ My Personal NixOS Flake.
 ## Installing
 
 ```
-nixos-install --flake . #$HOST-$HARDWARE-ARCH
+nixos-install --flake . #$HOST-$HARDWARE-$ARCH
 ```
 
 ## Updating
@@ -14,7 +14,7 @@ nixos-install --flake . #$HOST-$HARDWARE-ARCH
 ```
 nix flake update
 
-nixos-rebuild switch --flake . #$HOST-$HARDWARE-ARCH
+nixos-rebuild switch --flake . #$HOST-$HARDWARE-$ARCH
 ```
 
 # Non-Nixos
