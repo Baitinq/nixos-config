@@ -93,4 +93,8 @@ final: prev:
     ];
   });
 
+  mpv = prev.wrapMpv prev.mpv-unwrapped {
+    scripts = [ prev.mpvScripts.mpris ];
+  };
+
 }
