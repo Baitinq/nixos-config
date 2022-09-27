@@ -21,7 +21,6 @@
     accounts = {
       "manuelpalenzuelamerino@gmail.com" = {
         primary = true;
-        flavor = "gmail.com";
 
         realName = "Manuel Palenzuela Merino";
         signature = {
@@ -33,6 +32,16 @@
 
         address = "manuelpalenzuelamerino@gmail.com";
         userName = "manuelpalenzuelamerino@gmail.com";
+
+        imap = {
+          host = "imap.gmail.com";
+          port = 993;
+        };
+
+        smtp = {
+          host = "smtp.gmail.com";
+          port = 587;
+        };
 
         imapnotify = {
           enable = true;
