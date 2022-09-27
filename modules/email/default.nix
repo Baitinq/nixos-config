@@ -1,7 +1,10 @@
 { config, pkgs, lib, secrets, ... }:
 {
   services = {
-    mbsync.enable = true;
+    mbsync = {
+      enable = true;
+      postExec = "${pkgs.notmuch}/bin/notmuch new";
+    };
     imapnotify.enable = false;
   };
 
@@ -54,7 +57,7 @@
           enable = true;
           /*extraConfig = ''
             set imap_user = 'manuelpalenzuelamerino@gmail.com'
-            set imap_pass = '${secrets.git.email.password}'
+            set imap_pass = '${secrets.email."manuelpalenzuelamerino@gmail.com".password}'
             set spoolfile = imaps://imap.gmail.com/INBOX
             set folder = imaps://imap.gmail.com/
             set record="imaps://imap.gmail.com/[Gmail]/Sent Mail"
@@ -63,11 +66,11 @@
 
             # ================  SMTP  ====================
             set smtp_url = "smtp://manuelpalenzuelamerino@smtp.gmail.com:587/"
-            set smtp_pass = ${secrets.git.email.password}
+            set smtp_pass = ${secrets.email."manuelpalenzuelamerino@gmail.com".password}
             set ssl_force_tls = yes # Require encrypted connection
           '';*/
         };
-        passwordCommand = "${pkgs.coreutils}/bin/echo ${secrets.git.email.password}";
+        passwordCommand = "${pkgs.coreutils}/bin/echo ${secrets.email."manuelpalenzuelamerino@gmail.com".password}";
       };
     };
   };
