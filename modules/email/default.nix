@@ -57,11 +57,19 @@
         };
         neomutt = {
           enable = true;
+          mailboxName = "Inbox";
+          extraMailboxes = [
+            "\[Gmail\]/Sent\ Mail"
+            "\[Gmail\]/Bin"
+            "\[Gmail\]/Starred"
+            "\[Gmail\]/Drafts"
+          ];
           extraConfig = ''
             set edit_headers = yes  # See the headers when editing
             set charset = UTF-8     # value of $LANG; also fallback for send_charset
             unset use_domain        # because joe@localhost is just embarrassing
             set use_from = yes
+            set index_format='%4C %Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]> %-15.15L (%?l?%4l&%4c?) %s'
           '';
           /*extraConfig = ''
             set imap_user = 'manuelpalenzuelamerino@gmail.com'
