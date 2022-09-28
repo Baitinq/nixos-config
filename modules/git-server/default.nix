@@ -15,7 +15,10 @@ in
     nginx = {
       enable = true;
       virtualHosts."_" = {
-        listen = [{ addr = "0.0.0.0"; port = 80; }];
+        listen = [
+          { addr = "0.0.0.0"; port = 80; }
+          { addr = "[::]"; port = 80; }
+        ];
         locations = {
           "/".extraConfig =
             let
