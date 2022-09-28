@@ -114,10 +114,6 @@
 
   environment.etc."nix-index/files".source = inputs.nix-index.legacyPackages.${system}.database;
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-
   xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -190,11 +186,6 @@
       cores = 0;
     };
   };
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  #system.copySystemConfiguration = true;
 
   hardware = {
     enableRedistributableFirmware = true;
