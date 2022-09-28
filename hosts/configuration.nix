@@ -107,6 +107,7 @@
     gnupg
     comma
     xclip
+    strace
   ];
 
   environment.defaultPackages = [ ];
