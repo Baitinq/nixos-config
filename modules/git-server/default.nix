@@ -11,6 +11,47 @@ in
     cgitPackage
   ];
 
+  virtualisation.oci-containers.containers = {
+    hackagecompare = {
+      autoStart = true;
+      image = "redis:latest";
+      imageFile = pkgs.dockerTools.buildImage {
+        name = "redis";
+        tag = "latest";
+
+        #fromImage = someBaseImage;
+        fromImageName = null;
+        fromImageTag = "latest";
+
+        copyToRoot = pkgs.buildEnv {
+          name = "image-root";
+          paths = [ pkgs.redis ];
+          pathsToLink = [ "/bin" ];
+        };
+
+        runAsRoot = ''
+          #!${pkgs.runtimeShell}
+          mkdir -p /data
+        '';
+
+        config = {
+          Cmd = [ "/bin/redis-server" ];
+          WorkingDir = "/data";
+          Volumes = { "/data" = { }; };
+        };
+
+        diskSize = 1024;
+        buildVMMemorySize = 512;
+      };
+      ports = [ "127.0.0.1:3010:80" ];
+      volumes = [
+        "/home/git:/git"
+      ];
+      cmd = [
+      ];
+    };
+  };
+
   services = {
     nginx = {
       enable = true;
