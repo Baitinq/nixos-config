@@ -39,6 +39,8 @@
       dwmbar
       manga-cli
       mov-cli
+      calibre
+      kcc
       smart-wallpaper
       waybar
       wl-clipboard
@@ -52,6 +54,7 @@
     ] ++
     (with pkgs.custom; [
       lemacs
+      kindlegen
     ]);
   };
 

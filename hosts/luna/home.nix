@@ -4,11 +4,8 @@
     xorg.xmodmap
     trackma
     adl
-    #calibre
-    #kcc
   ] ++
   (with pkgs.custom; [
-    #kindlegen
   ]);
 
   programs.firefox.profiles.default.settings = {
