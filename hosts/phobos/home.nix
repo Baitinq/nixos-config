@@ -2,13 +2,10 @@
 {
   home.packages = with pkgs; [
     minecraft
-    calibre
-    kcc
     trackma
     adl
   ] ++
   (with pkgs.custom; [
-    kindlegen
   ]);
 
   programs.firefox.profiles.default.settings = {
