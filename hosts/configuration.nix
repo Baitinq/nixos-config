@@ -187,10 +187,7 @@
     };
   };
 
-  hardware = {
-    enableRedistributableFirmware = true;
-    cpu.intel.updateMicrocode = true;
-  };
+  hardware.enableRedistributableFirmware = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
