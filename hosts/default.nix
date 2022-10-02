@@ -16,7 +16,7 @@ let
         ] ++ extraOverlays;
       };
 
-      extraArgs = { inherit pkgs inputs isIso isHardware user secrets dotfiles timezone location hardware system; hostname = host; };
+      extraArgs = { inherit pkgs inputs isIso isHardware user secrets dotfiles timezone location hardware system; hostname = host + "-" + hardware; };
 
       extraSpecialModules = extraModules ++ lib.optional isHardware  ../hardware/${hardware} ++ lib.optional isIso "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
     in
