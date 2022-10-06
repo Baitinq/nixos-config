@@ -40,10 +40,11 @@
     hostName = hostname; # Define your hostname.
     enableIPv6 = true;
     extraHosts = builtins.readFile "${dotfiles}/hosts";
-    nameservers = [ "9.9.9.9" ];
     dhcpcd = {
       enable = true;
+      extraConfig = "nohook resolv.conf";
     };
+    resolvconf.enable = false;
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 22 9090 ];
@@ -140,6 +141,7 @@
         port = 22;
       }];
     };
+    unbound.enable = true;
     dbus.enable = true;
     irqbalance.enable = true;
     fwupd.enable = true;
