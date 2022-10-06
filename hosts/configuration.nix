@@ -38,8 +38,12 @@
 
   networking = {
     hostName = hostname; # Define your hostname.
+    enableIPv6 = true;
     extraHosts = builtins.readFile "${dotfiles}/hosts";
     nameservers = [ "9.9.9.9" ];
+    dhcpcd = {
+      enable = true;
+    };
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 22 9090 ];
