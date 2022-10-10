@@ -28,6 +28,10 @@
     };
   };
 
-  virtualisation.virtualbox.guest.enable = true;
+  environment.sessionVariables = {
+    "WLR_NO_HARDWARE_CURSORS" = "1";
+  };
+
+  #  virtualisation.virtualbox.guest.enable = true;
 
 }
