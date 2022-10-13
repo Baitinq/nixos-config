@@ -120,6 +120,7 @@
     comma
     xclip
     strace
+    inputs.deploy-rs.defaultPackage."${system}"
   ];
 
   environment.defaultPackages = [ ];
