@@ -34,3 +34,8 @@ home-manager switch --flake .#$HOST-$HARDWARE-$ARCH
 ```
 nix build .#isoConfigurations.$HOST-$HARDWARE-$ARCH.config.system.build.isoImage
 ```
+
+# Deploying
+```
+# deploy -s .#$HOST-$HARDWARE-$ARCH --hostname $TARGET_IP
+```
