@@ -59,15 +59,22 @@
 
   users.mutableUsers = false;
 
-  users.users.root.hashedPassword = secrets.root.hashed_password;
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${user} = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
-    hashedPassword = secrets.baitinq.hashed_password;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
-    ];
+  users.users = {
+    "root" = {
+      hashedPassword = secrets.root.hashed_password;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
+      ];
+    };
+
+    "${user}" = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
+      hashedPassword = secrets.baitinq.hashed_password;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
+      ];
+    };
   };
 
   environment.variables = {
