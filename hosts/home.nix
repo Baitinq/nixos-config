@@ -65,6 +65,12 @@
   };
 
   programs = {
+    password-store = {
+      enable = true;
+      settings = {
+        "PASSWORD_STORE_KEY" = "18BE4F736F27FC190C1E1000BB3C0BC698650937";
+      };
+    };
     xmobar = {
       enable = true;
       extraConfig = builtins.readFile "${dotfiles}/xmobar.hs";
