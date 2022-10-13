@@ -60,6 +60,7 @@ in
       directories = [
         "/var/log"
         "/var/lib"
+        "/root"
       ];
       files = [
         "/etc/machine-id"
