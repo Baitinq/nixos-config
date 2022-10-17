@@ -156,7 +156,6 @@
   programs = {
     ssh = {
       enableAskPassword = false;
-      forwardX11 = true;
     };
 
     tmux = {
