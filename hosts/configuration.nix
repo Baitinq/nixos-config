@@ -101,6 +101,7 @@
     #(uutils-coreutils.override { prefix = ""; })
     lm_sensors
     pulseaudio # used for tools
+    alsa-utils
     python
     killall
     wget
