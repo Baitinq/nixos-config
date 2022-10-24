@@ -17,6 +17,8 @@
   :config
   (evil-mode 1))
 
+(setq create-lockfiles nil)
+
 (use-package evil-collection
   :after evil
   :ensure t 
