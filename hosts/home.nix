@@ -41,6 +41,7 @@
       mov-cli
       calibre
       kcc
+      slack
       smart-wallpaper
       waybar
       wl-clipboard
