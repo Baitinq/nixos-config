@@ -150,6 +150,8 @@
 
         lsp-mode
         company
+        rust-mode
+        flycheck
         lsp-haskell
 
         nix-mode
