@@ -152,6 +152,7 @@
         lsp-mode
         company
         rust-mode
+        rustic
         flycheck
         lsp-haskell
 
