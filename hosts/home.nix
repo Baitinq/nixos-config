@@ -42,6 +42,7 @@
       calibre
       kcc
       slack
+      openvpn
       smart-wallpaper
       waybar
       wl-clipboard
