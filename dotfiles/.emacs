@@ -112,3 +112,7 @@
 
 (use-package rustic
   :ensure t)
+
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar))

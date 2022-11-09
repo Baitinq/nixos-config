@@ -163,6 +163,8 @@
         jq-mode
 
         doom-themes
+
+        dired-sidebar
       ];
       extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };
