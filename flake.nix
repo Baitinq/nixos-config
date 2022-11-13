@@ -44,6 +44,7 @@
       hardwares = [
         { hardware = "laptop"; }
         { hardware = "chromebook"; }
+        { hardware = "thinkpad"; }
         { hardware = "virtualbox"; }
       ];
 
