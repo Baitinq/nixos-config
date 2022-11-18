@@ -53,6 +53,7 @@
       river
       wlr-randr
       wlsunset
+      vscode
     ] ++
     (with pkgs.custom; [
       lemacs
