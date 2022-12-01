@@ -83,7 +83,7 @@ final: prev:
     };
     cargoDeps = old.cargoDeps.overrideAttrs (prev.lib.const {
       inherit src;
-      outputHash = "sha256-ZtkQOp1rV7F0rJ8PwYh1lccKLF/cdEWeqxuINr/YdiQ=";
+      outputHash = "sha256-JDMu3ORns3lfIT9wmwKTUmn2DQPlasymTW4lkCpGFBY=";
     });
   });
 
