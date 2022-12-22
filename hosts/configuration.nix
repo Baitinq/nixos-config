@@ -98,7 +98,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (uutils-coreutils.override { prefix = ""; })
+    #(uutils-coreutils.override { prefix = ""; })
     lm_sensors
     pulseaudio # used for tools
     alsa-utils
