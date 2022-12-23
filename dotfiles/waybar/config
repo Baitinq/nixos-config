@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     "spacing": 2, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["river/tags", "river/mode", "custom/separator", "river/window"],
+    "modules-left": ["river/tags", "custom/separator", "river/window"],
     //"modules-center": ["river/window"],
     "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock", "tray"],
     // Modules configuration
