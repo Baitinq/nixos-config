@@ -180,6 +180,11 @@ riverctl float-filter-add title "popup title with spaces"
 # Set app-ids and titles of views which should use client side decorations
 riverctl csd-filter-add app-id "gedit"
 
+# input configuration
+#
+# Thinkpad tap click:
+riverctl input "pointer-2-7-SynPS/2_Synaptics_TouchPad" tap enabled
+
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
