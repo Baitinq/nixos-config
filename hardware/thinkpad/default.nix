@@ -17,6 +17,7 @@
     flashrom
     nvramtool
     ectool
+    cbmem
   ];
 
 }
