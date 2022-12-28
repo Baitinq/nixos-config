@@ -184,6 +184,7 @@
         isDefault = true;
         settings = {
           "general.autoScroll" = true;
+          "browser.startup.page" = 3; #always restore pages
         };
       };
     };
