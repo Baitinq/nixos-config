@@ -16,6 +16,7 @@
   environment.systemPackages = with pkgs; [
     flashrom
     nvramtool
+    intelmetool
     ectool
     cbmem
   ];
