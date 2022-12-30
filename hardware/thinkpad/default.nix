@@ -1,6 +1,11 @@
 { pkgs, ... }:
 {
-  imports = [ ./hardware.nix ];
+  imports = [
+    ./hardware.nix
+
+    ../../modules/power-save
+    ../../modules/bluetooth
+  ];
 
   # nvramtool settings:
   #

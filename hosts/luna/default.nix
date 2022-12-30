@@ -1,9 +1,6 @@
 { config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
 
-  imports = [
-    ../../modules/power-save
-    ../../modules/bluetooth
-  ];
+  imports = [];
 
   services = {
     # Configure keymap in X11

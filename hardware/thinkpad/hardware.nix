@@ -35,7 +35,6 @@ in
       };
     };
     fstrim.enable = true;
-    tlp.enable = true;
   };
 
   hardware = {
