@@ -7,7 +7,6 @@
 
   boot = {
     kernelParams = [ "pcie_aspm.policy=powersave" ];
-    # blacklistedKernelModules = [ "uvcvideo" ];
     extraModprobeConfig = ''
       options snd_hda_intel power_save=1
       options iwlwifi power_save=1 d0i3_disable=0 uapsd_disable=0

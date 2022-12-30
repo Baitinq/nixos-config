@@ -8,6 +8,7 @@ in
   ];
 
   boot = {
+    blacklistedKernelModules = [ "uvcvideo" ];
     initrd = {
       availableKernelModules = [ "xhci_pci" "usb_storage" "sd_mod" "sdhci_acpi" "aesni_intel" "cryptd" ];
       kernelModules = [ "i915" ];

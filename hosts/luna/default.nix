@@ -1,6 +1,6 @@
 { config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
 
-  imports = [];
+  imports = [ ];
 
   services = {
     # Configure keymap in X11
