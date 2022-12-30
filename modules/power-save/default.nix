@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 {
 
+  environment.systemPackages = with pkgs; [
+    powertop
+  ];
+
   boot = {
     kernelParams = [ "pcie_aspm.policy=powersave" ];
     # blacklistedKernelModules = [ "uvcvideo" ];
@@ -29,4 +33,6 @@
     # i2p.enable = pkgs.lib.mkForce false;
     # tor.enable = pkgs.lib.mkForce false;
   };
+
+  powerManagement.powertop.enable = true;
 }
