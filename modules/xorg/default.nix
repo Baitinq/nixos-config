@@ -6,6 +6,10 @@
     displayManager.startx.enable = true;
 
     dpi = 96;
+
+    excludePackages = with pkgs; [
+      xterm
+    ];
   };
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
