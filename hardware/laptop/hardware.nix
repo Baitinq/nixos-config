@@ -45,6 +45,8 @@ in
     };
 
     nvidia = {
+      modesetting.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
       prime = {
         sync.enable = true;
 
