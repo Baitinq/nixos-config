@@ -5,7 +5,6 @@
     podman = {
       enable = true;
       dockerCompat = true;
-      defaultNetwork.dnsname.enable = true;
     };
     libvirtd.enable = true;
     virtualbox.host.enable = true;

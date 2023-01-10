@@ -102,7 +102,7 @@
     lm_sensors
     pulseaudio # used for tools
     alsa-utils
-    python
+    python3
     killall
     wget
     gitFull
