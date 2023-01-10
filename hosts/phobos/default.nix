@@ -33,5 +33,13 @@
     '';
   */
 
+  services.boinc = {
+    enable = true;
+    dataDir = "/var/lib/boinc";
+  };
+
+  users.users.${user}.extraGroups = [ "boinc" ];
+  users.users.boinc.extraGroups = [ "video" ];
+
 }
 
