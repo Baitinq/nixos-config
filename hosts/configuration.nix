@@ -30,7 +30,7 @@
     };
 
     supportedFilesystems = [ "ntfs" ];
-    cleanTmpDir = true;
+    tmpOnTmpfs = true;
   };
 
   # Set your time zone.
