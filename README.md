@@ -26,6 +26,8 @@ nix build .#homeManagerConfigurations.$HOST-$HARDWARE-$ARCH.activationPackage
 
 ## Updating
 ```
+nix flake update
+
 home-manager switch --flake .#$HOST-$HARDWARE-$ARCH
 ```
 
