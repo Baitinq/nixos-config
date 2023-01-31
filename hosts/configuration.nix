@@ -141,8 +141,10 @@
   services = {
     openssh = {
       enable = true;
-      passwordAuthentication = false;
-      kbdInteractiveAuthentication = false;
+      settings = {
+        passwordAuthentication = false;
+        kbdInteractiveAuthentication = false;
+      };
       listenAddresses = [{
         addr = "0.0.0.0";
         port = 22;
