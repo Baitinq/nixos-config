@@ -74,6 +74,9 @@
         "PASSWORD_STORE_KEY" = "18BE4F736F27FC190C1E1000BB3C0BC698650937";
       };
     };
+    ncmpcpp = {
+      enable = true;
+    };
     xmobar = {
       enable = true;
       extraConfig = builtins.readFile "${dotfiles}/xmobar.hs";
@@ -104,6 +107,10 @@
       enable = true;
       lockCmd = "${pkgs.xlockmore}/bin/xlock +resetsaver -dpmsoff 5 -mode blank";
       xautolock.enable = false;
+    };
+
+    mpd = {
+      enable = true;
     };
   };
 
