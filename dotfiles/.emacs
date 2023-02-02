@@ -104,11 +104,20 @@
 
 (use-package lsp-mode
   :ensure t 
-  :hook ((haskell-mode . lsp-deferred))
-  :commands (lsp lsp-deferred))
+  :hook ((haskell-mode c-mode c++-mode c-or-c++-mode) . lsp-deferred)
+  :commands (lsp lsp-deferred)
+  :config
+  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "--log=error" "--clang-tidy" "--enable-config"))
+  (setq lsp-auto-guess-root t))
 
 (use-package lsp-haskell
   :ensure t )
+
+(use-package company
+  :ensure t)
+
+(use-package yasnippet
+  :ensure t)
 
 (use-package rustic
   :ensure t)
