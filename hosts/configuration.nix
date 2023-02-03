@@ -185,6 +185,8 @@
 
     light.enable = true;
 
+    dconf.enable = true;
+
     firejail = {
       enable = true;
       wrappedBinaries = {
