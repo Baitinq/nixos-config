@@ -102,7 +102,11 @@
 (use-package jq-mode
   :ensure t )
 
-(use-package lsp-mode
+(use-package yasnippet
+  :ensure t)
+(yas-global-mode 1)
+
+(use-package lsp-bridge
   :ensure t 
   :hook ((haskell-mode c-mode c++-mode c-or-c++-mode) . lsp-deferred)
   :commands (lsp lsp-deferred)
@@ -114,9 +118,6 @@
   :ensure t )
 
 (use-package company
-  :ensure t)
-
-(use-package yasnippet
   :ensure t)
 
 (use-package rustic

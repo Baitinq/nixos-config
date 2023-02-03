@@ -158,13 +158,13 @@
         doom-modeline
         dashboard
 
-        lsp-ui
         projectile
+        lsp-ui
 
-        lsp-mode
-        company
+        manualPackages.custom.lsp-bridge
         rust-mode
         rustic
+        company
         flycheck
         lsp-haskell
 
