@@ -81,4 +81,10 @@ final: prev:
     scripts = [ prev.mpvScripts.mpris ];
   };
 
+  emacsPackagesFor = let merge = builtins.foldl' (a: b: a // b) {}; in
+  	emacs: with prev; (((prev.emacsPackagesFor emacs) // merge [
+	  (import ../../packages/lsp-bridge {})
+	]) {});
+
+
 }

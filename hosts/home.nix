@@ -158,11 +158,9 @@
         doom-modeline
         dashboard
 
-        lsp-ui
         projectile
 
-        lsp-mode
-        company
+        custom.lsp-bridge
         rust-mode
         rustic
         flycheck
