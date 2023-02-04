@@ -108,7 +108,7 @@
 
 (use-package lsp-bridge
   :ensure t 
-  :hook ((haskell-mode c-mode c++-mode c-or-c++-mode) . lsp-deferred)
+  :hook ((haskell-mode nix-mode jq-mode c-mode c++-mode c-or-c++-mode) . lsp-deferred)
   :commands (lsp lsp-deferred)
   :config
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "--log=error" "--clang-tidy" "--enable-config"))
