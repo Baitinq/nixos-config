@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["river/tags", "custom/separator", "river/window"],
     //"modules-center": ["river/window"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock", "tray"],
+    "modules-right": ["custom/weather", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock", "tray"],
     // Modules configuration
      //"sway/workspaces": {
       //   "disable-scroll": true,
@@ -39,6 +39,11 @@
             "locked": "",
             "unlocked": ""
         }
+    },
+    "custom/weather": {
+      "format": "{}",
+      "exec": "curl \"wttr.in/pdx?format=%c%t\" | sed \"s/+//g\"",
+      "interval": 6000
     },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
