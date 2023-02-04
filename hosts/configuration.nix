@@ -198,8 +198,12 @@
     };
   };
 
+  # Needed for nix-* commands to use the system's nixpkgs
+  environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
+
   nix = {
     registry.nixpkgs.flake = inputs.nixpkgs;
+    nixPath = [ "nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
     gc = {
       automatic = true;
       dates = "daily";
