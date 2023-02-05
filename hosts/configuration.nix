@@ -33,13 +33,12 @@
     tmpOnTmpfs = true;
   };
 
-  # Set your time zone.
   time.timeZone = timezone;
 
   networking = {
-    hostName = hostname; # Define your hostname.
+    hostName = hostname;
     enableIPv6 = true;
-    extraHosts = builtins.readFile "${dotfiles}/hosts";
+    extraHosts = builtins.readFile "${inputs.hosts}/hosts";
     dhcpcd.enable = true;
     resolvconf.enable = true;
     nameservers = [ "127.0.0.1" ];

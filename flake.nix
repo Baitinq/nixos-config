@@ -22,6 +22,11 @@
 
     nix-index.url = "github:Mic92/nix-index-database";
 
+    hosts = {
+      url = "github:StevenBlack/hosts";
+      flake = false;
+    };
+
     wallpapers = {
       url = "github:Baitinq/Wallpapers";
       flake = false;
