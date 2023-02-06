@@ -191,10 +191,46 @@
         id = 0;
         name = "Default";
         isDefault = true;
-        settings = {
-          "general.autoScroll" = true;
-          "browser.startup.page" = 3; #always restore pages
-        };
+        extraConfig = lib.strings.concatStrings [
+          (builtins.readFile "${inputs.arkenfox-userjs}/user.js")
+          ''
+	    // Re-enables URL usages as a search bar.
+            /* 0801 */ user_pref("keyword.enabled", true);
+	    user_pref("browser.search.suggest.enabled", true);    // 0804: live search suggestions
+	    // Re-allows COPY / CUT from "non-privileged" content as it actually breaks many websites.
+            /* 2404 */ user_pref("dom.allow_cut_copy", true);
+            // Disables RFP letter-boxing to avoid big white borders on screen.
+            /* 4504 */ user_pref("privacy.resistFingerprinting.letterboxing", false);
+	    // Set UI density to normal
+            user_pref("browser.uidensity", 0);
+            // DRM content :(
+            user_pref("media.gmp-widevinecdm.enabled", true);
+            user_pref("media.eme.enabled", true);
+	    user_pref("webgl.disabled", false); // 4520
+            user_pref("network.http.referer.XOriginTrimmingPolicy", 0);
+	    user_pref("privacy.clearOnShutdown.history", false); // 2811: don't clear history on close
+	    user_pref("browser.startup.page", 3);                 // 0102: enable session restore
+	    user_pref("signon.rememberSignons", true);           // 5003: enable saving passwords
+	    /* [UX,-HIST] Remember more closed tabs for undo. */
+            user_pref("browser.sessionstore.max_tabs_undo", 27);                    // 1020
+            /* [UX,-HIST] Restore all state for closed tab or previous session after Firefox restart. */
+            user_pref("browser.sessionstore.privacy_level", 0);                     // 1021
+            user_pref("browser.sessionstore.interval", 15000);                      // 1023
+            /* [UX,-HIST] Enable search and form history. */
+            user_pref("browser.formfill.enable", true);                             // 0860
+            user_pref("general.autoScroll", true);
+	    //user_pref("network.cookie.lifetimePolicy", 0); //keep cookies 2801
+	    user_pref("network.cookie.cookieBehavior", 5); // 2701
+	    user_pref("privacy.clearOnShutdown.offlineApps", false);
+            user_pref("privacy.cpd.offlineApps", false);
+	    user_pref("privacy.cpd.history", false); // 2812 to match when you use Ctrl-Shift-Del
+	    user_pref("privacy.clearOnShutdown.cookies", false);
+	    user_pref("privacy.clearOnShutdown.downloads", false);
+	    user_pref("privacy.clearOnShutdown.formdata", false);
+	    user_pref("privacy.clearOnShutdown.sessions", false);
+	    user_pref("_user.js.baitinq", "Survived the overrides :)");
+	  ''
+        ];
       };
     };
 

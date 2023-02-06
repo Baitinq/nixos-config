@@ -27,6 +27,11 @@
       flake = false;
     };
 
+    arkenfox-userjs = {
+      url = "github:arkenfox/user.js";
+      flake = false;
+    };
+
     wallpapers = {
       url = "github:Baitinq/Wallpapers";
       flake = false;
