@@ -58,6 +58,7 @@
     (with pkgs.custom; [
       lemacs
       kindlegen
+      animdl
     ]);
   };
 
