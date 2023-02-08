@@ -12,6 +12,7 @@
       scrot
       redshift
       discord
+      tdesktop
       mpv
       sxiv
       #dwm
