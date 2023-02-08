@@ -42,7 +42,7 @@
     },
     "custom/weather": {
       "format": "{}",
-      "exec": "curl \"wttr.in/pdx?format=%c%t\" | sed \"s/+//g\"",
+      "exec": "curl \"wttr.in/?format=%c%t\" | sed \"s/+//g\"",
       "interval": 6000
     },
     "sway/mode": {
