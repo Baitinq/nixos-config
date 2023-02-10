@@ -229,6 +229,7 @@
 	    user_pref("privacy.clearOnShutdown.downloads", false);
 	    user_pref("privacy.clearOnShutdown.formdata", false);
 	    user_pref("privacy.clearOnShutdown.sessions", false);
+	    user_pref("extensions.pocket.enabled", false);        // 0900: disable Pocket
 	    user_pref("_user.js.baitinq", "Survived the overrides :)");
 	  ''
         ];
