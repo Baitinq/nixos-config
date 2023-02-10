@@ -89,11 +89,9 @@
     XDG_DATA_HOME = "\${HOME}/.local/share";
     XDG_STATE_HOME = "\${HOME}/.local/state";
     XDG_DESKTOP_DIR = "\${HOME}/";
-
-    PATH = [
-      "\${XDG_BIN_HOME}"
-    ];
   };
+
+  environment.localBinInPath = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
