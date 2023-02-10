@@ -300,6 +300,7 @@
         vim = "nvim";
         q = "exit";
         c = "clear";
+        open = "xdg-open";
         "," = ", --database '/etc/nix-index'";
         extract = ''
           () {
