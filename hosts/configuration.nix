@@ -81,6 +81,8 @@
     VISUAL = "nvim";
 
     XKB_DEFAULT_LAYOUT = "gb";
+
+    NIXPKGS_ALLOW_UNFREE = "1";
   };
 
   environment.sessionVariables = rec {
