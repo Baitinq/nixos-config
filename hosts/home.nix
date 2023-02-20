@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, user, hostname, secrets, dotfiles, location, ... }:
+{ config, lib, pkgs, inputs, user, hostname, secrets, dotfiles, location, stateVersion, ... }:
 {
   imports = [
     ../modules/email
@@ -369,6 +369,6 @@
   # For disabling the automatic creation of $HOME/Desktop
   xdg.userDirs.desktop = "$HOME/";
 
-  home.stateVersion = "22.05";
+  home.stateVersion = stateVersion;
 
 }

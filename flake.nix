@@ -52,10 +52,10 @@
       ];
 
       hardwares = [
-        { hardware = "laptop"; }
-        { hardware = "chromebook"; }
-        { hardware = "thinkpad"; }
-        { hardware = "virtualbox"; }
+        { hardware = "laptop"; stateVersion = "22.05"; }
+        { hardware = "chromebook"; stateVersion = "22.05"; }
+        { hardware = "thinkpad"; stateVersion = "22.05"; }
+        { hardware = "virtualbox"; stateVersion = "22.05"; }
       ];
 
       systems = [
