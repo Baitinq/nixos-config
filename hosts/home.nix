@@ -138,7 +138,6 @@
           smtpuser = "manuelpalenzuelamerino@gmail.com";
           smtpPass = secrets.email."manuelpalenzuelamerino@gmail.com".password;
         };
-	http.cookiefile = "/home/${user}/.gitcookies";
       };
     };
 
@@ -362,7 +361,7 @@
 
     ".scripts/".source = "${dotfiles}/scripts/";
 
-    ".gitcookies".text = secrets.git.cookies;
+    ".netrc".text = secrets.netrc;
   };
 
   home.file = {
