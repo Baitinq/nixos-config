@@ -31,7 +31,7 @@
     };
 
     supportedFilesystems = [ "ntfs" ];
-    tmpOnTmpfs = true;
+    tmp.useTmpfs = true;
   };
 
   time.timeZone = timezone;
