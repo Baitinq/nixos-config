@@ -212,8 +212,9 @@
     };
     package = pkgs.nixVersions.stable;
     settings = {
-      experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+      experimental-features = [ "nix-command" "flakes" "ca-derivations" "auto-allocate-uids" ];
       auto-optimise-store = true;
+      auto-allocate-uids = true;
       max-jobs = "auto";
       cores = 0;
     };
