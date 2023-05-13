@@ -92,6 +92,7 @@
     gpg-agent = {
       enable = true;
       enableSshSupport = true;
+      enableExtraSocket = true;
       sshKeys = [ "BC10A40920B576F641480795B9C7E01A4E47DA9F" ];
       defaultCacheTtl = 43200; #12h
       defaultCacheTtlSsh = 43200;
