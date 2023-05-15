@@ -55,6 +55,10 @@
       wlr-randr
       wlsunset
       vscode
+      chromium
+      grim
+      slurp
+      google-cloud-sdk
     ] ++
     (with pkgs.custom; [
       lemacs
