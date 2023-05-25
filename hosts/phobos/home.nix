@@ -4,7 +4,6 @@
     minecraft
     trackma
     adl
-    jetbrains.clion
     jetbrains.idea-ultimate
     gimp
   ] ++
