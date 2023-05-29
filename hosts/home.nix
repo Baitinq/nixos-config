@@ -104,8 +104,6 @@
       maxCacheTtlSsh = 86400;
     };
 
-    pass-secret-service.enable = true;
-
     emacs = {
       enable = true;
       startWithUserSession = true;
@@ -360,8 +358,6 @@
     configFile."waybar/".source = "${dotfiles}/waybar/";
     configFile."zathura/zathurarc".source = "${dotfiles}/zathurarc";
     configFile."dunst/dunstrc".source = "${dotfiles}/dunstrc";
-
-    dataFile."password-store/.gpg-id".text = lib.head (builtins.attrNames secrets.email);
   };
 
   home.file = {

@@ -153,6 +153,7 @@
         port = 22;
       }];
     };
+    gnome.gnome-keyring.enable = true;
     unbound.enable = true;
     dbus.enable = true;
     irqbalance.enable = true;
