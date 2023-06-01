@@ -18,6 +18,7 @@
 
   services.xserver = {
     # Enable touchpad support (enabled default in most desktopManager).
+    synaptics.enable = false;
     libinput.enable = true;
   };
 

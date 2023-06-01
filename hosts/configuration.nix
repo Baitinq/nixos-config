@@ -20,7 +20,6 @@
       };
       grub = {
         enable = true;
-        version = 2;
         efiSupport = true;
         efiInstallAsRemovable = true;
         device = "nodev";
@@ -145,8 +144,8 @@
     openssh = {
       enable = true;
       settings = {
-        passwordAuthentication = false;
-        kbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
       };
       listenAddresses = [{
         addr = "0.0.0.0";
@@ -158,6 +157,7 @@
     dbus.enable = true;
     irqbalance.enable = true;
     fwupd.enable = true;
+    xserver.libinput.enable = false;
   };
 
   programs = {
