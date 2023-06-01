@@ -57,3 +57,8 @@ $ nix build .#isoConfigurations.$HOST-$HARDWARE-$ARCH.config.system.build.isoIma
 ```
 # deploy -s .#$HOST-$HARDWARE-$ARCH --hostname $TARGET_IP
 ```
+
+## Testing
+```
+$ nix eval .#tests
+```

@@ -20,6 +20,8 @@
 
     nur.url = "github:nix-community/NUR";
 
+    nixtest.url = "github:jetpack-io/nixtest";
+
     nix-index.url = "github:Mic92/nix-index-database";
 
     hosts = {
@@ -117,5 +119,8 @@
 
       # This is highly advised, and will prevent many possible mistakes
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
+
+
+      tests = inputs.nixtest.run ./.;
     };
 }
