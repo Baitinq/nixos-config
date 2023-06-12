@@ -4,7 +4,7 @@
     minecraft
     trackma
     adl
-    jetbrains.idea-ultimate
+    jetbrains.idea-community
     gimp
   ] ++
   (with pkgs.custom; [
