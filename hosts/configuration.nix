@@ -113,6 +113,7 @@
     zip
     yt-dlp
     lf
+    file
     usbutils
     pciutils
     gnupg
