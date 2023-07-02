@@ -58,6 +58,7 @@
       chromium
       grim
       slurp
+      appimage-run
       google-cloud-sdk
     ] ++
     (with pkgs.custom; [
