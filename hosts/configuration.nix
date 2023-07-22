@@ -25,6 +25,7 @@
         device = "nodev";
         enableCryptodisk = true;
         splashImage = null;
+        useOSProber = true;
       };
       timeout = 0;
     };
