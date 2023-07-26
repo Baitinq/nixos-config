@@ -22,7 +22,7 @@ Make sure you're in the `nixos-config` folder and have followed (if necessary) t
 ### Installing
 
 ```
-$ nixos-install --flake . #$HOST-$HARDWARE-$ARCH
+$ nixos-install --flake .#$HOST-$HARDWARE-$ARCH
 ```
 
 ### Updating
@@ -30,7 +30,7 @@ $ nixos-install --flake . #$HOST-$HARDWARE-$ARCH
 ```
 $ nix flake update
 
-$ nixos-rebuild switch --flake . #$HOST-$HARDWARE-$ARCH
+$ nixos-rebuild switch --flake .#$HOST-$HARDWARE-$ARCH
 ```
 
 ## Non-Nixos-Based Installation
