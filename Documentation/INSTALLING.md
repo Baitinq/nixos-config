@@ -5,7 +5,7 @@ My NixOS configuration is modular by design. In practice, this means that you ca
 ---
 `$HOST` -> this refers to the host-specific configuration (packages, services, etc). This loads the host-specific configuration from `/hosts/$HOST/default.nix`
 
-`$HARDWARE` -> this refers to the hardware-specific configuration (disks, kernel, boot, etc). This loads the hardware-specific configuration from `/hosts/$HOST/default.nix`
+`$HARDWARE` -> this refers to the hardware-specific configuration (disks, kernel, boot, etc). This loads the hardware-specific configuration from `/hosts/$HARDWARE/default.nix`
 
 `$ARCH` -> this refers to the architecture of the configuration (x86_64-linux, aarch64-darwin, etc). This sets the architecture to use for the packages.
 
