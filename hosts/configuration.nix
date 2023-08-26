@@ -135,11 +135,14 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  #fix swaylock
-  security.pam.services.swaylock = {
-    text = ''
-      auth include login
-    '';
+  security = {
+    polkit.enable = true;
+    #fix swaylock
+    pam.services.swaylock = {
+      text = ''
+        auth include login
+      '';
+    };
   };
 
   services = {

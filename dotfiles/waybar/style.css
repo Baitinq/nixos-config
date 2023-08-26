@@ -19,24 +19,24 @@ window#waybar {
 }
 
 #window,
-#tags {
+#workspaces {
 	padding: 0 0;
 	margin: 0 0;
 }
 
-#tags button {
+#workspaces button {
 	padding: 0 7px;
 	margin: 0;
 	color: #bbbbbb;
 }
 
-#tags button.occupied {
+#workspaces button.occupied {
 	border-top: 4px solid #bbbbbb;
 	margin: 0;
 	padding: 0 7px;
 }
 
-#tags button.focused {
+#workspaces button.focused {
 	border-top: 0;
 	margin: 0;
 	padding: 0 7px;
@@ -44,7 +44,7 @@ window#waybar {
 	background: #bbbbbb;
 }
 
-#tags button:hover {
+#workspaces button:hover {
 	background: inherit;
 	color: inherit;
 	box-shadow: inherit;

@@ -5,32 +5,32 @@
     // "width": 1280, // Waybar width
     "spacing": 2, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["river/tags", "custom/separator", "river/window"],
+    "modules-left": ["sway/workspaces", "custom/separator", "sway/window"],
     //"modules-center": ["river/window"],
     "modules-right": ["custom/weather", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock", "tray"],
     // Modules configuration
-     //"sway/workspaces": {
-      //   "disable-scroll": true,
-       //  "all-outputs": true,
-        // "format": "{name}",
-        // "persistent_workspaces": {
-        //     "1": [],
-         //    "2": [],
-          //   "3": [],
-           //  "4": [],
-          //   "5": [],
-          //   "6": [],
-          //   "7": [],
-          //   "8": [],
-          //   "9": []
-         //}
-     //},
-    "river/tags": {
-      "tag-labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    },
-    "river/window": {
-      "max-length": 99
-    },
+     "sway/workspaces": {
+         "disable-scroll": true,
+         "all-outputs": true,
+         "format": "{name}",
+         "persistent_workspaces": {
+             "1": [],
+             "2": [],
+             "3": [],
+             "4": [],
+             "5": [],
+             "6": [],
+             "7": [],
+             "8": [],
+             "9": []
+         }
+     },
+   // "river/tags": {
+   //   "tag-labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+   // },
+    //"river/window": {
+    //  "max-length": 99
+    //},
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
