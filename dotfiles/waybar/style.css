@@ -36,7 +36,7 @@ window#waybar {
 	padding: 0 7px;
 }
 
-#workspaces button.focused {
+#workspaces button.focused, #workspaces button.focused:hover {
 	border-top: 0;
 	margin: 0;
 	padding: 0 7px;
