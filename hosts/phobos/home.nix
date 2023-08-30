@@ -44,9 +44,10 @@
       builtins.readFile "${dotfiles}/sxhkd/base" +
       ''
       
+        # Not supported by swhkd
         #enter and leave game mode
-        alt + shift + F11: ctrl + shift + F11 
-            pkill -ALRM sxhkd
+        #alt + shift + F11: ctrl + shift + F11 
+        #    pkill -ALRM sxhkd
 
         # Make sxhkd reload its configuration files
         alt + Escape
@@ -95,8 +96,9 @@
         XF86AudioPlay
           playerctl play
 
-        XF86AudioPause
-          playerctl pause
+        # Not supported by swhkd
+        #XF86AudioPause
+        #  playerctl pause
 
         XF86AudioNext
           playerctl next
@@ -108,8 +110,9 @@
         ######## OTHER #######
         ######################
 
-        XF86TouchpadToggle
-        	exec ~/.config/i3/scripts/toggletouchpad.sh
+        # Not supported by swhkd
+        #XF86TouchpadToggle
+        #	exec ~/.config/i3/scripts/toggletouchpad.sh
       '';
   };
 
