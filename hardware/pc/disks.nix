@@ -13,10 +13,7 @@ let
   '';
   partitionsFormatScript = ''
     mkfs.vfat "${HDD}"-part1
-    cryptsetup -q luksFormat "${HDD}"-part2  --type luks1
-    cryptsetup open --type luks "${HDD}"-part2 encrypted_boot
-    mkfs.ext4 /dev/mapper/encrypted_boot
-    cryptsetup close encrypted_boot
+    mkfs.ext4 "${HDD}"-part2
     cryptsetup -q luksFormat "${HDD}"-part3  --type luks2
     cryptsetup open --type luks "${HDD}"-part3 encrypted_root
     pvcreate /dev/mapper/encrypted_root
@@ -34,8 +31,7 @@ let
     mount -t tmpfs none /mnt
     mkdir -p /mnt/{boot,nix,persist,home}
 
-    cryptsetup open --type luks /dev/disk/by-partlabel/boot encrypted_boot
-    mount /dev/mapper/encrypted_boot /mnt/boot
+    mount /dev/disk/by-partlabel/boot /mnt/boot
     mkdir -p /mnt/boot/efi
     mount /dev/disk/by-partlabel/efi /mnt/boot/efi
     cryptsetup open --type luks /dev/disk/by-partlabel/root encrypted_root
@@ -86,13 +82,8 @@ in
       options = [ "defaults" "mode=755" ];
     };
 
-    boot.initrd.luks.devices."encrypted_boot" = {
-      device = "/dev/disk/by-partlabel/boot";
-      preLVM = true;
-    };
-
     fileSystems."/boot" = {
-      device = "/dev/mapper/encrypted_boot";
+      device = "/dev/disk/by-partlabel/boot";
       fsType = "ext4";
     };
 
