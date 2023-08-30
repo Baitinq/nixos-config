@@ -4,6 +4,27 @@
 #
 # Read `man 5 sway` for a complete reference.
 
+exec "xrdb ~/.Xresources"
+exec "xmodmap ~/.Xmodmap"
+exec "swayidle -w \
+        timeout 300 'swaylock --clock --indicator -f -F -c 000000 --ring-color 005577 --key-hl-color 444444 --grace 7' \
+	timeout 400 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --off' \
+	resume 'wlr-randr --output $(wlr-randr | head -n1 | awk "{print $1;}") --on' \
+        before-sleep 'swaylock --clock --indicator -f -F -c 000000 --ring-color 005577 --key-hl-color 444444 --grace 7'"
+
+exec 'wlsunset -l $(echo $LOCATION | cut -d: -f1) -L $(echo $LOCATION | cut -d: -f2)'
+exec "unclutter"
+exec "clipmenud"
+exec "dunst"
+#exec "numlockx on"
+exec "systemctl --user start graphical-session.target"
+exec "sxhkd"
+exec 'while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -l $LOCATION -r; done'
+exec "waybar"
+
+exec "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"
+exec "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -76,7 +97,7 @@ exec "swaybg -i /home/baitinq/Images/Wallpapers/Day/wave.jpg &"
     bindsym $mod+q kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    #bindsym $mod+d exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -98,7 +119,7 @@ exec "swaybg -i /home/baitinq/Images/Wallpapers/Day/wave.jpg &"
     bindsym $mod+Shift+Escape reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -156,8 +177,8 @@ exec "swaybg -i /home/baitinq/Images/Wallpapers/Day/wave.jpg &"
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    bindsym $mod+Shift+b splith
+    bindsym $mod+Shift+v splitv
 
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
@@ -211,24 +232,5 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
-
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    swaybar_command waybar
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
 
 include @sysconfdir@/sway/config.d/*
