@@ -32,6 +32,6 @@
     "WLR_NO_HARDWARE_CURSORS" = "1";
   };
 
-  #  virtualisation.virtualbox.guest.enable = true;
+  virtualisation.virtualbox.guest.enable = true;
 
 }
