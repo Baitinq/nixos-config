@@ -80,7 +80,7 @@
     EDITOR = "nvim";
     VISUAL = "nvim";
 
-    XKB_DEFAULT_LAYOUT = "gb";
+    XKB_DEFAULT_LAYOUT = "us";
 
     NIXPKGS_ALLOW_UNFREE = "1";
   };

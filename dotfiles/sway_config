@@ -80,7 +80,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 # Read `man 5 sway-input` for more information about this section.
 
 input type:keyboard {
-    xkb_layout gb
+    xkb_layout us
 }
 
 exec "xrdb ~/.Xresources"

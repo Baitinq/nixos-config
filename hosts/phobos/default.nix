@@ -5,7 +5,7 @@
   ];
 
   # Configure keymap in X11
-  services.xserver.layout = "gb";
+  services.xserver.layout = "us";
 
   # Pick only one of the below networking options.
   networking = {
