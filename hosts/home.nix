@@ -99,6 +99,7 @@
       enableSshSupport = true;
       enableExtraSocket = true;
       sshKeys = [ "BC10A40920B576F641480795B9C7E01A4E47DA9F" ];
+      pinentryFlavor = "gnome3";
       defaultCacheTtl = 43200; #12h
       defaultCacheTtlSsh = 43200;
       maxCacheTtl = 86400; #24h
