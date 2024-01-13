@@ -374,6 +374,10 @@
     "./Images/Wallpapers".source = inputs.wallpapers;
   };
 
+  home.sessionPath = [
+      "/home/${user}/.cargo/bin"
+  ];
+
   # For disabling the automatic creation of $HOME/Desktop
   xdg.userDirs.desktop = "$HOME/";
 
