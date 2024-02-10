@@ -17,8 +17,6 @@
   :config
   (evil-mode 1))
 
-(setq create-lockfiles nil)
-
 (use-package evil-collection
   :after evil
   :ensure t 
@@ -39,12 +37,15 @@
   )
 )
 
-(add-hook 'after-init-hook 'my/setup-font-faces)
+(add-hook 'after-init-hook
+          (lambda ()
+            (my/setup-font-faces)))
 (add-hook 'server-after-make-frame-hook 'my/setup-font-faces)
 
-(setq-default line-spacing 0.10)
+(setq default-line-spacing 0.10)
 
 (setq make-backup-files nil)
+(setq create-lockfiles nil)
 
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
@@ -129,4 +130,6 @@
 
 (use-package dired-sidebar
   :ensure t
-  :commands (dired-sidebar-toggle-sidebar))
+  :commands (dired-sidebar-toggle-sidebar)
+  :init
+  (dired-sidebar-toggle-sidebar))
