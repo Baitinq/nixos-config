@@ -42,6 +42,8 @@
 
 (setq-default line-spacing 0.10)
 
+(setq make-backup-files nil)
+
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
