@@ -31,14 +31,16 @@
       doom-themes-enable-italic t)
 (load-theme 'doom-one t)
 
-(cond
- ((find-font (font-spec :name "Inconsolata LGC Nerd Font"))
- (set-face-attribute 'default nil
+(defun my/setup-font-faces ()
+(when (display-graphic-p)
+  (set-face-attribute 'default nil
                      :font "Inconsolata LGC Nerd Font 11"
                      :weight 'medium)
-   ;; Needed for emacsclient or fonts will be smaller than expected
-  (add-to-list 'default-frame-alist '(font . "Inconsolata LGC Nerd Font 11")))
+  )
 )
+
+(add-hook 'after-init-hook 'my/setup-font-faces)
+(add-hook 'server-after-make-frame-hook 'my/setup-font-faces)
 
 (setq-default line-spacing 0.10)
 
@@ -110,7 +112,7 @@
 
 (use-package lsp-bridge
   :ensure t 
-  :hook ((haskell-mode nix-mode jq-mode c-mode c++-mode c-or-c++-mode) . lsp-deferred)
+  :hook ((haskell-mode nix-mode jq-mode c-mode c++-mode c-or-c++-mode rust-mode) . lsp-deferred)
   :commands (lsp lsp-deferred)
   :config
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "--log=error" "--clang-tidy" "--enable-config"))
