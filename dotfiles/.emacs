@@ -135,5 +135,8 @@
   :ensure t)
 
 (use-package dired-sidebar
-  :ensure t
-  :commands (dired-sidebar-toggle-sidebar))
+  :ensure t)
+
+(eval-after-load 'dired
+  '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
+)
