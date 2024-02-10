@@ -37,10 +37,16 @@
   )
 )
 
-(add-hook 'after-init-hook
-          (lambda ()
-            (my/setup-font-faces)))
-(add-hook 'server-after-make-frame-hook 'my/setup-font-faces)
+(defun my/on-init ()
+	(my/setup-font-faces)
+	(dired-sidebar-toggle-sidebar)
+(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+
+	)
+
+(add-hook 'after-init-hook 'my/on-init)
+(add-hook 'server-after-make-frame-hook 'my/on-init)
 
 (setq default-line-spacing 0.10)
 
@@ -130,6 +136,4 @@
 
 (use-package dired-sidebar
   :ensure t
-  :commands (dired-sidebar-toggle-sidebar)
-  :init
-  (dired-sidebar-toggle-sidebar))
+  :commands (dired-sidebar-toggle-sidebar))
