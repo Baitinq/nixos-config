@@ -20,7 +20,6 @@ exec "dunst"
 exec "systemctl --user start graphical-session.target"
 exec "sxhkd"
 exec 'while :; do ssh-agent smart-wallpaper -d ~/Images/Wallpapers/Day -n ~/Images/Wallpapers/Night -l $LOCATION -r; done'
-exec "waybar"
 
 exec "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"
 exec "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"
@@ -230,5 +229,9 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+bar {
+    swaybar_command waybar
+}
 
 include @sysconfdir@/sway/config.d/*
