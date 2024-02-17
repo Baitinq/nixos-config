@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hardware.url = "github:NixOS/nixos-hardware";
 
     impermanence.url = "github:nix-community/impermanence";
@@ -40,7 +45,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, nix-darwin, ... }:
     let
       user = "baitinq";
 
@@ -71,25 +76,35 @@
 
       commonInherits = {
         inherit (nixpkgs) lib;
-        inherit inputs nixpkgs home-manager;
+        inherit inputs nixpkgs home-manager nix-darwin;
         inherit user secrets dotfiles hosts hardwares systems;
       };
     in
     {
       nixosConfigurations = import ./hosts (commonInherits // {
         isNixOS = true;
+        isMacOS = false;
+        isIso = false;
+        isHardware = true;
+      });
+
+      darwinConfigurations = import ./hosts (commonInherits // {
+        isNixOS = false;
+        isMacOS = true;
         isIso = false;
         isHardware = true;
       });
 
       homeConfigurations = import ./hosts (commonInherits // {
         isNixOS = false;
+        isMacOS = false;
         isIso = false;
         isHardware = false;
       });
 
       isoConfigurations = import ./hosts (commonInherits // {
         isNixOS = true;
+        isMacOS = false;
         isIso = true;
         isHardware = false;
         user = "nixos";
@@ -97,6 +112,7 @@
 
       nixosNoHardwareConfigurations = import ./hosts (commonInherits // {
         isNixOS = true;
+        isMacOS = false;
         isIso = false;
         isHardware = false;
       });

@@ -1,6 +1,6 @@
-{ lib, inputs, secrets, dotfiles, hosts, hardwares, systems, isNixOS, isIso, isHardware, user, nixpkgs, home-manager, ... }:
+{ lib, inputs, secrets, dotfiles, hosts, hardwares, systems, isNixOS, isMacOS, isIso, isHardware, user, nixpkgs, home-manager, nix-darwin, ... }:
 let
-  mkHost = { host, hardware, stateVersion, system, timezone, location, extraOverlays, extraModules }: isNixOS: isIso: isHardware:
+  mkHost = { host, hardware, stateVersion, system, timezone, location, extraOverlays, extraModules }: isNixOS: isMacOS: isIso: isHardware:
     let
       pkgs = import nixpkgs {
         inherit system;
@@ -43,6 +43,14 @@ let
             }
           ] ++ extraSpecialModules;
         }
+    else if isMacOS
+    then
+      nix-darwin.lib.darwinSystem
+      {
+        inherit system;
+        modules = [ ./darwin.nix ];
+        specialArgs = extraArgs;
+      }
     else
       home-manager.lib.homeManagerConfiguration
         {
@@ -63,4 +71,4 @@ in
     Map each element of the list applying the mkHost function to its elements and returning a set in the listToAttrs format
     builtins.listToAttrs on the result
   */
-builtins.listToAttrs (map (mInput@{ host, hardware, system, ... }: { name = host + "-" + hardware + "-" + system; value = mkHost mInput isNixOS isIso isHardware; }) permutatedHosts)
+builtins.listToAttrs (map (mInput@{ host, hardware, system, ... }: { name = host + "-" + hardware + "-" + system; value = mkHost mInput isNixOS isMacOS isIso isHardware; }) permutatedHosts)
