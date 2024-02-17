@@ -48,8 +48,21 @@ let
       nix-darwin.lib.darwinSystem
       {
         inherit system;
-        modules = [ ./darwin.nix ];
         specialArgs = extraArgs;
+        modules = [
+          ./darwin.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = extraArgs;
+            home-manager.users."manuel.palenzuela" = {
+              imports = [
+                ./home-darwin.nix
+              ];
+            };
+          }
+        ];
       }
     else
       home-manager.lib.homeManagerConfiguration

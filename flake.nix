@@ -93,6 +93,7 @@
         isMacOS = true;
         isIso = false;
         isHardware = true;
+        user = "${secrets.darwin_user}";
       });
 
       homeConfigurations = import ./hosts (commonInherits // {
