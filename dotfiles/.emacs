@@ -1,13 +1,16 @@
-;; load package manager, add the Melpa package registry
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-;; bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(require 'use-package)
+;; bootstrap straight
+(defvar bootstrap-version)
+(let ((bootstrap-file
+      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 (use-package evil
   :ensure t 
@@ -117,9 +120,10 @@
   :ensure t)
 (yas-global-mode 1)
 
+;; TODO: Install with straight tho
 (use-package lsp-bridge
   :ensure t 
-  :hook ((haskell-mode nix-mode jq-mode c-mode c++-mode c-or-c++-mode rust-mode) . lsp-deferred)
+  :hook (prog-mode . lsp-deferred)
   :commands (lsp lsp-deferred)
   :config
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "--log=error" "--clang-tidy" "--enable-config"))
