@@ -120,9 +120,11 @@
   :ensure t)
 (yas-global-mode 1)
 
-;; TODO: Install with straight tho
 (use-package lsp-bridge
-  :ensure t 
+  :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+            :build (:not compile))
+  :ensure t
   :hook (prog-mode . lsp-deferred)
   :commands (lsp lsp-deferred)
   :config
