@@ -126,10 +126,15 @@
             :build (:not compile))
   :ensure t
   :hook (prog-mode . lsp-deferred)
-  :commands (lsp lsp-deferred)
+  :init
+  (global-lsp-bridge-mode)
   :config
+  (setq lsp-bridge-enable-log t)
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "--log=error" "--clang-tidy" "--enable-config"))
-  (setq lsp-auto-guess-root t))
+  (setq lsp-auto-guess-root t)
+  (setq acm-enable-copilot t)
+  (setq lsp-bridge-enable-completion-in-string t)
+  (setq lsp-bridge-enable-hover-diagnostic t))
 
 (use-package lsp-haskell
   :ensure t )
