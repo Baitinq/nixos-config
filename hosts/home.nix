@@ -169,7 +169,7 @@
         projectile
         lsp-ui
 
-        manualPackages.custom.lsp-bridge
+        lsp-bridge
         rust-mode
         rustic
         company

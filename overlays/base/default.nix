@@ -80,9 +80,4 @@ final: prev:
   mpv = prev.wrapMpv prev.mpv-unwrapped {
     scripts = [ prev.mpvScripts.mpris ];
   };
-
-  emacsPackagesFor = emacs: ((prev.emacsPackagesFor emacs).overrideScope' (prev: final: rec {
-    manualPackages = final.manualPackages // { custom.lsp-bridge = prev.callPackage ../../packages/lsp-bridge { }; };
-  }));
-
 }
