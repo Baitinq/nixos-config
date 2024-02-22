@@ -97,16 +97,12 @@
   :config
   (direnv-mode))
 
-;; TODO: use corfu?
-(use-package company
+(use-package corfu
   :ensure t
-  :after eglot  ; this line alone does not help to start company
-  :hook (eglot-managed-mode . company-mode)  ; starts company when eglot is started
-)
-
-(use-package company-box
-  :ensure t
-  :hook (company-mode . company-box-mode))
+  :init
+  (global-corfu-mode)
+  :config
+  (setq corfu-auto t))
 
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
