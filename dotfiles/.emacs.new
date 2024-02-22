@@ -97,12 +97,13 @@
   :config
   (direnv-mode))
 
-(use-package corfu
+(use-package company
   :ensure t
-  :init
-  (global-corfu-mode)
-  :config
-  (setq corfu-auto t))
+)
+
+(use-package company-box
+  :ensure t
+  :hook (company-mode . company-box-mode))
 
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
@@ -112,13 +113,18 @@
   (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
   (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 
+(use-package lsp-mode
+  :ensure t)
+
+(use-package lsp-ui
+  :ensure t)
+
 (use-package rustic
   :ensure t
   :config
-  (setq rustic-format-on-save t)
-  (setq rustic-lsp-client 'eglot))
+  (setq rustic-format-on-save t))
 
 (use-package go-mode
   :ensure t
   :init
-  (add-hook 'go-mode-hook 'eglot-ensure))
+  (add-hook 'go-mode-hook 'lsp-deferred))
