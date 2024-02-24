@@ -105,7 +105,9 @@
   :ensure t)
 
 (use-package helm-ag
-  :ensure t)
+  :ensure t
+  :init
+  (setq helm-ag-fuzzy-match t))
 
 (use-package projectile
   :ensure t
@@ -119,7 +121,10 @@
   :config
   (helm-projectile-on)
   :bind
-  (:map evil-normal-state-map ("C-p" . helm-projectile-find-file)))
+  (:map evil-normal-state-map
+    ("C-p" . helm-projectile-find-file)
+    ("C-S-f" . helm-projectile-ag)))
+
 (use-package company
   :ensure t
   :config
@@ -142,7 +147,9 @@
   :ensure t
   :config
   (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-file-watch-threshold 4000))
+  (setq lsp-file-watch-threshold 4000)
+  (setq gc-cons-threshold 100000000)
+  (setq read-process-output-max (* 1024 1024)))
 
 (use-package lsp-ui
   :ensure t
