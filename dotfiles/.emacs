@@ -1,16 +1,21 @@
-;; bootstrap straight
+;; bootstrap straight start
 (defvar bootstrap-version)
 (let ((bootstrap-file
-      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-        'silent 'inhibit-cookies)
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+(use-package straight
+  :custom
+  (straight-use-package-by-default t))
+;; bootstrap straight end
 
 (use-package evil
   :ensure t 
@@ -42,11 +47,7 @@
 
 (defun my/on-init ()
 	(my/setup-font-faces)
-	(dired-sidebar-toggle-sidebar)
-(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-
-	)
+)
 
 (add-hook 'after-init-hook 'my/on-init)
 (add-hook 'server-after-make-frame-hook 'my/on-init)
@@ -54,7 +55,10 @@
 (setq default-line-spacing 0.10)
 
 (setq make-backup-files nil)
+(setq auto-save-default nil)
 (setq create-lockfiles nil)
+(setq warning-minimum-level :error)
+(setq inhibit-startup-screen t)
 
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
@@ -80,70 +84,69 @@
   (setq dashboard-center-content nil)
   (setq dashboard-items '((recents  . 5)
                         (bookmarks . 5)
-			(projects . 5)
-			(agenda . 5)
-                        (registers . 5)))
+			(projects . 5)))
   (setq dashboard-set-navigator t)
   :config
   (dashboard-setup-startup-hook))
 
 (setq dashboard-footer-messages '("I showed you my source code, plz respond."))
 
-;;(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-
-;;TODO, make it work with directories
-(setq initial-buffer-choice
-  (lambda ()
-    (if (buffer-file-name)
-      (current-buffer) ;; leave as-is
-      (get-buffer-create "*dashboard*"))))
-
 (use-package direnv
   :ensure t 
   :config
   (direnv-mode))
 
-(use-package nix-mode
-  :ensure t 
-  :mode "\\.nix\\'")
-
-(use-package haskell-mode
-  :ensure t )
-
-(use-package typescript-mode
-  :ensure t )
-
-(use-package jq-mode
-  :ensure t )
-
-(use-package yasnippet
+(use-package helm
   :ensure t)
-(yas-global-mode 1)
 
-(use-package lsp-bridge
-  :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
-            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
-            :build (:not compile))
+(use-package projectile
   :ensure t
-  :hook (prog-mode . lsp-deferred)
-  :init
-  (global-lsp-bridge-mode)
   :config
-  (setq lsp-bridge-enable-log t)
-  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "--log=error" "--clang-tidy" "--enable-config"))
-  (setq lsp-auto-guess-root t)
-  (setq acm-enable-copilot t)
-  (setq lsp-bridge-enable-completion-in-string t)
-  (setq lsp-bridge-enable-hover-diagnostic t))
+  (projectile-mode +1))
 
-(use-package lsp-haskell
-  :ensure t )
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on))
 
 (use-package company
-  :ensure t)
+  :ensure t
+  :config
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.0))
+
+(use-package company-box
+  :ensure t
+  :hook (company-mode . company-box-mode))
+
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'copilot-mode)
+  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
+
+(use-package lsp-mode
+  :ensure t
+  :config
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-file-watch-threshold 4000))
+
+(use-package lsp-ui
+  :ensure t
+  :config
+  (setq lsp-ui-doc-show-with-cursor nil))
 
 (use-package rustic
-  :ensure t)
+  :ensure t
+  :config
+  (setq rustic-format-on-save t))
+
+(use-package go-mode
+  :ensure t
+  :init
+  (add-hook 'go-mode-hook 'lsp-deferred))
 
 (use-package dired-sidebar
   :ensure t)
