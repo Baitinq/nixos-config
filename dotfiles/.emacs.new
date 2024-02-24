@@ -148,6 +148,9 @@
   :init
   (add-hook 'go-mode-hook 'lsp-deferred))
 
+(use-package dired-sidebar
+  :ensure t)
+
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
 )
