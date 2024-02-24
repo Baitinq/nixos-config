@@ -55,6 +55,7 @@
 (setq default-line-spacing 0.10)
 
 (setq make-backup-files nil)
+(setq auto-save-default nil)
 (setq create-lockfiles nil)
 (setq warning-minimum-level :error)
 (setq inhibit-startup-screen t)
@@ -131,7 +132,8 @@
 (use-package lsp-mode
   :ensure t
   :config
-  (setq lsp-headerline-breadcrumb-enable nil))
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-file-watch-threshold 4000))
 
 (use-package lsp-ui
   :ensure t
