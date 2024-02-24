@@ -99,7 +99,9 @@
 
 (use-package company
   :ensure t
-)
+  :config
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.0))
 
 (use-package company-box
   :ensure t
@@ -114,10 +116,14 @@
   (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 
 (use-package lsp-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq lsp-headerline-breadcrumb-enable nil))
 
 (use-package lsp-ui
-  :ensure t)
+  :ensure t
+  :config
+  (setq lsp-ui-doc-show-with-cursor nil))
 
 (use-package rustic
   :ensure t
@@ -128,3 +134,7 @@
   :ensure t
   :init
   (add-hook 'go-mode-hook 'lsp-deferred))
+
+(eval-after-load 'dired
+  '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
+)
