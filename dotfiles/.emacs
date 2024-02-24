@@ -17,6 +17,9 @@
   (straight-use-package-by-default t))
 ;; bootstrap straight end
 
+(use-package which-key
+  :ensure t)
+
 (use-package evil
   :ensure t 
   :init
@@ -107,8 +110,9 @@
 (use-package helm-projectile
   :ensure t
   :config
-  (helm-projectile-on))
-
+  (helm-projectile-on)
+  :bind
+  (:map evil-normal-state-map ("C-p" . helm-projectile-find-file)))
 (use-package company
   :ensure t
   :config
@@ -149,7 +153,9 @@
   (add-hook 'go-mode-hook 'lsp-deferred))
 
 (use-package dired-sidebar
-  :ensure t)
+  :ensure t
+  :bind
+  (:map evil-normal-state-map ("C-b" . dired-sidebar-toggle-sidebar)))
 
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
