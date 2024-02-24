@@ -97,6 +97,19 @@
   :config
   (direnv-mode))
 
+(use-package helm
+  :ensure t)
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1))
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on))
+
 (use-package company
   :ensure t
   :config
