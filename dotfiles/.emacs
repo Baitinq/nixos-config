@@ -146,6 +146,7 @@
 (use-package lsp-mode
   :ensure t
   :config
+  (setq lsp-semantic-tokens-enable t)
   (setq lsp-headerline-breadcrumb-enable nil)
   (setq lsp-file-watch-threshold 4000)
   (setq gc-cons-threshold 100000000)
