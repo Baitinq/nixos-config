@@ -63,6 +63,8 @@
 (setq warning-minimum-level :error)
 (setq inhibit-startup-screen t)
 
+(savehist-mode 1)
+
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -102,8 +104,13 @@
 (use-package helm
   :ensure t)
 
+(use-package helm-ag
+  :ensure t)
+
 (use-package projectile
   :ensure t
+  :init
+  (setq projectile-project-search-path '("~/src/"))
   :config
   (projectile-mode +1))
 
