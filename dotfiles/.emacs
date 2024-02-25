@@ -135,6 +135,11 @@
   :ensure t
   :hook (company-mode . company-box-mode))
 
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(basic partial-completion orderless)))
+
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
   :ensure t
