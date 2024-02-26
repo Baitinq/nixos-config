@@ -101,6 +101,7 @@
   :config
   (direnv-mode))
 
+;; TODO: Use vertico
 (use-package helm
   :ensure t)
 
@@ -122,8 +123,9 @@
   (helm-projectile-on)
   :bind
   (:map evil-normal-state-map
+    ("C-S-f" . helm-occur)
     ("C-p" . helm-projectile-find-file)
-    ("C-S-f" . helm-projectile-ag)))
+    ("C-S-p" . helm-projectile-ag)))
 
 (use-package company
   :ensure t
