@@ -176,6 +176,9 @@
 
 (use-package dired-sidebar
   :ensure t
+  :config
+  (setq dired-sidebar-resize-on-open nil)
+  (setq dired-sidebar-window-fixed nil)
   :bind
   (:map evil-normal-state-map ("C-b" . dired-sidebar-toggle-sidebar)))
 
