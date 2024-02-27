@@ -101,14 +101,30 @@
   :config
   (direnv-mode))
 
-;; TODO: Use vertico
-(use-package helm
-  :ensure t)
-
-(use-package helm-ag
+(use-package vertico
   :ensure t
   :init
-  (setq helm-ag-fuzzy-match t))
+  (vertico-mode))
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+(use-package consult
+  :ensure t
+  :config
+  (setq consult-async-min-input 2)
+  :bind
+  (:map evil-normal-state-map
+  ("C-S-f" . consult-line)
+  ("C-p" . consult-find)
+  ("C-S-p" . consult-ripgrep)))
+
+(use-package savehist
+  :ensure t
+  :init
+  (savehist-mode))
 
 (use-package projectile
   :ensure t
@@ -116,16 +132,6 @@
   (setq projectile-project-search-path '("~/src/"))
   :config
   (projectile-mode +1))
-
-(use-package helm-projectile
-  :ensure t
-  :config
-  (helm-projectile-on)
-  :bind
-  (:map evil-normal-state-map
-    ("C-S-f" . helm-occur)
-    ("C-p" . helm-projectile-find-file)
-    ("C-S-p" . helm-projectile-ag)))
 
 (use-package company
   :ensure t
