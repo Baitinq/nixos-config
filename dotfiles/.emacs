@@ -42,9 +42,11 @@
 
 (defun my/setup-font-faces ()
 (when (display-graphic-p)
-  (set-face-attribute 'default nil
+  (cond
+    ((find-font (font-spec :name "Inconsolata LGC Nerd Font 11"))
+      (set-face-attribute 'default nil
                      :font "Inconsolata LGC Nerd Font 11"
-                     :weight 'medium)
+                     :weight 'medium)))
   )
 )
 
