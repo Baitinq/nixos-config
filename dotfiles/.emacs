@@ -63,8 +63,6 @@
 (setq warning-minimum-level :error)
 (setq inhibit-startup-screen t)
 
-(savehist-mode 1)
-
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -84,17 +82,18 @@
       
 (use-package dashboard
   :ensure t 
-  :init
+  :config
   (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
+  (setq dashboard-footer-messages '("I showed you my source code, plz respond."))
   (setq dashboard-center-content nil)
   (setq dashboard-items '((recents  . 5)
                         (bookmarks . 5)
 			(projects . 5)))
   (setq dashboard-set-navigator t)
-  :config
-  (dashboard-setup-startup-hook))
-
-(setq dashboard-footer-messages '("I showed you my source code, plz respond."))
+  (if (< (length command-line-args) 2)
+    (setq initial-buffer-choice (lambda ()
+	(get-buffer-create "*dashboard*")
+	(dashboard-refresh-buffer)))))
 
 (use-package direnv
   :ensure t 
