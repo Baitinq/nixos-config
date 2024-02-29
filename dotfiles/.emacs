@@ -146,6 +146,12 @@
   :init
   (global-corfu-mode))
 
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
 (use-package eglot
   :ensure t
   :config
@@ -187,3 +193,5 @@
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
 )
+
+(setq flymake-show-diagnostics-at-end-of-line t)
