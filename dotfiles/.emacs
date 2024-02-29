@@ -82,7 +82,7 @@
 (setq scroll-conservatively 10000)
 
 (global-display-line-numbers-mode)
-
+(setq display-line-numbers-type 'relative) 
 (global-visual-line-mode t)
       
 (use-package dashboard
