@@ -65,6 +65,9 @@
 (setq warning-minimum-level :error)
 (setq inhibit-startup-screen t)
 
+;; Refresh buffers if underlying file changes
+(setq globa-auto-revert-mode 1)
+
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -149,12 +152,19 @@
 (use-package kind-icon
   :ensure t
   :after corfu
+  ;:custom
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+(use-package flymake
+  :ensure t
+  :config
+  (setq flymake-show-diagnostics-at-end-of-line t))
 
 (use-package eglot
   :ensure t
   :config
+  (add-to-list 'eglot-ignored-server-capabilites :hoverProvider)
   (setq read-process-output-max (* 1024 1024))
   (setq gc-cons-threshold 100000000))
 
@@ -193,5 +203,3 @@
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
 )
-
-(setq flymake-show-diagnostics-at-end-of-line t)
