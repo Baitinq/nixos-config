@@ -134,20 +134,28 @@
   :config
   (projectile-mode +1))
 
-(use-package company
-  :ensure t
-  :config
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.0))
-
-(use-package company-box
-  :ensure t
-  :hook (company-mode . company-box-mode))
-
 (use-package orderless
   :ensure t
   :custom
   (completion-styles '(basic partial-completion orderless)))
+
+(use-package corfu
+  :ensure t
+  :config
+  (setq corfu-auto t)
+  :init
+  (global-corfu-mode))
+
+(use-package eglot
+  :ensure t
+  :config
+  (setq read-process-output-max (* 1024 1024))
+  (setq gc-cons-threshold 100000000))
+
+(use-package eldoc-box
+  :ensure t
+  :init
+  (add-hook 'eldoc-mode-hook 'eldoc-box-hover-at-point-mode))
 
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
@@ -157,29 +165,16 @@
   (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
   (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 
-(use-package lsp-mode
-  :ensure t
-  :config
-  (setq lsp-semantic-tokens-enable t)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-file-watch-threshold 4000)
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024)))
-
-(use-package lsp-ui
-  :ensure t
-  :config
-  (setq lsp-ui-doc-show-with-cursor nil))
-
 (use-package rustic
   :ensure t
   :config
-  (setq rustic-format-on-save t))
+  (setq rustic-format-on-save t)
+  (setq rustic-lsp-client 'eglot))
 
 (use-package go-mode
   :ensure t
   :init
-  (add-hook 'go-mode-hook 'lsp-deferred))
+  (add-hook 'go-mode-hook 'eglot-ensure))
 
 (use-package dired-sidebar
   :ensure t
