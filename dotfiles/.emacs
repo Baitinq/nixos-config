@@ -57,6 +57,8 @@
 (add-hook 'after-init-hook 'my/on-init)
 (add-hook 'server-after-make-frame-hook 'my/on-init)
 
+(setq ring-bell-function 'ignore)
+
 (setq default-line-spacing 0.10)
 
 (setq make-backup-files nil)
