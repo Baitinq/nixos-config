@@ -15,7 +15,7 @@ Installation steps are in [Documentation/INSTALLING.md](./Documentation/INSTALLI
 * Secrets using **git-crypt**
 * Network-deployable through **deploy-rs**
 * Modularized configuration
-* Wayland (*river*) and XOrg (*dwm*) desktops
+* Wayland (*sway*) and XOrg (*XMonad*) desktops
 
 ## Structure
 Here is an overview of the repos' structure:
