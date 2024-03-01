@@ -158,10 +158,13 @@
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
-(use-package flymake
+(use-package treesit-auto
   :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
   :config
-  (setq flymake-show-diagnostics-at-end-of-line t))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 (use-package eglot
   :ensure t
@@ -187,12 +190,14 @@
   :ensure t
   :config
   (setq rustic-format-on-save t)
-  (setq rustic-lsp-client 'eglot))
+  (setq rustic-lsp-client 'eglot)
+  (delete 'rust treesit-auto-langs))
 
 (use-package go-mode
   :ensure t
   :init
-  (add-hook 'go-mode-hook 'eglot-ensure))
+  (add-hook 'go-mode-hook 'eglot-ensure)
+  (delete 'go treesit-auto-langs))
 
 (use-package dired-sidebar
   :ensure t
@@ -205,11 +210,3 @@
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
 )
-
-(use-package treesit-auto
-  :ensure t
-  :custom
-  (treesit-auto-install 'prompt)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
