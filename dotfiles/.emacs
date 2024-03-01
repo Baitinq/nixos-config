@@ -207,6 +207,18 @@
   :bind
   (:map evil-normal-state-map ("C-b" . dired-sidebar-toggle-sidebar)))
 
+(use-package minimap
+  :ensure t
+  :config
+  (setq minimap-window-location 'right)
+  (setq minimap-dedicated-window t)
+  (setq minimap-enlarge-certain-faces nil)
+  (setq minimap-width-fraction 0.0)
+  (setq minimap-minimum-width 12)
+  :bind
+  (:map evil-normal-state-map
+  ("C-n" . minimap-mode)))
+
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
 )
