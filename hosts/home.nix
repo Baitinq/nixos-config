@@ -156,34 +156,34 @@
     emacs = {
       enable = true;
       extraPackages = epkgs: with epkgs; [
-        use-package
-
         direnv
+        which-key
 
         evil
         evil-collection
 
         doom-modeline
+        doom-themes
         dashboard
 
         projectile
-        lsp-ui
+        
+        corfu
+        kind-icon
+        eldoc-box 
+        
+        vertico
+        consult
+        orderless
+        marginalia
+        
+        treesit-auto
 
-        lsp-bridge
-        rust-mode
+        go-mode
         rustic
-        company
-        flycheck
-        lsp-haskell
-
-        nix-mode
-        haskell-mode
-        typescript-mode
-        jq-mode
-
-        doom-themes
 
         dired-sidebar
+        minimap
       ];
       extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };
