@@ -1,10 +1,10 @@
-{ pkgs, user, ...}:
+{ pkgs, user, ... }:
 {
-    users.users."${user}".home = "/Users/${user}";
+  users.users."${user}".home = "/Users/${user}";
 
-    environment.systemPackages =
+  environment.systemPackages =
     [
     ];
 
-    services.nix-daemon.enable = true;
+  services.nix-daemon.enable = true;
 }

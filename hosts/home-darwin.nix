@@ -1,4 +1,4 @@
-{  pkgs, stateVersion, lib, dotfiles, user, ... }:
+{ pkgs, stateVersion, lib, dotfiles, user, ... }:
 {
   imports = [
   ];
@@ -12,8 +12,7 @@
     ];
   };
 
-  services = {
-  };
+  services = { };
 
   programs = {
     emacs = {

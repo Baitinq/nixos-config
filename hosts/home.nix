@@ -167,16 +167,16 @@
         dashboard
 
         projectile
-        
+
         corfu
         kind-icon
-        eldoc-box 
-        
+        eldoc-box
+
         vertico
         consult
         orderless
         marginalia
-        
+
         treesit-auto
 
         go-mode
@@ -376,7 +376,7 @@
   };
 
   home.sessionPath = [
-      "/home/${user}/.cargo/bin"
+    "/home/${user}/.cargo/bin"
   ];
 
   # For disabling the automatic creation of $HOME/Desktop

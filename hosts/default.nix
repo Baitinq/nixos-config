@@ -46,24 +46,24 @@ let
     else if isMacOS
     then
       nix-darwin.lib.darwinSystem
-      {
-        inherit system;
-        specialArgs = extraArgs;
-        modules = [
-          ./darwin.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = extraArgs;
-            home-manager.users."manuel.palenzuela" = {
-              imports = [
-                ./home-darwin.nix
-              ];
-            };
-          }
-        ];
-      }
+        {
+          inherit system;
+          specialArgs = extraArgs;
+          modules = [
+            ./darwin.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = extraArgs;
+              home-manager.users."manuel.palenzuela" = {
+                imports = [
+                  ./home-darwin.nix
+                ];
+              };
+            }
+          ];
+        }
     else
       home-manager.lib.homeManagerConfiguration
         {
