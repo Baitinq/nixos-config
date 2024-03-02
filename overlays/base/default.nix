@@ -80,4 +80,12 @@ final: prev:
   mpv = prev.wrapMpv prev.mpv-unwrapped {
     scripts = [ prev.mpvScripts.mpris ];
   };
+
+  emacs = (prev.symlinkJoin {
+    inherit (prev.emacs) name;
+    inherit (prev.emacs) version;
+    paths = [ prev.emacs ];
+    nativeBuildInputs = [ prev.makeBinaryWrapper ];
+    postBuild = "wrapProgram $out/bin/emacs --prefix PATH : ${prev.lib.makeBinPath [ prev.nodejs prev.ripgrep ]}";
+  });
 }
