@@ -11,6 +11,7 @@ let
         };
         overlays = [
           inputs.nur.overlay
+          inputs.emacs-overlay.overlay
           (import ../packages)
           (import ../overlays)
         ] ++ extraOverlays;

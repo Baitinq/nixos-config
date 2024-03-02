@@ -155,37 +155,10 @@
 
     emacs = {
       enable = true;
-      extraPackages = epkgs: with epkgs; [
-        use-package
-
-        direnv
-
-        evil
-        evil-collection
-
-        doom-modeline
-        dashboard
-
-        projectile
-        lsp-ui
-
-        lsp-bridge
-        rust-mode
-        rustic
-        company
-        flycheck
-        lsp-haskell
-
-        nix-mode
-        haskell-mode
-        typescript-mode
-        jq-mode
-
-        doom-themes
-
-        dired-sidebar
-      ];
-      extraConfig = builtins.readFile "${dotfiles}/.emacs";
+      package = (pkgs.emacsWithPackagesFromUsePackage {
+        config = "${dotfiles}/.emacs";
+        defaultInitFile = true;
+      });
     };
 
     firefox = {

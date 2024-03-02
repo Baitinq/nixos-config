@@ -17,6 +17,9 @@
   (straight-use-package-by-default t))
 ;; bootstrap straight end
 
+(use-package bind-key
+  :ensure t)
+
 (use-package which-key
   :ensure t)
 
@@ -127,10 +130,8 @@
   ("C-p" . consult-find)
   ("C-S-p" . consult-ripgrep)))
 
-(use-package savehist
-  :ensure t
-  :init
-  (savehist-mode))
+
+  (savehist-mode)
 
 (use-package projectile
   :ensure t

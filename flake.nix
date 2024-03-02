@@ -29,6 +29,8 @@
 
     nix-index.url = "github:Mic92/nix-index-database";
 
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+
     hosts = {
       url = "github:StevenBlack/hosts";
       flake = false;
