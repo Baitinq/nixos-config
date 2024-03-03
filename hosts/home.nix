@@ -184,6 +184,7 @@
 
         dired-sidebar
         minimap
+        centaur-tabs
       ];
       extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };
