@@ -63,7 +63,7 @@
 
 (setq make-backup-files nil)
 (setq auto-save-mode -1)
-(setq auto-save-visited-mode 1)
+(auto-save-visited-mode 1)
 (setq create-lockfiles nil)
 (setq warning-minimum-level :error)
 (setq inhibit-startup-screen t)
