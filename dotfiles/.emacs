@@ -224,7 +224,7 @@
   :ensure t
   :bind
   (:map evil-normal-state-map
-  ("C-t" . centaur-tabs-mode)))
+  ("C-S-t" . centaur-tabs-mode)))
 
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
