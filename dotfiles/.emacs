@@ -69,7 +69,7 @@
 (setq inhibit-startup-screen t)
 
 ;; Refresh buffers if underlying file changes
-(setq globa-auto-revert-mode 1)
+(global-auto-revert-mode 1)
 
 ;; Disable toolbar, menubar and scrollbar
 (menu-bar-mode -1)
