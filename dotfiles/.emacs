@@ -18,7 +18,10 @@
 ;; bootstrap straight end
 
 (use-package which-key
-  :ensure t)
+  :ensure t
+  :init
+  (which-key-setup-minibuffer)
+  (which-key-mode))
 
 (use-package evil
   :ensure t 
