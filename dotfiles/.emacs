@@ -203,6 +203,11 @@
   (add-hook 'go-mode-hook 'eglot-ensure)
   (delete 'go treesit-auto-langs))
 
+(use-package gotest
+  :ensure t
+  :init
+  (setq go-test-args "-tags dynamic"))
+
 (use-package treemacs
   :ensure t
   :config
