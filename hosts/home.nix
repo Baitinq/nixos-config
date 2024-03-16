@@ -180,9 +180,10 @@
         treesit-auto
 
         go-mode
+        gotest
         rustic
 
-        dired-sidebar
+        treemacs
         minimap
         centaur-tabs
       ];
