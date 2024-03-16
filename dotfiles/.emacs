@@ -20,6 +20,7 @@
 (use-package which-key
   :ensure t
   :init
+  (setq which-key-idle-delay 0.4)
   (which-key-setup-minibuffer)
   (which-key-mode))
 
@@ -36,6 +37,28 @@
   :ensure t 
   :config
   (evil-collection-init))
+
+(use-package general
+  :ensure t
+  :config
+  (general-evil-setup)
+  ;; set up 'SPC' as the global leader key
+  (general-create-definer my/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC" ;; set leader
+    :global-prefix "M-SPC") ;; access leader in insert mode
+
+  ;; set up ',' as the local leader key
+  (general-create-definer my/local-leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "," ;; set local leader
+    :global-prefix "M-,") ;; access local leader in insert mode
+  (my/leader-keys
+    "SPC" '(execute-extended-command :wk "execute command");; an alternative to 'M-x'
+    "x" (general-simulate-key "C-x" :state 'emacs :which-key "execute keybind");; an alternative to 'C-x'
+    ))
 
 (use-package doom-themes
   :ensure t )
@@ -214,6 +237,9 @@
   (treemacs-project-follow-mode t)
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
+  :init
+  (my/leader-keys
+    "et" '(treemacs :wk "toggle sidebar"))
   :bind
   (:map evil-normal-state-map ("C-b" . treemacs)))
 
@@ -225,9 +251,11 @@
   (setq minimap-enlarge-certain-faces nil)
   (setq minimap-width-fraction 0.0)
   (setq minimap-minimum-width 12)
+  :init
+  (my/leader-keys
+    "em" '(minimap-mode :wk "toggle minimap"))
   :bind
-  (:map evil-normal-state-map
-  ("C-n" . minimap-mode)))
+  (:map evil-normal-state-map ("C-n" . minimap-mode)))
 
 (use-package centaur-tabs
   :ensure t

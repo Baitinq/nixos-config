@@ -161,6 +161,8 @@
         evil
         evil-collection
 
+        general
+
         doom-modeline
         doom-themes
         dashboard
