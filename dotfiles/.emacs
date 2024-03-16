@@ -200,13 +200,14 @@
   (add-hook 'go-mode-hook 'eglot-ensure)
   (delete 'go treesit-auto-langs))
 
-(use-package dired-sidebar
+(use-package treemacs
   :ensure t
   :config
-  (setq dired-sidebar-resize-on-open nil)
-  (setq dired-sidebar-window-fixed nil)
+  (treemacs-project-follow-mode t)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
   :bind
-  (:map evil-normal-state-map ("C-b" . dired-sidebar-toggle-sidebar)))
+  (:map evil-normal-state-map ("C-b" . treemacs)))
 
 (use-package minimap
   :ensure t
