@@ -360,6 +360,7 @@
   };
 
   xdg = {
+    configFile."nvim/".source = "${dotfiles}/nvim/";
     configFile."sway/config".source = "${dotfiles}/sway_config";
     configFile."river/".source = "${dotfiles}/river/";
     configFile."waybar/".source = "${dotfiles}/waybar/";

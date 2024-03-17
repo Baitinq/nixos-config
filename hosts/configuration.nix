@@ -108,6 +108,7 @@
     wget
     gitFull
     git-crypt
+    neovim
     htop
     pfetch
     unzip
@@ -176,23 +177,6 @@
     tmux = {
       enable = true;
       clock24 = true;
-    };
-
-    neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      configure = {
-        extraConfig = ''
-          filetype plugin indent on
-          syntax on
-          set title
-          set tabstop=8
-          set softtabstop=8
-          set shiftwidth=8
-          set noexpandtab
-        '';
-      };
     };
 
     light.enable = true;
