@@ -167,6 +167,8 @@
   };
 
   programs = {
+    gnupg.agent.enable = true;
+
     ssh = {
       enableAskPassword = false;
     };
