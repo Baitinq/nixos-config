@@ -187,6 +187,8 @@
         treemacs
         minimap
         centaur-tabs
+
+	shell-pop
       ];
       extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };

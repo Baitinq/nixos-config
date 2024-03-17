@@ -58,7 +58,7 @@
   (my/leader-keys
     "SPC" '(execute-extended-command :wk "execute command");; an alternative to 'M-x'
     "x" (general-simulate-key "C-x" :state 'emacs :which-key "execute keybind");; an alternative to 'C-x'
-    ))
+  ))
 
 (use-package doom-themes
   :ensure t )
@@ -262,6 +262,14 @@
   :bind
   (:map evil-normal-state-map
   ("C-S-t" . centaur-tabs-mode)))
+
+(use-package shell-pop
+  :ensure t
+  :init
+  (setq shell-pop-shell-type '("terminal" "*terminal*" (lambda nil (term shell-pop-term-shell))))
+  (setq shell-pop-term-shell "zsh")
+  (my/leader-keys
+    "t" '(shell-pop :wk "toggle terminal")))
 
 (eval-after-load 'dired
   '(evil-define-key 'normal dired-mode-map [mouse-2] 'dired-mouse-find-file)
