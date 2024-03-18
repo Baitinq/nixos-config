@@ -188,7 +188,8 @@
         minimap
         centaur-tabs
 
-	shell-pop
+        shell-pop
+        eat
       ];
       extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };

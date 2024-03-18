@@ -263,10 +263,15 @@
   (:map evil-normal-state-map
   ("C-S-t" . centaur-tabs-mode)))
 
+(use-package eat
+    :ensure t
+    :init
+    (setq eat-term-name "xterm-256color"))
+
 (use-package shell-pop
   :ensure t
   :init
-  (setq shell-pop-shell-type '("terminal" "*terminal*" (lambda nil (term shell-pop-term-shell))))
+  (setq shell-pop-shell-type '("terminal" "*terminal*" (lambda nil (eat shell-pop-term-shell))))
   (setq shell-pop-term-shell "zsh")
   (my/leader-keys
     "t" '(shell-pop :wk "toggle terminal")))
