@@ -234,6 +234,7 @@ require('lazy').setup({
   'direnv/direnv.vim',
 
   'github/copilot.vim',
+  
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -243,6 +244,9 @@ require('lazy').setup({
       "MunifTanjim/nui.nvim",
     }
   },
+
+  { 'klen/nvim-test', opts = {} },
+
   --
   -- Use `opts = {}` to force a plugin to be loaded.
   --
