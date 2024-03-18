@@ -105,6 +105,8 @@
     alsa-utils
     python3
     killall
+    ripgrep
+    gcc
     wget
     gitFull
     git-crypt
