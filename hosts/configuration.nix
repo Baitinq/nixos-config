@@ -108,6 +108,7 @@
     wget
     gitFull
     git-crypt
+    tmux
     neovim
     htop
     pfetch
@@ -172,11 +173,6 @@
 
     ssh = {
       enableAskPassword = false;
-    };
-
-    tmux = {
-      enable = true;
-      clock24 = true;
     };
 
     light.enable = true;

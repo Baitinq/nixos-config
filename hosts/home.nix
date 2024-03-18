@@ -361,6 +361,7 @@
   };
 
   xdg = {
+    configFile."tmux/tmux.conf".source = "${dotfiles}/tmux.conf";
     configFile."nvim/".source = "${dotfiles}/nvim/";
     configFile."sway/config".source = "${dotfiles}/sway_config";
     configFile."river/".source = "${dotfiles}/river/";
