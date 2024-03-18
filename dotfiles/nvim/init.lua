@@ -232,7 +232,17 @@ require('lazy').setup({
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
   'direnv/direnv.vim',
+
   'github/copilot.vim',
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", 
+      "MunifTanjim/nui.nvim",
+    }
+  },
   --
   -- Use `opts = {}` to force a plugin to be loaded.
   --
