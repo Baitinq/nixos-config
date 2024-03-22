@@ -34,6 +34,11 @@
       flake = false;
     };
 
+    tpm = {
+      url = "github:tmux-plugins/tpm";
+      flake = false;
+    };
+
     arkenfox-userjs = {
       url = "github:arkenfox/user.js";
       flake = false;

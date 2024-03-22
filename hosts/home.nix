@@ -380,6 +380,7 @@
   };
 
   home.file = {
+    ".tmux/plugins/tpm".source = inputs.tpm;
     "./Images/Wallpapers".source = inputs.wallpapers;
   };
 
