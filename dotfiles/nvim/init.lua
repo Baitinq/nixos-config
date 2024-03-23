@@ -233,6 +233,8 @@ require('lazy').setup({
   -- keys can be used to configure plugin behavior/loading/etc.
   'direnv/direnv.vim',
 
+  'christoomey/vim-tmux-navigator',
+
   'github/copilot.vim',
   
   {
