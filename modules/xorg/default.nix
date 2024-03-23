@@ -5,10 +5,10 @@
   # We are kind of screwed :)
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "wayland-session" ''
-        /run/current-system/systemd/bin/systemctl --user start graphical-session.target
-        dbus-run-session "$@"
-        /run/current-system/systemd/bin/systemctl --user stop graphical-session.target
-      '')
+      /run/current-system/systemd/bin/systemctl --user start graphical-session.target
+      dbus-run-session "$@"
+      /run/current-system/systemd/bin/systemctl --user stop graphical-session.target
+    '')
   ];
 
   services.xserver = {
