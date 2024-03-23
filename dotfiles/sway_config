@@ -90,7 +90,7 @@ exec "swaybg -i /home/baitinq/Images/Wallpapers/Day/wave.jpg &"
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec "st -e zsh"
+    bindsym $mod+Return exec "st tmux new-session -A"
     bindsym $mod+Tab workspace back_and_forth
     # Kill focused window
     bindsym $mod+q kill

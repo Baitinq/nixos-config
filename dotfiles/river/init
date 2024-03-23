@@ -35,7 +35,7 @@ riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_
 # $mod+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 mod="Mod1"
 
-riverctl map normal $mod Return spawn "st -e zsh"
+riverctl map normal $mod Return spawn "st tmux new-session -A"
 riverctl map normal $mod D spawn "dmenu_run &"
 riverctl map normal $mod Tab focus-previous-tags
 

@@ -1,6 +1,6 @@
 # terminal emulator
 alt + Return
-	st -e zsh
+	st tmux new-session -A
 
 # program launcher
 alt + d
