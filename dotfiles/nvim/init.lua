@@ -668,6 +668,7 @@ require('lazy').setup({
           -- },
         },
       },
+      'onsails/lspkind.nvim',
       'saadparwaiz1/cmp_luasnip',
 
       -- Adds other completion capabilities.
@@ -681,6 +682,7 @@ require('lazy').setup({
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local lspkind = require "lspkind"
       luasnip.config.setup {}
 
       cmp.setup {
@@ -690,6 +692,13 @@ require('lazy').setup({
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
+
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.kind = string.format("%s %s", lspkind.presets.default[vim_item.kind], vim_item.kind)
+            return vim_item
+          end,
+        },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
