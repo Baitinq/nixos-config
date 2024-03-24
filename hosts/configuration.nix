@@ -105,6 +105,7 @@
     alsa-utils
     python3
     killall
+    moreutils
     ripgrep
     gcc
     wget
