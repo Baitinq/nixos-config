@@ -112,7 +112,7 @@
     gitFull
     git-crypt
     tmux
-    neovim
+    neovim-nightly
     htop
     pfetch
     unzip

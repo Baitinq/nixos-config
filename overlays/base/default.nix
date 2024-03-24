@@ -89,10 +89,10 @@ final: prev:
     postBuild = "wrapProgram $out/bin/emacs --prefix PATH : ${prev.lib.makeBinPath [ prev.nodejs prev.ripgrep ]}";
   });
 
-  neovim = (prev.symlinkJoin {
-    inherit (prev.neovim) name;
-    version = "";
-    paths = [ prev.neovim ];
+  neovim-nightly = (prev.symlinkJoin {
+    inherit (prev.neovim-nightly) name;
+    inherit (prev.neovim-nightly) version;
+    paths = [ prev.neovim-nightly ];
     nativeBuildInputs = [ prev.makeBinaryWrapper ];
     postBuild = "wrapProgram $out/bin/nvim --prefix PATH : ${prev.lib.makeBinPath [ prev.nodejs prev.ripgrep ]}";
   });

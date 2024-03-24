@@ -25,6 +25,8 @@
 
     nur.url = "github:nix-community/NUR";
 
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     nixtest.url = "github:jetpack-io/nixtest";
 
     nix-index.url = "github:Mic92/nix-index-database";
