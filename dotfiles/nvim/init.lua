@@ -239,7 +239,14 @@ require('lazy').setup({
 
   'github/copilot.vim',
   
-  { 'klen/nvim-test', opts = {} },
+  { 'klen/nvim-test',
+    config = function()
+      require('nvim-test.runners.go-test'):setup {
+              args = { "test", "-tags", "dynamic" }
+      }
+      require('nvim-test').setup()
+    end
+  },
 
   --
   -- Use `opts = {}` to force a plugin to be loaded.
