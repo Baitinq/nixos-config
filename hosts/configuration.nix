@@ -126,6 +126,7 @@
     comma
     xclip
     strace
+    fzf
     inputs.deploy-rs.defaultPackage."${system}"
   ];
 
