@@ -1,5 +1,5 @@
 --[[
-
+-- TODO: Add test leader key section and dont select completion on tab, only enter.
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
