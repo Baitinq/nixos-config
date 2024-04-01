@@ -1,5 +1,4 @@
 --[[
--- TODO: Add test leader key section and dont select completion on tab, only enter.
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -242,9 +241,14 @@ require('lazy').setup({
   { 'klen/nvim-test',
     config = function()
       require('nvim-test.runners.go-test'):setup {
-              args = { "test", "-tags", "dynamic" }
+        args = { "test", "-tags", "dynamic" }
       }
-      require('nvim-test').setup()
+      require('nvim-test').setup {
+        vim.keymap.set('n', '<leader>tf', function() require('nvim-test').run('file') end, { desc = '[T]est [F]ile' }),
+        vim.keymap.set('n', '<leader>tn', function() require('nvim-test').run('nearest') end, { desc = '[T]est [N]earest' }),
+        vim.keymap.set('n', '<leader>ts', function() require('nvim-test').run('suite') end, { desc = '[T]est [S]uite' }),
+        vim.keymap.set('n', '<leader>tl', function() require('nvim-test').run_last() end, { desc = '[T]est [L]ast' })
+      }
     end
   },
 
