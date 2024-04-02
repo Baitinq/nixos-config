@@ -247,7 +247,8 @@ require('lazy').setup({
         vim.keymap.set('n', '<leader>tf', function() require('nvim-test').run('file') end, { desc = '[T]est [F]ile' }),
         vim.keymap.set('n', '<leader>tn', function() require('nvim-test').run('nearest') end, { desc = '[T]est [N]earest' }),
         vim.keymap.set('n', '<leader>ts', function() require('nvim-test').run('suite') end, { desc = '[T]est [S]uite' }),
-        vim.keymap.set('n', '<leader>tl', function() require('nvim-test').run_last() end, { desc = '[T]est [L]ast' })
+        vim.keymap.set('n', '<leader>tl', function() require('nvim-test').run_last() end, { desc = '[T]est [L]ast' }),
+        vim.keymap.set('n', '<leader>tv', function() require('nvim-test').visit() end, { desc = '[T]est [V]isit' })
       }
     end
   },
