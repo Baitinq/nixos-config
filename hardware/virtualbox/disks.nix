@@ -20,7 +20,7 @@ let
     vgcreate encrypted_root_pool /dev/mapper/encrypted_root
     lvcreate -L 4G -n persist encrypted_root_pool
     mkfs.btrfs -f /dev/mapper/encrypted_root_pool-persist
-    lvcreate -L 44G -n nix encrypted_root_pool
+    lvcreate -L 64G -n nix encrypted_root_pool
     mkfs.btrfs -f /dev/mapper/encrypted_root_pool-nix
     lvcreate -l 100%FREE -n home encrypted_root_pool
     mkfs.btrfs -f /dev/mapper/encrypted_root_pool-home
