@@ -47,27 +47,17 @@ family = "Inconsolata LGC Nerd Font"
 [[keyboard.bindings]]
 action = "Paste"
 key = "V"
-mods = "Command"
+mods = "Alt"
 
 [[keyboard.bindings]]
 action = "Copy"
 key = "C"
-mods = "Command"
+mods = "Alt"
 
 [[keyboard.bindings]]
 action = "Quit"
 key = "Q"
-mods = "Command"
-
-[[keyboard.bindings]]
-action = "SpawnNewInstance"
-key = "N"
-mods = "Command"
-
-[[keyboard.bindings]]
-action = "ToggleFullscreen"
-key = "Return"
-mods = "Command"
+mods = "Alt"
 
 [[keyboard.bindings]]
 chars = "\u001BOH"
@@ -88,21 +78,6 @@ mode = "AppCursor"
 chars = "\u001B[F"
 key = "End"
 mode = "~AppCursor"
-
-[[keyboard.bindings]]
-action = "IncreaseFontSize"
-key = "Equals"
-mods = "Command"
-
-[[keyboard.bindings]]
-action = "DecreaseFontSize"
-key = "Minus"
-mods = "Command"
-
-[[keyboard.bindings]]
-action = "ResetFontSize"
-key = "Minus"
-mods = "Command|Shift"
 
 [[keyboard.bindings]]
 chars = "\u001B[5;;5~"
@@ -296,41 +271,6 @@ key = "Insert"
 [[keyboard.bindings]]
 chars = "\u001B[3~"
 key = "Delete"
-
-[[keyboard.bindings]]
-chars = "\u0002&"
-key = "W"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0002c"
-key = "T"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0002n"
-key = "RBracket"
-mods = "Command|Shift"
-
-[[keyboard.bindings]]
-chars = "\u0002p"
-key = "LBracket"
-mods = "Command|Shift"
-
-[[keyboard.bindings]]
-chars = "\u0002o"
-key = "RBracket"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0002;"
-key = "LBracket"
-mods = "Command"
-
-[[keyboard.bindings]]
-chars = "\u0002/"
-key = "F"
-mods = "Command"
 
 [mouse]
 hide_when_typing = true
