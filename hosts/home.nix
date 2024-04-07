@@ -323,7 +323,6 @@
         q = "exit";
         c = "clear";
         open = "xdg-open";
-        "," = ", --database '/etc/nix-index'";
         extract = ''
           () {
             if [ -f $1 ] ; then

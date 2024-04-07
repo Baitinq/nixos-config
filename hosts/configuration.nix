@@ -83,6 +83,7 @@
     XKB_DEFAULT_LAYOUT = "us";
 
     NIXPKGS_ALLOW_UNFREE = "1";
+    NIX_INDEX_DATABASE = "/etc/nix-index/";
   };
 
   environment.sessionVariables = rec {

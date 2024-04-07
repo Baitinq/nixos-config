@@ -64,19 +64,6 @@ final: prev:
     ];
   });
 
-  comma = prev.comma.overrideAttrs (old: rec {
-    src = prev.fetchFromGitHub {
-      owner = "baitinq";
-      repo = "comma";
-      rev = "1eeccb3c60323a292ddb44647f603d3a54005350";
-      sha256 = "sha256-yT9eZSSSlAty9QcUtxVG4J3rWi5rxQMHAxbSGe9FQi0=";
-    };
-    cargoDeps = old.cargoDeps.overrideAttrs (prev.lib.const {
-      inherit src;
-      outputHash = "sha256-sEkCrO5ZEzkhrxf44IgJb3NkYvZH9fqVZ5GtXSLwu3c=";
-    });
-  });
-
   mpv = prev.wrapMpv prev.mpv-unwrapped {
     scripts = [ prev.mpvScripts.mpris ];
   };
