@@ -81,6 +81,6 @@ final: prev:
     inherit (prev.neovim-nightly) version;
     paths = [ prev.neovim-nightly ];
     nativeBuildInputs = [ prev.makeBinaryWrapper ];
-    postBuild = "wrapProgram $out/bin/nvim --prefix PATH : ${prev.lib.makeBinPath [ prev.nodejs prev.fd prev.ripgrep ]}";
+    postBuild = "wrapProgram $out/bin/nvim --prefix PATH : ${prev.lib.makeBinPath [ prev.nodejs prev.fd prev.ripgrep prev.fswatch ]}";
   });
 }
