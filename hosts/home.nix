@@ -61,6 +61,7 @@
       slurp
       appimage-run
       google-cloud-sdk
+      ollama
     ] ++
     (with pkgs.custom; [
       lemacs
