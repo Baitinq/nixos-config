@@ -62,6 +62,9 @@
       appimage-run
       google-cloud-sdk
       ollama
+      kubectl
+      kubectx
+      kubernetes-helm
     ] ++
     (with pkgs.custom; [
       lemacs
@@ -324,6 +327,7 @@
         q = "exit";
         c = "clear";
         open = "xdg-open";
+        k = "kubectl";
         extract = ''
           () {
             if [ -f $1 ] ; then
