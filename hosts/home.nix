@@ -111,7 +111,7 @@
     };
 
     emacs = {
-      enable = true;
+      enable = false;
       startWithUserSession = true;
     };
 
