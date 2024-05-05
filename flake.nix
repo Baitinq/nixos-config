@@ -25,7 +25,10 @@
 
     nur.url = "github:nix-community/NUR";
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixtest.url = "github:jetpack-io/nixtest";
 
