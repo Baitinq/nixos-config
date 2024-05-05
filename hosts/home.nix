@@ -33,9 +33,9 @@
       xdotool #needed for xmobar clickable workspaces
       xlockmore
       arandr
-      jrnl
-      todo-txt-cli
-      element-desktop
+      # jrnl
+      # todo-txt-cli
+      # element-desktop
       speedtest-cli
       libnotify
       dwmbar
