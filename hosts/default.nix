@@ -11,7 +11,7 @@ let
         };
         overlays = [
           inputs.nur.overlay
-          inputs.neovim-nightly-overlay.overlay
+          # inputs.neovim-nightly-overlay.overlay
           (import ../packages)
           (import ../overlays)
         ] ++ extraOverlays;
