@@ -128,6 +128,7 @@
     xclip
     strace
     fzf
+    powertop
     inputs.deploy-rs.defaultPackage."${system}"
   ];
 
