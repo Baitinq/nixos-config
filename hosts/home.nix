@@ -329,6 +329,7 @@
         c = "clear";
         open = "xdg-open";
         k = "kubectl";
+        bzl = "bazel";
         extract = ''
           () {
             if [ -f $1 ] ; then
