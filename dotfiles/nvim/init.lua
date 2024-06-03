@@ -576,11 +576,13 @@ require('lazy').setup({
             })
           end
           if client and client.server_capabilities.codeLensProvider then
-            vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
-              buffer = event.buf,
-              callback = vim.lsp.codelens.refresh,
-            })
-          end
+						vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+							buffer = event.buf,
+							callback = function()
+								return vim.lsp.codelens.refresh({ bufnr = event.buf })
+							end,
+						})
+					end
         end,
       })
 
