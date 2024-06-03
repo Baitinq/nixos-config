@@ -172,7 +172,7 @@
     dbus.enable = true;
     irqbalance.enable = true;
     fwupd.enable = true;
-    xserver.libinput.enable = false;
+    libinput.enable = false;
   };
 
   programs = {
