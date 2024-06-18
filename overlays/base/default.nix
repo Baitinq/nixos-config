@@ -64,7 +64,7 @@ final: prev:
     ];
   });
 
-  mpv = prev.wrapMpv prev.mpv-unwrapped {
+  mpv = prev.mpv.override {
     scripts = [ prev.mpvScripts.mpris ];
   };
 

@@ -42,6 +42,7 @@ let
                 ];
               };
             }
+            inputs.nix-index.nixosModules.nix-index
           ] ++ extraSpecialModules;
         }
     else if isMacOS

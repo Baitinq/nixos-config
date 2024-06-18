@@ -27,7 +27,10 @@
 
     nixtest.url = "github:jetpack-io/nixtest";
 
-    nix-index.url = "github:Mic92/nix-index-database";
+    nix-index = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hosts = {
       url = "github:StevenBlack/hosts";

@@ -83,7 +83,6 @@
     XKB_DEFAULT_LAYOUT = "us";
 
     NIXPKGS_ALLOW_UNFREE = "1";
-    NIX_INDEX_DATABASE = "/etc/nix-index/";
   };
 
   environment.sessionVariables = rec {
@@ -125,7 +124,6 @@
     usbutils
     pciutils
     gnupg
-    comma
     xclip
     strace
     fzf
@@ -134,8 +132,6 @@
   ];
 
   environment.defaultPackages = [ ];
-
-  environment.etc."nix-index/files".source = inputs.nix-index.legacyPackages.${system}.database;
 
   xdg.portal = {
     enable = true;
@@ -185,6 +181,10 @@
     light.enable = true;
 
     dconf.enable = true;
+
+    command-not-found.enable = false;
+    nix-index.enable = true;
+    nix-index-database.comma.enable = true;
 
     firejail = {
       enable = true;
