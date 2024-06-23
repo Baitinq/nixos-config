@@ -41,7 +41,6 @@ in
 
     opengl = {
       enable = true;
-      driSupport = true;
     };
 
     nvidia = {
