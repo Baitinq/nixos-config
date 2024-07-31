@@ -15,50 +15,61 @@ An example complete configuration could be: `phobos-laptop-x86_64-linux` [This i
 
 All these variables are declared in the `flake.nix` and can be added/removed to fit your needs.
 
-
 # Installation Steps
+
 Make sure you're in the `nixos-config` folder and have followed (if necessary) the [partitioning steps](PARTITIONING.md) :)
-## NixOS-Based Intallation
+
+## NixOS-Based Installation
+
 ### Installing
 
-```
-$ nixos-install --flake .#$HOST-$HARDWARE-$ARCH
+<!-- actually `sh`, but github nushell syntax highlighting is better -->
+```nushell
+nixos-install --flake .#$HOST-$HARDWARE-$ARCH
 ```
 
 ### Updating
 
-```
-$ nix flake update
+```nushell
+nix flake update
 
-$ nixos-rebuild switch --flake .#$HOST-$HARDWARE-$ARCH
+nixos-rebuild switch --flake .#$HOST-$HARDWARE-$ARCH
 ```
 
 ## Non-Nixos-Based Installation
+
 ### Installing
-```
-$ nix build .#homeManagerConfigurations.$HOST-$HARDWARE-$ARCH.activationPackage
-$ ./result/activate
+
+```nushell
+nix build .#homeManagerConfigurations.$HOST-$HARDWARE-$ARCH.activationPackage
+
+./result/activate
 ```
 
 ### Updating
-```
-$ nix flake update
 
-$ home-manager switch --flake .#$HOST-$HARDWARE-$ARCH
+```nushell
+nix flake update
+
+home-manager switch --flake .#$HOST-$HARDWARE-$ARCH
 ```
 
 ## ISO
+
 ### Building
-```
-$ nix build .#isoConfigurations.$HOST-$HARDWARE-$ARCH.config.system.build.isoImage
+
+```nushell
+nix build .#isoConfigurations.$HOST-$HARDWARE-$ARCH.config.system.build.isoImage
 ```
 
 ## Deploying
-```
-# deploy -s .#$HOST-$HARDWARE-$ARCH --hostname $TARGET_IP
+
+```nushell
+deploy -s .#$HOST-$HARDWARE-$ARCH --hostname $TARGET_IP
 ```
 
 ## Testing
-```
-$ nix eval .#tests
+
+```nushell
+nix eval .#tests
 ```

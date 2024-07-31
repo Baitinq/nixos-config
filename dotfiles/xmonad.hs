@@ -125,7 +125,7 @@ urgentColor = "#ff0000"
 ------------------------------------------------------------------------
 
 {-
-  This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust acoordingly to fullscreen mode
+  This sets the "_NET_WM_STATE_FULLSCREEN" window property, helping some programs such as firefox to adjust accordingly to fullscreen mode
   In a perfect world we shouldnt need to do this manually but it seems like ewmhFullscreen/others dont implement this functionality
 -}
 setFullscreenProp :: Bool -> Window -> X ()
