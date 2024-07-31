@@ -136,7 +136,7 @@ setFullscreenProp b win = withDisplay $ \dpy -> do
                       if b
                         then io $ replaceWMStateProperty [fromIntegral fullsc]
                         else io $ replaceWMStateProperty []
-{- 
+{-
   Fullscreen: Hide xmobar -> Hide borders -> Set fullscreen -> Set fullscreenprops
   Unfullscreen: ^^ but reverse
 -}
@@ -145,7 +145,7 @@ toggleFullScreen = do
                     mIsFullScreen <- withWindowSet (isToggleActive NBFULL . W.workspace . W.current)
                     case mIsFullScreen of
                       Just isFullScreen -> if isFullScreen
-                                            then withFocused (setFullscreenProp False) >> sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts 
+                                            then withFocused (setFullscreenProp False) >> sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts
                                             else sendMessage ToggleStruts >> sendMessage (Toggle NBFULL)  >> withFocused (setFullscreenProp True)
                       Nothing -> return ()
 
@@ -232,7 +232,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
   3. Set a 2 space separation between workspaces.
 -}
 myStatusBar :: StatusBarConfig
-myStatusBar = statusBarProp "xmobar" (do 
+myStatusBar = statusBarProp "xmobar" (do
                                         numWindows <- getNumberOfWindowsInWorkpace
                                         return $ def {
                                                     ppCurrent = if numWindows > 0
@@ -242,7 +242,7 @@ myStatusBar = statusBarProp "xmobar" (do
                                                   , ppSep = " |  "
                                                   , ppWsSep = ""
                                                   , ppLayout = (\_ -> "")
-                                                  , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox foregroundColor ("  " ++ s ++ "  "))) --better way to clickablewrap . 
+                                                  , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox foregroundColor ("  " ++ s ++ "  "))) --better way to clickablewrap .
                                                   , ppHiddenNoWindows = (\s -> clickableWrap ((read s::Int) - 1) ("  " ++ s ++ "  "))
                                                   , ppUrgent = (\s -> clickableWrap ((read s::Int) - 1) (xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  ")))
                                           }

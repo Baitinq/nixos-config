@@ -40,7 +40,7 @@ let
   partitionsMountScript = ''
     mount -t tmpfs none /mnt
     mkdir -p /mnt/{boot,nix,persist,home}
-    
+
     cryptsetup open --type luks /dev/disk/by-partlabel/boot encrypted_boot
     mount /dev/mapper/encrypted_boot /mnt/boot
     mkdir -p /mnt/boot/efi
