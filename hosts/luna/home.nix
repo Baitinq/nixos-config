@@ -41,9 +41,9 @@
       builtins.readFile "${dotfiles}/sxhkd/xmonad" +
       builtins.readFile "${dotfiles}/sxhkd/base" +
       ''
-      
+
         #enter and leave game mode
-        alt + shift + F11: ctrl + shift + F11 
+        alt + shift + F11: ctrl + shift + F11
           pkill -ALRM sxhkd
 
         # Make sxhkd reload its configuration files

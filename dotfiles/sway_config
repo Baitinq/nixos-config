@@ -104,7 +104,7 @@ exec "swaybg -i /home/baitinq/Images/Wallpapers/Day/wave.jpg &"
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
     floating_modifier $mod normal
-    
+
     focus_follows_mouse no
     mouse_warping none
     exec wl-paste -t text --watch clipman store --no-persist

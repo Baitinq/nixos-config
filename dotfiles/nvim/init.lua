@@ -238,7 +238,7 @@ require('lazy').setup({
   {'echasnovski/mini.pairs', opts = {} },
 
   'github/copilot.vim',
-  
+
   { 'klen/nvim-test',
     config = function()
       require('nvim-test.runners.go-test'):setup {
