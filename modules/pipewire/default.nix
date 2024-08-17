@@ -14,7 +14,5 @@
 
   # Recent fix for pipewire-pulse breakage
   systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
-
-  sound.enable = false;
 }
 
