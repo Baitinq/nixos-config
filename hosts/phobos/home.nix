@@ -6,6 +6,7 @@
     adl
     jetbrains.idea-community
     gimp
+    godot_4
   ] ++
   (with pkgs.custom; [
   ]);
