@@ -1,4 +1,4 @@
-Config { 
+Config {
 
    -- appearance
      font =         "xft:Noto Sans Display Nerd Font:size=10,Inconsolata LGC Nerd Font:size=10,DejaVu Sans Mono Nerd Font:size=10,Noto Sans Mono CJK JP:size=10,Noto Color Emoji:size=10,Noto Sans Hebrew:size=10"
