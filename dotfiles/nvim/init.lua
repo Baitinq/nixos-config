@@ -238,7 +238,17 @@ require('lazy').setup({
   {'echasnovski/mini.pairs', opts = {} },
 
   'github/copilot.vim',
-  
+
+  {
+    "linrongbin16/gitlinker.nvim",
+    cmd = "GitLink",
+    config = function()
+      require('gitlinker').setup {
+        vim.keymap.set('n', '<leader>gl', require('gitlinker').link, { desc = '[G]it [L]ink' })
+      }
+    end
+  },
+
   { 'klen/nvim-test',
     config = function()
       require('nvim-test.runners.go-test'):setup {
