@@ -602,18 +602,9 @@ require('lazy').setup({
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-      local servers = {
-        -- clangd = {},
-        gopls = {
+      -- TODO: We should do the capabilities stuff
+      require("lspconfig").hls.setup({})
+      require("lspconfig").gopls.setup({
           settings = {
             gopls = {
               ["ui.inlayhint.hints"] = {
@@ -626,7 +617,30 @@ require('lazy').setup({
               },
             },
           },
-        },
+        })
+      require("lspconfig").lua_ls.setup({
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
+              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+              -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        })
+
+      -- Enable the following language servers
+      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+      --
+      --  Add any additional override configuration in the following tables. Available keys are:
+      --  - cmd (table): Override the default command used to start the server
+      --  - filetypes (table): Override the default list of associated filetypes for the server
+      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
+      --  - settings (table): Override the default settings passed when initializing the server.
+      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      local autoinstalled_servers = {
+        -- clangd = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -637,21 +651,6 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-
-        lua_ls = {
-          -- cmd = {...},
-          -- filetypes { ...},
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -664,7 +663,7 @@ require('lazy').setup({
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
+      local ensure_installed = vim.tbl_keys(autoinstalled_servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format lua code
       })
@@ -673,7 +672,7 @@ require('lazy').setup({
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
-            local server = servers[server_name] or {}
+            local server = autoinstalled_servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
