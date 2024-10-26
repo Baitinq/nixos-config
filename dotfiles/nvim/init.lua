@@ -241,7 +241,6 @@ require('lazy').setup({
 
   {
     "linrongbin16/gitlinker.nvim",
-    cmd = "GitLink",
     config = function()
       require('gitlinker').setup {
         vim.keymap.set('n', '<leader>gl', require('gitlinker').link, { desc = '[G]it [L]ink' })
