@@ -597,9 +597,9 @@ require('lazy').setup({
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      -- TODO: We should do the capabilities stuff
-      require("lspconfig").hls.setup({})
-      require("lspconfig").gopls.setup({
+      local servers = {
+        hls = {},
+        gopls = {
           settings = {
             gopls = {
               ["ui.inlayhint.hints"] = {
@@ -612,18 +612,13 @@ require('lazy').setup({
               },
             },
           },
-        })
-      require("lspconfig").lua_ls.setup({
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        })
+        },
+      }
+
+      for lsp, settings in pairs(servers) do
+            settings.capabilities = vim.tbl_deep_extend('force', {}, capabilities, settings.capabilities or {})
+            require('lspconfig')[lsp].setup(settings)
+      end
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -635,6 +630,17 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local autoinstalled_servers = {
+        lua_ls = {
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
+              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+              -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        }
         -- clangd = {},
         -- pyright = {},
         -- rust_analyzer = {},
