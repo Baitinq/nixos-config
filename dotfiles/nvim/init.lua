@@ -251,9 +251,13 @@ require('lazy').setup({
 
   { 'klen/nvim-test',
     config = function()
-      require('nvim-test.runners.go-test'):setup {
-        args = { "test", "-tags", "dynamic" }
-      }
+
+      -- If go parser is installed, then we can activate the go nvim-test runner
+      if require("nvim-treesitter.parsers").has_parser('go') then
+        require('nvim-test.runners.go-test'):setup {
+          args = { "test", "-tags", "dynamic" }
+        }
+      end
       require('nvim-test').setup {
         vim.keymap.set('n', '<leader>tf', function() require('nvim-test').run('file') end, { desc = '[T]est [F]ile' }),
         vim.keymap.set('n', '<leader>tn', function() require('nvim-test').run('nearest') end, { desc = '[T]est [N]earest' }),
