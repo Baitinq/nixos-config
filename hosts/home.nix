@@ -143,6 +143,7 @@
       extraConfig = {
         push.autoSetupRemote = true;
         init.defaultBranch = "master";
+        safe.directory = [ "*" ];
         sendemail = {
           smtpserver = "smtp.gmail.com";
           smtpserverport = "587";

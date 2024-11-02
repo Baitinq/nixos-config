@@ -1,3 +1,4 @@
+[general]
 live_config_reload = true
 
 [colors]
@@ -287,7 +288,7 @@ multiplier = 3
 save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
-[shell]
+[terminal.shell]
 args = ["-c", "zsh"]
 program = "/bin/sh"
 

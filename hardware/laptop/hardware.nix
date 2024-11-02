@@ -39,7 +39,7 @@ in
   hardware = {
     cpu.intel.updateMicrocode = true;
 
-    opengl = {
+    graphics = {
       enable = true;
     };
 
