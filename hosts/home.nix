@@ -58,6 +58,7 @@
       vscode
       chromium
       grim
+      qbittorrent
       slurp
       appimage-run
       google-cloud-sdk
