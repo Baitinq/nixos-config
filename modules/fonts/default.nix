@@ -3,6 +3,7 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
-    (nerdfonts.override { fonts = [ "InconsolataLGC" "Noto" ]; })
+    nerd-fonts.inconsolata-lgc
+    nerd-fonts.noto
   ];
 }
