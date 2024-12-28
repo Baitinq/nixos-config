@@ -10,7 +10,7 @@ let
           allowUnsupportedSystem = true;
         };
         overlays = [
-          inputs.nur.overlay
+          inputs.nur.overlays.default
           # inputs.neovim-nightly-overlay.overlay
           (import ../packages)
           (import ../overlays)
