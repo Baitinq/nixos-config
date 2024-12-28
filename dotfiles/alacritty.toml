@@ -42,8 +42,21 @@ TERM = "xterm-256color"
 [font]
 size = 12.0
 
+[font.bold]
+family = "Berkeley Mono"
+style = "Bold"
+
+[font.bold_italic]
+family = "Berkeley Mono"
+style = "Bold Italic"
+
+[font.italic]
+family = "Berkeley Mono"
+style = "Italic"
+
 [font.normal]
-family = "Inconsolata LGC Nerd Font"
+family = "Berkeley Mono"
+style = "Regular"
 
 [[keyboard.bindings]]
 action = "Paste"

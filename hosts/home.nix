@@ -18,6 +18,7 @@
       #dwm
       #st
       alacritty
+      # ghostty
       dmenu
       unclutter
       clipmenu
@@ -405,6 +406,8 @@
   home.sessionPath = [
     "/home/${user}/.cargo/bin"
   ];
+
+  fonts.fontconfig.enable = true;
 
   # For disabling the automatic creation of $HOME/Desktop
   xdg.userDirs.desktop = "$HOME/";

@@ -12,11 +12,11 @@ URxvt.termName: xterm-256color
 URxvt.urgentOnBell: True
 URxvt.cursorBlink: False
 
-#define font1         Inconsolata LGC Nerd Font
-#define font2         DejaVu Sans Mono Nerd Font
-#define font3         Noto Sans Mono CJK JP
-#define font4         Noto Color Emoji
-#define font5         Noto Sans Hebrew
+#define font1         Berkeley Mono
+#define font2         Inconsolata LGC Nerd Font
+#define font3         DejaVu Sans Mono Nerd Font
+#define font4         Noto Sans Mono CJK JP
+#define font5         Noto Color Emoji
 
 URxvt*letterSpace: 0
 URxvt*font:           xft:font1:pixelsize=16, xft:font2:pixelsize=16,xft:font3:pixelsize=16, xft:font4:pixelsize=16, xft:font5:pixelsize=16
