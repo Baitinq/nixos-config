@@ -382,6 +382,7 @@
     configFile."tmux/tmux.conf".source = "${dotfiles}/tmux.conf";
     configFile."nvim/".source = "${dotfiles}/nvim/";
     configFile."alacritty/alacritty.toml".source = "${dotfiles}/alacritty.toml";
+    configFile."ghostty/".source = "${dotfiles}/ghostty/";
     configFile."sway/config".source = "${dotfiles}/sway_config";
     configFile."river/".source = "${dotfiles}/river/";
     configFile."waybar/".source = "${dotfiles}/waybar/";

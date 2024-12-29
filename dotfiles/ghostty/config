@@ -1,0 +1,18 @@
+theme = shinobi
+
+font-family = TX-02
+font-size = 12
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
+
+window-decoration = false
+window-padding-x = 0
+window-padding-y = 0
+
+clipboard-read = "allow"
+clipboard-paste-protection = false
+
+gtk-adwaita = false
+
+initial-command = "zsh"
