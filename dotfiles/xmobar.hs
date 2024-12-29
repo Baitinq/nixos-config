@@ -1,7 +1,8 @@
 Config { 
 
    -- appearance
-     font =         "xft:Berkeley Mono:size=10,Inconsolata LGC Nerd Font:size=10,DejaVu Sans Mono Nerd Font:size=10,Noto Sans Mono CJK JP:size=10,Noto Color Emoji:size=10,Noto Sans Hebrew:size=10"
+     font =         "TX-02 10"
+   , additionalFonts = ["Inconsolata LGC Nerd Font 10"]
    , bgColor =      "#222222"
    , fgColor =      "#bbbbbb"
    , position =     Top

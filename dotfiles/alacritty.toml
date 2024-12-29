@@ -43,19 +43,19 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.bold]
-family = "Berkeley Mono"
+family = "TX-02"
 style = "Bold"
 
 [font.bold_italic]
-family = "Berkeley Mono"
-style = "Bold Italic"
+family = "TX-02"
+style = "Bold Oblique"
 
 [font.italic]
-family = "Berkeley Mono"
-style = "Italic"
+family = "TX-02"
+style = "Oblique"
 
 [font.normal]
-family = "Berkeley Mono"
+family = "TX-02"
 style = "Regular"
 
 [[keyboard.bindings]]

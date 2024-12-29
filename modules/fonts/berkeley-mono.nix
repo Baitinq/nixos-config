@@ -8,7 +8,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "berkeley-mono";
   version = "1";
 
-  src = ../../../secrets/berkeley-mono.zip;
+  src = ../../secrets/berkeley-mono.zip;
 
   outputs = [
     "out"
@@ -35,7 +35,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   meta = {
     description = "Berkeley Mono Typeface";
-    longDescription = "…";
     homepage = "https://berkeleygraphics.com/typefaces/berkeley-mono";
     license = lib.licenses.unfree;
     platforms = lib.platforms.all;

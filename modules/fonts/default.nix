@@ -6,11 +6,13 @@
       noto-fonts-emoji
       nerd-fonts.inconsolata-lgc
       nerd-fonts.noto
-      (pkgs.callPackage ./berkeley-mono {})
+      (pkgs.callPackage ./berkeley-mono.nix {})
+      (pkgs.callPackage ./tx-02.nix {})
+      (pkgs.callPackage ./monolisa.nix {})
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "Berkeley Mono" "Inconsolata LGC" ];
+        monospace = [ "TX-02" "Inconsolata LGC" ];
       };
     #   localConf = ''
     #   <?xml version="1.0"?>
