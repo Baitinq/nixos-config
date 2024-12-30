@@ -1,6 +1,6 @@
 # terminal emulator
 alt + Return
-	alacritty -e tmux new-session -A
+	ghostty -e tmux new-session -A
 
 # program launcher
 alt + d
