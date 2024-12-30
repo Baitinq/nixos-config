@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     ./hardware.nix
 
@@ -25,5 +24,4 @@
     ectool
     cbmem
   ];
-
 }

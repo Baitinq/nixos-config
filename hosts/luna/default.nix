@@ -1,6 +1,14 @@
-{ config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
-
-  imports = [ ];
+{
+  config,
+  pkgs,
+  lib,
+  secrets,
+  hostname,
+  inputs,
+  user,
+  ...
+}: {
+  imports = [];
 
   services = {
     # Configure keymap in X11
@@ -25,6 +33,4 @@
 
   environment.systemPackages = with pkgs; [
   ];
-
 }
-

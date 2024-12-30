@@ -1,29 +1,34 @@
-{ config, lib, inputs, pkgs, modulesPath, ... }:
-let
-  powerMode = "schedutil";
-in
 {
+  config,
+  lib,
+  inputs,
+  pkgs,
+  modulesPath,
+  ...
+}: let
+  powerMode = "schedutil";
+in {
   imports = [
     ./disks.nix
   ];
 
   boot = {
-    blacklistedKernelModules = [ "uvcvideo" ];
+    blacklistedKernelModules = ["uvcvideo"];
     initrd = {
-      availableKernelModules = [ "xhci_pci" "usb_storage" "sd_mod" "sdhci_acpi" "aesni_intel" "cryptd" ];
-      kernelModules = [ "i915" ];
+      availableKernelModules = ["xhci_pci" "usb_storage" "sd_mod" "sdhci_acpi" "aesni_intel" "cryptd"];
+      kernelModules = ["i915"];
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "kvm_intel" ];
-    extraModulePackages = [ ];
-    kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off" ];
+    kernelModules = ["kvm_intel"];
+    extraModulePackages = [];
+    kernelParams = ["net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off"];
   };
 
   powerManagement.cpuFreqGovernor = powerMode;
 
   services = {
     xserver = {
-      videoDrivers = [ "intel" ];
+      videoDrivers = ["intel"];
 
       # Enable touchpad support (enabled default in most desktopManager).
       synaptics = {
@@ -50,5 +55,4 @@ in
       ];
     };
   };
-
 }

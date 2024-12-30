@@ -1,6 +1,9 @@
-{ config, pkgs, user, ... }:
-
 {
+  config,
+  pkgs,
+  user,
+  ...
+}: {
   virtualisation = {
     docker = {
       enable = true;
@@ -18,6 +21,6 @@
     docker-compose
   ];
 
-  users.users.${user}.extraGroups = [ "libvirtd" "docker" ];
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  users.users.${user}.extraGroups = ["libvirtd" "docker"];
+  users.extraGroups.vboxusers.members = ["user-with-access-to-virtualbox"];
 }

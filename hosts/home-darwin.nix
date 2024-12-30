@@ -1,5 +1,11 @@
-{ pkgs, stateVersion, lib, dotfiles, user, ... }:
 {
+  pkgs,
+  stateVersion,
+  lib,
+  dotfiles,
+  user,
+  ...
+}: {
   imports = [
   ];
 
@@ -12,41 +18,42 @@
     ];
   };
 
-  services = { };
+  services = {};
 
   programs = {
     emacs = {
       enable = true;
-      extraPackages = epkgs: with epkgs; [
-        use-package
+      extraPackages = epkgs:
+        with epkgs; [
+          use-package
 
-        direnv
+          direnv
 
-        evil
-        evil-collection
+          evil
+          evil-collection
 
-        doom-modeline
-        dashboard
+          doom-modeline
+          dashboard
 
-        projectile
-        lsp-ui
+          projectile
+          lsp-ui
 
-        lsp-bridge
-        rust-mode
-        rustic
-        company
-        flycheck
-        lsp-haskell
+          lsp-bridge
+          rust-mode
+          rustic
+          company
+          flycheck
+          lsp-haskell
 
-        nix-mode
-        haskell-mode
-        typescript-mode
-        jq-mode
+          nix-mode
+          haskell-mode
+          typescript-mode
+          jq-mode
 
-        doom-themes
+          doom-themes
 
-        dired-sidebar
-      ];
+          dired-sidebar
+        ];
       extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };
   };

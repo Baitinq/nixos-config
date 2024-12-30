@@ -1,5 +1,4 @@
-final: prev:
-{
+final: prev: {
   dwm = prev.dwm.overrideAttrs (old: {
     src = prev.fetchFromGitHub {
       owner = "Baitinq";
@@ -17,11 +16,11 @@ final: prev:
       sha256 = "sha256-MyNMxdaWtgjClZGIHUtYwwx51u5NII5Ce4BnOnUojo8=";
     };
     NIX_CFLAGS_COMPILE = "-lXrender -lm";
-    patches = [ ./patches/dmenu_height.patch ];
+    patches = [./patches/dmenu_height.patch];
   });
 
   st = prev.st.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [ prev.harfbuzz ];
+    buildInputs = old.buildInputs ++ [prev.harfbuzz];
     src = prev.fetchFromGitHub {
       owner = "LukeSmithxyz";
       repo = "st";
@@ -30,7 +29,7 @@ final: prev:
     };
   });
 
-  minecraft = prev.minecraft.override { jre = prev.jdk8; };
+  minecraft = prev.minecraft.override {jre = prev.jdk8;};
 
   xwinwrap = prev.xwinwrap.overrideAttrs (old: {
     src = prev.fetchFromGitHub {
@@ -65,22 +64,22 @@ final: prev:
   });
 
   mpv = prev.mpv.override {
-    scripts = [ prev.mpvScripts.mpris ];
+    scripts = [prev.mpvScripts.mpris];
   };
 
-  emacs = (prev.symlinkJoin {
+  emacs = prev.symlinkJoin {
     inherit (prev.emacs) name;
     inherit (prev.emacs) version;
-    paths = [ prev.emacs ];
-    nativeBuildInputs = [ prev.makeBinaryWrapper ];
-    postBuild = "wrapProgram $out/bin/emacs --prefix PATH : ${prev.lib.makeBinPath [ prev.nodejs prev.ripgrep ]}";
-  });
+    paths = [prev.emacs];
+    nativeBuildInputs = [prev.makeBinaryWrapper];
+    postBuild = "wrapProgram $out/bin/emacs --prefix PATH : ${prev.lib.makeBinPath [prev.nodejs prev.ripgrep]}";
+  };
 
-  neovim = (prev.symlinkJoin {
+  neovim = prev.symlinkJoin {
     inherit (prev.neovim) name;
     inherit (prev.neovim) version;
-    paths = [ prev.neovim ];
-    nativeBuildInputs = [ prev.makeBinaryWrapper ];
-    postBuild = "wrapProgram $out/bin/nvim --prefix PATH : ${prev.lib.makeBinPath [ prev.nodejs prev.fd prev.ripgrep prev.fswatch ]}";
-  });
+    paths = [prev.neovim];
+    nativeBuildInputs = [prev.makeBinaryWrapper];
+    postBuild = "wrapProgram $out/bin/nvim --prefix PATH : ${prev.lib.makeBinPath [prev.nodejs prev.fd prev.ripgrep prev.fswatch]}";
+  };
 }

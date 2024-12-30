@@ -1,6 +1,17 @@
-{ secrets, dotfiles, lib, pkgs, config, hostname, inputs, user, timezone, system, stateVersion, ... }:
 {
-
+  secrets,
+  dotfiles,
+  lib,
+  pkgs,
+  config,
+  hostname,
+  inputs,
+  user,
+  timezone,
+  system,
+  stateVersion,
+  ...
+}: {
   imports = [
     "${inputs.impermanence}/nixos.nix"
 
@@ -30,7 +41,7 @@
       timeout = 5;
     };
 
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = ["ntfs"];
     tmp.useTmpfs = true;
   };
 
@@ -42,10 +53,10 @@
     extraHosts = builtins.readFile "${inputs.hosts}/hosts";
     dhcpcd.enable = true;
     resolvconf.enable = true;
-    nameservers = [ "127.0.0.1" ];
+    nameservers = ["127.0.0.1"];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 22 9090 ];
+      allowedTCPPorts = [80 22 9090];
       # networking.firewall.allowedUDPPorts = [ ... ];
       # Or disable the firewall altogether.
     };
@@ -67,7 +78,7 @@
 
     "${user}" = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "audio" "video" ]; # Enable ‘sudo’ for the user.
+      extraGroups = ["wheel" "audio" "video"]; # Enable ‘sudo’ for the user.
       hashedPassword = secrets.baitinq.hashed_password;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
@@ -131,14 +142,14 @@
     inputs.deploy-rs.defaultPackage."${system}"
   ];
 
-  environment.defaultPackages = [ ];
+  environment.defaultPackages = [];
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
     config.common.default = "*";
     # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
   security = {
@@ -158,10 +169,12 @@
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
       };
-      listenAddresses = [{
-        addr = "0.0.0.0";
-        port = 22;
-      }];
+      listenAddresses = [
+        {
+          addr = "0.0.0.0";
+          port = 22;
+        }
+      ];
     };
     gnome.gnome-keyring.enable = true;
     unbound.enable = true;
@@ -202,7 +215,7 @@
 
   nix = {
     registry.nixpkgs.flake = inputs.nixpkgs;
-    nixPath = [ "nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels" ];
+    nixPath = ["nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels"];
     gc = {
       automatic = true;
       dates = "daily";
@@ -210,7 +223,7 @@
     };
     package = pkgs.nixVersions.stable;
     settings = {
-      experimental-features = [ "nix-command" "flakes" "ca-derivations" "auto-allocate-uids" ];
+      experimental-features = ["nix-command" "flakes" "ca-derivations" "auto-allocate-uids"];
       auto-optimise-store = true;
       auto-allocate-uids = true;
       max-jobs = "auto";
@@ -228,4 +241,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = stateVersion; # Did you read the comment?
 }
-

@@ -1,5 +1,16 @@
-{ config, lib, pkgs, inputs, user, hostname, secrets, dotfiles, location, stateVersion, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  user,
+  hostname,
+  secrets,
+  dotfiles,
+  location,
+  stateVersion,
+  ...
+}: {
   imports = [
     ../modules/email
   ];
@@ -8,71 +19,72 @@
     username = "${user}";
     homeDirectory = "/home/${user}";
 
-    packages = with pkgs; [
-      scrot
-      redshift
-      discord
-      tdesktop
-      mpv
-      sxiv
-      #dwm
-      #st
-      alacritty
-      # ghostty
-      dmenu
-      unclutter
-      clipmenu
-      dunst
-      sxhkd
-      zathura
-      feh
-      pavucontrol
-      polkit_gnome
-      nixpkgs-fmt
-      virt-manager
-      xmonadctl
-      xdotool #needed for xmobar clickable workspaces
-      xlockmore
-      arandr
-      # jrnl
-      # todo-txt-cli
-      # element-desktop
-      speedtest-cli
-      libnotify
-      dwmbar
-      manga-cli
-      mov-cli
-      calibre
-      kcc
-      slack
-      openvpn
-      smart-wallpaper
-      waybar
-      wl-clipboard
-      sway
-      swayidle
-      swaylock-effects
-      swaybg
-      river
-      wlr-randr
-      wlsunset
-      vscode
-      chromium
-      grim
-      qbittorrent
-      slurp
-      appimage-run
-      google-cloud-sdk
-      ghidra
-      ollama
-      kubectl
-      kubectx
-      kubernetes-helm
-    ] ++
-    (with pkgs.custom; [
-      lemacs
-      kindlegen
-    ]);
+    packages = with pkgs;
+      [
+        scrot
+        redshift
+        discord
+        tdesktop
+        mpv
+        sxiv
+        #dwm
+        #st
+        alacritty
+        # ghostty
+        dmenu
+        unclutter
+        clipmenu
+        dunst
+        sxhkd
+        zathura
+        feh
+        pavucontrol
+        polkit_gnome
+        nixpkgs-fmt
+        virt-manager
+        xmonadctl
+        xdotool #needed for xmobar clickable workspaces
+        xlockmore
+        arandr
+        # jrnl
+        # todo-txt-cli
+        # element-desktop
+        speedtest-cli
+        libnotify
+        dwmbar
+        manga-cli
+        mov-cli
+        calibre
+        kcc
+        slack
+        openvpn
+        smart-wallpaper
+        waybar
+        wl-clipboard
+        sway
+        swayidle
+        swaylock-effects
+        swaybg
+        river
+        wlr-randr
+        wlsunset
+        vscode
+        chromium
+        grim
+        qbittorrent
+        slurp
+        appimage-run
+        google-cloud-sdk
+        ghidra
+        ollama
+        kubectl
+        kubectx
+        kubernetes-helm
+      ]
+      ++ (with pkgs.custom; [
+        lemacs
+        kindlegen
+      ]);
   };
 
   xsession.windowManager.xmonad = {
@@ -106,7 +118,7 @@
       enable = true;
       enableSshSupport = true;
       enableExtraSocket = true;
-      sshKeys = [ "BC10A40920B576F641480795B9C7E01A4E47DA9F" ];
+      sshKeys = ["BC10A40920B576F641480795B9C7E01A4E47DA9F"];
       defaultCacheTtl = 43200; #12h
       defaultCacheTtlSsh = 43200;
       maxCacheTtl = 86400; #24h
@@ -145,7 +157,7 @@
       extraConfig = {
         push.autoSetupRemote = true;
         init.defaultBranch = "master";
-        safe.directory = [ "*" ];
+        safe.directory = ["*"];
         sendemail = {
           smtpserver = "smtp.gmail.com";
           smtpserverport = "587";
@@ -163,43 +175,44 @@
 
     emacs = {
       enable = true;
-      extraPackages = epkgs: with epkgs; [
-        direnv
-        which-key
+      extraPackages = epkgs:
+        with epkgs; [
+          direnv
+          which-key
 
-        evil
-        evil-collection
+          evil
+          evil-collection
 
-        general
+          general
 
-        doom-modeline
-        doom-themes
-        dashboard
+          doom-modeline
+          doom-themes
+          dashboard
 
-        projectile
+          projectile
 
-        corfu
-        kind-icon
-        eldoc-box
+          corfu
+          kind-icon
+          eldoc-box
 
-        vertico
-        consult
-        orderless
-        marginalia
+          vertico
+          consult
+          orderless
+          marginalia
 
-        treesit-auto
+          treesit-auto
 
-        go-mode
-        gotest
-        rustic
+          go-mode
+          gotest
+          rustic
 
-        treemacs
-        minimap
-        centaur-tabs
+          treemacs
+          minimap
+          centaur-tabs
 
-        shell-pop
-        eat
-      ];
+          shell-pop
+          eat
+        ];
       extraConfig = builtins.readFile "${dotfiles}/.emacs";
     };
 
@@ -217,50 +230,50 @@
         extraConfig = lib.strings.concatStrings [
           (builtins.readFile "${inputs.arkenfox-userjs}/user.js")
           ''
-	    // Re-enables URL usages as a search bar.
-            /* 0801 */ user_pref("keyword.enabled", true);
-	    user_pref("browser.search.suggest.enabled", true);    // 0804: live search suggestions
-	    // Re-allows COPY / CUT from "non-privileged" content as it actually breaks many websites.
-            /* 2404 */ user_pref("dom.allow_cut_copy", true);
-            // Disables RFP letter-boxing to avoid big white borders on screen.
-            /* 4504 */ user_pref("privacy.resistFingerprinting.letterboxing", false);
-	    // Set UI density to normal
-            user_pref("browser.uidensity", 0);
-            // DRM content :(
-            user_pref("media.gmp-widevinecdm.enabled", true);
-            user_pref("media.eme.enabled", true);
-	    user_pref("webgl.disabled", false); // 4520
-            user_pref("network.http.referer.XOriginTrimmingPolicy", 0);
-	    user_pref("privacy.clearOnShutdown.history", false); // 2811: don't clear history on close
-	    user_pref("browser.startup.page", 3);                 // 0102: enable session restore
-	    user_pref("signon.rememberSignons", true);           // 5003: enable saving passwords
-	    /* [UX,-HIST] Remember more closed tabs for undo. */
-            user_pref("browser.sessionstore.max_tabs_undo", 27);                    // 1020
-            /* [UX,-HIST] Restore all state for closed tab or previous session after Firefox restart. */
-            user_pref("browser.sessionstore.privacy_level", 0);                     // 1021
-            user_pref("browser.sessionstore.interval", 15000);                      // 1023
-            /* [UX,-HIST] Enable search and form history. */
-            user_pref("browser.formfill.enable", true);                             // 0860
-            user_pref("general.autoScroll", true);
-	    //user_pref("network.cookie.lifetimePolicy", 0); //keep cookies 2801
-	    user_pref("network.cookie.cookieBehavior", 5); // 2701
-	    user_pref("privacy.clearOnShutdown.offlineApps", false);
-            user_pref("privacy.cpd.offlineApps", false);
-	    user_pref("privacy.cpd.history", false); // 2812 to match when you use Ctrl-Shift-Del
-	    user_pref("privacy.clearOnShutdown.cookies", false);
-	    user_pref("privacy.clearOnShutdown.downloads", false);
-	    user_pref("privacy.clearOnShutdown.formdata", false);
-	    user_pref("privacy.clearOnShutdown.sessions", false);
-	    user_pref("extensions.pocket.enabled", false);        // 0900: disable Pocket
-	    user_pref("_user.js.baitinq", "Survived the overrides :)");
-	  ''
+            // Re-enables URL usages as a search bar.
+                   /* 0801 */ user_pref("keyword.enabled", true);
+            user_pref("browser.search.suggest.enabled", true);    // 0804: live search suggestions
+            // Re-allows COPY / CUT from "non-privileged" content as it actually breaks many websites.
+                   /* 2404 */ user_pref("dom.allow_cut_copy", true);
+                   // Disables RFP letter-boxing to avoid big white borders on screen.
+                   /* 4504 */ user_pref("privacy.resistFingerprinting.letterboxing", false);
+            // Set UI density to normal
+                   user_pref("browser.uidensity", 0);
+                   // DRM content :(
+                   user_pref("media.gmp-widevinecdm.enabled", true);
+                   user_pref("media.eme.enabled", true);
+            user_pref("webgl.disabled", false); // 4520
+                   user_pref("network.http.referer.XOriginTrimmingPolicy", 0);
+            user_pref("privacy.clearOnShutdown.history", false); // 2811: don't clear history on close
+            user_pref("browser.startup.page", 3);                 // 0102: enable session restore
+            user_pref("signon.rememberSignons", true);           // 5003: enable saving passwords
+            /* [UX,-HIST] Remember more closed tabs for undo. */
+                   user_pref("browser.sessionstore.max_tabs_undo", 27);                    // 1020
+                   /* [UX,-HIST] Restore all state for closed tab or previous session after Firefox restart. */
+                   user_pref("browser.sessionstore.privacy_level", 0);                     // 1021
+                   user_pref("browser.sessionstore.interval", 15000);                      // 1023
+                   /* [UX,-HIST] Enable search and form history. */
+                   user_pref("browser.formfill.enable", true);                             // 0860
+                   user_pref("general.autoScroll", true);
+            //user_pref("network.cookie.lifetimePolicy", 0); //keep cookies 2801
+            user_pref("network.cookie.cookieBehavior", 5); // 2701
+            user_pref("privacy.clearOnShutdown.offlineApps", false);
+                   user_pref("privacy.cpd.offlineApps", false);
+            user_pref("privacy.cpd.history", false); // 2812 to match when you use Ctrl-Shift-Del
+            user_pref("privacy.clearOnShutdown.cookies", false);
+            user_pref("privacy.clearOnShutdown.downloads", false);
+            user_pref("privacy.clearOnShutdown.formdata", false);
+            user_pref("privacy.clearOnShutdown.sessions", false);
+            user_pref("extensions.pocket.enabled", false);        // 0900: disable Pocket
+            user_pref("_user.js.baitinq", "Survived the overrides :)");
+          ''
         ];
       };
     };
 
-    rtorrent = { enable = true; };
+    rtorrent = {enable = true;};
 
-    obs-studio = { enable = true; };
+    obs-studio = {enable = true;};
 
     bash = {
       enable = true;
@@ -375,7 +388,6 @@
         bindkey "\e\x7f" backward-kill-word
       '';
     };
-
   };
 
   xdg = {
@@ -415,5 +427,4 @@
   xdg.userDirs.desktop = "$HOME/";
 
   home.stateVersion = stateVersion;
-
 }

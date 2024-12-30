@@ -1,4 +1,9 @@
-{ rustPlatform, fetchFromGitHub, pkgs, ... }:
+{
+  rustPlatform,
+  fetchFromGitHub,
+  pkgs,
+  ...
+}:
 rustPlatform.buildRustPackage rec {
   name = "swhkd";
 
@@ -6,7 +11,7 @@ rustPlatform.buildRustPackage rec {
     pkgconfig
   ];
 
-  buildInputs = with pkgs; [ systemd ];
+  buildInputs = with pkgs; [systemd];
 
   src = fetchFromGitHub {
     owner = "waycrate";
@@ -17,5 +22,5 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-E5AE18CfeX1HI/FbGDFoUDsPyG/CpJrD+8Ky7c+EQUw=";
 }
-
 # Doesn't yet work because NixOS' kernel isn't compiled with CONFIG_RFKILL_INPUT=y
+

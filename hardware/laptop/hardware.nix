@@ -1,28 +1,33 @@
-{ config, lib, inputs, pkgs, modulesPath, ... }:
-let
-  powerMode = "performance";
-in
 {
+  config,
+  lib,
+  inputs,
+  pkgs,
+  modulesPath,
+  ...
+}: let
+  powerMode = "performance";
+in {
   imports = [
     ./disks.nix
   ];
 
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
-      kernelModules = [ ];
+      availableKernelModules = ["xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci"];
+      kernelModules = [];
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "kvm_intel" ];
-    extraModulePackages = [ ];
-    kernelParams = [ "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off" ];
+    kernelModules = ["kvm_intel"];
+    extraModulePackages = [];
+    kernelParams = ["net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off"];
   };
 
   powerManagement.cpuFreqGovernor = powerMode;
 
   services = {
     xserver = {
-      videoDrivers = [ "nvidia" ];
+      videoDrivers = ["nvidia"];
 
       # Enable touchpad support (enabled default in most desktopManager).
       synaptics = {
@@ -57,5 +62,4 @@ in
       };
     };
   };
-
 }

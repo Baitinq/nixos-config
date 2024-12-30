@@ -1,5 +1,10 @@
-{ config, pkgs, lib, secrets, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  secrets,
+  ...
+}: {
   services = {
     mbsync.enable = true;
     imapnotify.enable = true;
@@ -45,7 +50,7 @@
 
         imapnotify = {
           enable = true;
-          boxes = [ "Inbox" ];
+          boxes = ["Inbox"];
           onNotifyPost = ''
             ${pkgs.libnotify}/bin/notify-send "New mail arrived."
           '';
@@ -71,7 +76,8 @@
             set use_from = yes
             set index_format='%4C %Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]> %-15.15L (%?l?%4l&%4c?) %s'
           '';
-          /*extraConfig = ''
+          /*
+            extraConfig = ''
             set imap_user = 'manuelpalenzuelamerino@gmail.com'
             set imap_pass = '${secrets.email."manuelpalenzuelamerino@gmail.com".password}'
             set spoolfile = imaps://imap.gmail.com/INBOX
@@ -84,11 +90,11 @@
             set smtp_url = "smtp://manuelpalenzuelamerino@smtp.gmail.com:587/"
             set smtp_pass = ${secrets.email."manuelpalenzuelamerino@gmail.com".password}
             set ssl_force_tls = yes # Require encrypted connection
-          '';*/
+          '';
+          */
         };
         passwordCommand = "${pkgs.coreutils}/bin/echo ${secrets.email."manuelpalenzuelamerino@gmail.com".password}";
       };
     };
   };
 }
-

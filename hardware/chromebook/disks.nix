@@ -1,5 +1,10 @@
-{ inputs, lib, config, pkgs, ... }:
-let
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   MMC = "/dev/disk/by-id/mmc-AGND3R_0x48d44fdc";
   SD = "/dev/disk/by-id/usb-Generic_STORAGE_DEVICE_000000000208-0:0";
 
@@ -40,7 +45,7 @@ let
   partitionsMountScript = ''
     mount -t tmpfs none /mnt
     mkdir -p /mnt/{boot,nix,persist,home}
-    
+
     cryptsetup open --type luks /dev/disk/by-partlabel/boot encrypted_boot
     mount /dev/mapper/encrypted_boot /mnt/boot
     mkdir -p /mnt/boot/efi
@@ -62,16 +67,14 @@ let
 
   # Utility to compare the root tree
   diff-root = pkgs.writers.writeDashBin "diff-root" ''
-    export PATH=${with pkgs; lib.makeBinPath [ diffutils less ]}:$PATH
+    export PATH=${with pkgs; lib.makeBinPath [diffutils less]}:$PATH
     current="$(mktemp current-root.XXX --tmpdir)"
     trap 'rm "$current"' EXIT INT HUP
     ${save-root}/bin/save-root "$current"
     diff -u /run/initial-root "$current" --color=always | ''${PAGER:-less -R}
   '';
-in
-{
+in {
   config = {
-
     environment.persistence."/persist" = {
       directories = [
         "/var/log"
@@ -91,7 +94,7 @@ in
     fileSystems."/" = {
       device = "none";
       fsType = "tmpfs";
-      options = [ "defaults" "mode=755" ];
+      options = ["defaults" "mode=755"];
     };
 
     boot.initrd.luks.devices."encrypted_boot" = {
@@ -115,7 +118,7 @@ in
       device = "/dev/mapper/encrypted_nix";
       fsType = "btrfs";
       neededForBoot = true;
-      options = [ "compress-force=zstd" "noatime" ];
+      options = ["compress-force=zstd" "noatime"];
     };
 
     boot.initrd.luks.devices."encrypted_home_and_persist".device = "/dev/disk/by-partlabel/home_and_persist";
@@ -124,21 +127,20 @@ in
       device = "/dev/mapper/encrypted_home_and_persist_pool-persist";
       fsType = "btrfs";
       neededForBoot = true;
-      options = [ "compress-force=zstd" "noatime" ];
+      options = ["compress-force=zstd" "noatime"];
     };
 
     fileSystems."/home" = {
       device = "/dev/mapper/encrypted_home_and_persist_pool-home";
       fsType = "btrfs";
-      options = [ "compress-force=zstd" ];
+      options = ["compress-force=zstd"];
     };
 
     services.btrfs.autoScrub.enable = true;
 
-    swapDevices = [ ];
+    swapDevices = [];
 
     zramSwap.enable = true;
-
 
     environment.systemPackages = [
       config.disks-create
@@ -150,37 +152,42 @@ in
 
     systemd.services.save-root-snapshot = {
       description = "save a snapshot of the initial root tree";
-      wantedBy = [ "sysinit.target" ];
-      requires = [ "-.mount" ];
-      after = [ "-.mount" ];
+      wantedBy = ["sysinit.target"];
+      requires = ["-.mount"];
+      after = ["-.mount"];
       serviceConfig.Type = "oneshot";
       serviceConfig.RemainAfterExit = true;
       serviceConfig.ExecStart = ''${save-root}/bin/save-root /run/initial-root'';
     };
   };
 
-  options.disks-create = with lib; mkOption rec {
-    type = types.package;
-    default = with pkgs; symlinkJoin {
-      name = "disks-create";
-      paths = [ (writeScriptBin default.name partitionsCreateScript) parted ];
+  options.disks-create = with lib;
+    mkOption rec {
+      type = types.package;
+      default = with pkgs;
+        symlinkJoin {
+          name = "disks-create";
+          paths = [(writeScriptBin default.name partitionsCreateScript) parted];
+        };
     };
-  };
 
-  options.disks-format = with lib; mkOption rec {
-    type = types.package;
-    default = with pkgs; symlinkJoin {
-      name = "disks-format";
-      paths = [ (writeScriptBin default.name partitionsFormatScript) cryptsetup lvm2 dosfstools e2fsprogs btrfs-progs ];
+  options.disks-format = with lib;
+    mkOption rec {
+      type = types.package;
+      default = with pkgs;
+        symlinkJoin {
+          name = "disks-format";
+          paths = [(writeScriptBin default.name partitionsFormatScript) cryptsetup lvm2 dosfstools e2fsprogs btrfs-progs];
+        };
     };
-  };
 
-  options.disks-mount = with lib; mkOption rec {
-    type = types.package;
-    default = with pkgs; symlinkJoin {
-      name = "disks-mount";
-      paths = [ (writeScriptBin default.name partitionsMountScript) cryptsetup lvm2 ];
+  options.disks-mount = with lib;
+    mkOption rec {
+      type = types.package;
+      default = with pkgs;
+        symlinkJoin {
+          name = "disks-mount";
+          paths = [(writeScriptBin default.name partitionsMountScript) cryptsetup lvm2];
+        };
     };
-  };
-
 }

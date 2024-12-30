@@ -1,12 +1,23 @@
-{ config, lib, pkgs, inputs, user, hostname, location, secrets, dotfiles, ... }:
 {
-  home.packages = with pkgs; [
-    xorg.xmodmap
-    trackma
-    adl
-  ] ++
-  (with pkgs.custom; [
-  ]);
+  config,
+  lib,
+  pkgs,
+  inputs,
+  user,
+  hostname,
+  location,
+  secrets,
+  dotfiles,
+  ...
+}: {
+  home.packages = with pkgs;
+    [
+      xorg.xmodmap
+      trackma
+      adl
+    ]
+    ++ (with pkgs.custom; [
+      ]);
 
   programs.firefox.profiles.default.settings = {
     "gfx.webrender.all" = true;
@@ -38,12 +49,12 @@
     '';
 
     "sxhkd/sxhkdrc".text =
-      builtins.readFile "${dotfiles}/sxhkd/xmonad" +
-      builtins.readFile "${dotfiles}/sxhkd/base" +
-      ''
-      
+      builtins.readFile "${dotfiles}/sxhkd/xmonad"
+      + builtins.readFile "${dotfiles}/sxhkd/base"
+      + ''
+
         #enter and leave game mode
-        alt + shift + F11: ctrl + shift + F11 
+        alt + shift + F11: ctrl + shift + F11
           pkill -ALRM sxhkd
 
         # Make sxhkd reload its configuration files
@@ -158,5 +169,4 @@
     ! bind Super+L to search
     keycode  133 = XF86Search
   '';
-
 }

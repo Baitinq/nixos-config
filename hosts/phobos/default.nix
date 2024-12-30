@@ -1,5 +1,13 @@
-{ config, pkgs, lib, secrets, hostname, inputs, user, ... }: {
-
+{
+  config,
+  pkgs,
+  lib,
+  secrets,
+  hostname,
+  inputs,
+  user,
+  ...
+}: {
   imports = [
     ../../modules/bluetooth
   ];
@@ -19,18 +27,18 @@
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   };
 
-  environment.systemPackages = with pkgs;
-    [
-    ];
+  environment.systemPackages = with pkgs; [
+  ];
 
   programs = {
     steam.enable = true;
   };
 
-  /*  services.udev.extraRules = ''
-    SUBSYSTEM=="input", ACTION=="add", ATTRS{bInterfaceProtocol}=="02", ATTRS{bInterfaceClass}=="03", ATTRS{bInterfaceSubClass}=="01", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${user}/.Xauthority", RUN+="${pkgs.xorg.xf86inputsynaptics}/bin/synclient TouchpadOff=1"
-    SUBSYSTEM=="input", ACTION=="remove", ATTRS{bInterfaceProtocol}=="02", ATTRS{bInterfaceClass}=="03", ATTRS{bInterfaceSubClass}=="01", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${user}/.Xauthority", RUN+="${pkgs.xorg.xf86inputsynaptics}/bin/synclient TouchpadOff=0"
-    '';
+  /*
+    services.udev.extraRules = ''
+  SUBSYSTEM=="input", ACTION=="add", ATTRS{bInterfaceProtocol}=="02", ATTRS{bInterfaceClass}=="03", ATTRS{bInterfaceSubClass}=="01", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${user}/.Xauthority", RUN+="${pkgs.xorg.xf86inputsynaptics}/bin/synclient TouchpadOff=1"
+  SUBSYSTEM=="input", ACTION=="remove", ATTRS{bInterfaceProtocol}=="02", ATTRS{bInterfaceClass}=="03", ATTRS{bInterfaceSubClass}=="01", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/${user}/.Xauthority", RUN+="${pkgs.xorg.xf86inputsynaptics}/bin/synclient TouchpadOff=0"
+  '';
   */
 
   services.boinc = {
@@ -38,8 +46,6 @@
     dataDir = "/var/lib/boinc";
   };
 
-  users.users.${user}.extraGroups = [ "boinc" ];
-  users.users.boinc.extraGroups = [ "video" ];
-
+  users.users.${user}.extraGroups = ["boinc"];
+  users.users.boinc.extraGroups = ["video"];
 }
-

@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   fonts = {
     packages = with pkgs; [
       noto-fonts
@@ -12,7 +16,7 @@
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "TX-02" "Inconsolata LGC" ];
+        monospace = ["TX-02" "Inconsolata LGC"];
       };
     };
   };

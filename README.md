@@ -19,7 +19,7 @@ Installation steps are in [Documentation/INSTALLING.md](./Documentation/INSTALLI
 
 ## Structure
 Here is an overview of the repos' structure:
-```
+```hs
 .
 ├── flake.nix
 ├── flake.lock

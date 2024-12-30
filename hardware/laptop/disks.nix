@@ -1,5 +1,12 @@
-{ config, lib, inputs, pkgs, modulesPath, isIso, ... }:
-let
+{
+  config,
+  lib,
+  inputs,
+  pkgs,
+  modulesPath,
+  isIso,
+  ...
+}: let
   HDD = "/dev/disk/by-id/wwn-0x5000c5009e0984c7";
 
   partitionsCreateScript = ''
@@ -54,16 +61,14 @@ let
 
   # Utility to compare the root tree
   diff-root = pkgs.writers.writeDashBin "diff-root" ''
-    export PATH=${with pkgs; lib.makeBinPath [ diffutils less ]}:$PATH
+    export PATH=${with pkgs; lib.makeBinPath [diffutils less]}:$PATH
     current="$(mktemp current-root.XXX --tmpdir)"
     trap 'rm "$current"' EXIT INT HUP
     ${save-root}/bin/save-root "$current"
     diff -u /run/initial-root "$current" --color=always | ''${PAGER:-less -R}
   '';
-in
-{
+in {
   config = {
-
     environment.persistence."/persist" = {
       directories = [
         "/var/log"
@@ -83,7 +88,7 @@ in
     fileSystems."/" = {
       device = "none";
       fsType = "tmpfs";
-      options = [ "defaults" "mode=755" ];
+      options = ["defaults" "mode=755"];
     };
 
     boot.initrd.luks.devices."encrypted_boot" = {
@@ -107,28 +112,27 @@ in
       device = "/dev/mapper/encrypted_root_pool-nix";
       fsType = "btrfs";
       neededForBoot = true;
-      options = [ "compress-force=zstd" "noatime" ];
+      options = ["compress-force=zstd" "noatime"];
     };
 
     fileSystems."/persist" = {
       device = "/dev/mapper/encrypted_root_pool-persist";
       fsType = "btrfs";
       neededForBoot = true;
-      options = [ "compress-force=zstd" "noatime" ];
+      options = ["compress-force=zstd" "noatime"];
     };
 
     fileSystems."/home" = {
       device = "/dev/mapper/encrypted_root_pool-home";
       fsType = "btrfs";
-      options = [ "compress-force=zstd" ];
+      options = ["compress-force=zstd"];
     };
 
-    swapDevices = [ ];
+    swapDevices = [];
 
     services.btrfs.autoScrub.enable = true;
 
     zramSwap.enable = true;
-
 
     environment.systemPackages = [
       config.disks-create
@@ -140,37 +144,42 @@ in
 
     systemd.services.save-root-snapshot = {
       description = "save a snapshot of the initial root tree";
-      wantedBy = [ "sysinit.target" ];
-      requires = [ "-.mount" ];
-      after = [ "-.mount" ];
+      wantedBy = ["sysinit.target"];
+      requires = ["-.mount"];
+      after = ["-.mount"];
       serviceConfig.Type = "oneshot";
       serviceConfig.RemainAfterExit = true;
       serviceConfig.ExecStart = ''${save-root}/bin/save-root /run/initial-root'';
     };
   };
 
-  options.disks-create = with lib; mkOption rec {
-    type = types.package;
-    default = with pkgs; symlinkJoin {
-      name = "disks-create";
-      paths = [ (writeScriptBin default.name partitionsCreateScript) parted ];
+  options.disks-create = with lib;
+    mkOption rec {
+      type = types.package;
+      default = with pkgs;
+        symlinkJoin {
+          name = "disks-create";
+          paths = [(writeScriptBin default.name partitionsCreateScript) parted];
+        };
     };
-  };
 
-  options.disks-format = with lib; mkOption rec {
-    type = types.package;
-    default = with pkgs; symlinkJoin {
-      name = "disks-format";
-      paths = [ (writeScriptBin default.name partitionsFormatScript) cryptsetup lvm2 dosfstools e2fsprogs btrfs-progs ];
+  options.disks-format = with lib;
+    mkOption rec {
+      type = types.package;
+      default = with pkgs;
+        symlinkJoin {
+          name = "disks-format";
+          paths = [(writeScriptBin default.name partitionsFormatScript) cryptsetup lvm2 dosfstools e2fsprogs btrfs-progs];
+        };
     };
-  };
 
-  options.disks-mount = with lib; mkOption rec {
-    type = types.package;
-    default = with pkgs; symlinkJoin {
-      name = "disks-mount";
-      paths = [ (writeScriptBin default.name partitionsMountScript) cryptsetup lvm2 ];
+  options.disks-mount = with lib;
+    mkOption rec {
+      type = types.package;
+      default = with pkgs;
+        symlinkJoin {
+          name = "disks-mount";
+          paths = [(writeScriptBin default.name partitionsMountScript) cryptsetup lvm2];
+        };
     };
-  };
-
 }

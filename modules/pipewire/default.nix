@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -13,6 +15,5 @@
   };
 
   # Recent fix for pipewire-pulse breakage
-  systemd.user.services.pipewire-pulse.path = [ pkgs.pulseaudio ];
+  systemd.user.services.pipewire-pulse.path = [pkgs.pulseaudio];
 }
-

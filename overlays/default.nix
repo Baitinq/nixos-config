@@ -1,7 +1,6 @@
-final: prev:
-let
+final: prev: let
   overlays = [
     (import ./base)
   ];
 in
-prev.lib.composeManyExtensions overlays final prev
+  prev.lib.composeManyExtensions overlays final prev
