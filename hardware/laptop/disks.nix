@@ -159,7 +159,7 @@ in {
       default = with pkgs;
         symlinkJoin {
           name = "disks-create";
-          paths = [(writeScriptBin default.name partitionsCreateScript) parted];
+          paths = [(writeShellScriptBin default.name partitionsCreateScript) parted];
         };
     };
 
@@ -169,7 +169,7 @@ in {
       default = with pkgs;
         symlinkJoin {
           name = "disks-format";
-          paths = [(writeScriptBin default.name partitionsFormatScript) cryptsetup lvm2 dosfstools e2fsprogs btrfs-progs];
+          paths = [(writeShellScriptBin default.name partitionsFormatScript) cryptsetup lvm2 dosfstools e2fsprogs btrfs-progs];
         };
     };
 
@@ -179,7 +179,7 @@ in {
       default = with pkgs;
         symlinkJoin {
           name = "disks-mount";
-          paths = [(writeScriptBin default.name partitionsMountScript) cryptsetup lvm2];
+          paths = [(writeShellScriptBin default.name partitionsMountScript) cryptsetup lvm2];
         };
     };
 }

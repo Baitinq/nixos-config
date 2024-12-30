@@ -30,9 +30,9 @@
         #dwm
         #st
         alacritty
-        # ghostty
+        ghostty
         dmenu
-        unclutter
+        # unclutter
         clipmenu
         dunst
         sxhkd
