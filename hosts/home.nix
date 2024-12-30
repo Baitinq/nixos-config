@@ -174,7 +174,7 @@
     };
 
     emacs = {
-      enable = true;
+      enable = false;
       extraPackages = epkgs:
         with epkgs; [
           direnv
