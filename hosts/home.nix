@@ -388,6 +388,7 @@
     configFile."waybar/".source = "${dotfiles}/waybar/";
     configFile."zathura/zathurarc".source = "${dotfiles}/zathurarc";
     configFile."dunst/dunstrc".source = "${dotfiles}/dunstrc";
+    configFile."gtk-4.0/".source = "${dotfiles}/gtk-4.0/";
   };
 
   home.file = {
