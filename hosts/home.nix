@@ -58,7 +58,6 @@
       wlsunset
       vscode
       chromium
-      fontforge-gtk
       grim
       qbittorrent
       slurp
