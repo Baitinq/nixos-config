@@ -14,16 +14,6 @@
       defaultFonts = {
         monospace = [ "TX-02" "Inconsolata LGC" ];
       };
-    #   localConf = ''
-    #   <?xml version="1.0"?>
-    #   <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-    #   <fontconfig>
-    #      <match target="pattern">
-    #         <test qual="any" name="family" compare="eq"><string>Berkeley Mono</string></test>
-    #         <edit name="family" mode="assign" binding="same"><string>Inconsolata LGC</string></edit>
-    #      </match>
-    #   </fontconfig>
-    # '';
     };
   };
 }
