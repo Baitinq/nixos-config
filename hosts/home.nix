@@ -70,6 +70,7 @@
         wlsunset
         vscode
         chromium
+        inputs.zen-browser.packages."${system}".default
         grim
         qbittorrent
         slurp
