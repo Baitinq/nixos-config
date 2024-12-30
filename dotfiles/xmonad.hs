@@ -236,15 +236,15 @@ myStatusBar = statusBarProp "xmobar" (do
                                         numWindows <- getNumberOfWindowsInWorkpace
                                         return $ def {
                                                     ppCurrent = if numWindows > 0
-                                                                        then xmobarBorder "Top" foregroundColor 4 . xmobarColor foregroundColor backgroundColor . wrap "  " "  "
-                                                                        else xmobarColor foregroundColor backgroundColor . wrap "  " "  "
+                                                                        then xmobarBorder "Top" foregroundColor 4 . xmobarColor foregroundColor backgroundColor . wrap " " " "
+                                                                        else xmobarColor foregroundColor backgroundColor . wrap " " " "
                                                   , ppTitle = id
                                                   , ppSep = " |  "
                                                   , ppWsSep = ""
                                                   , ppLayout = (\_ -> "")
-                                                  , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox foregroundColor ("  " ++ s ++ "  "))) --better way to clickablewrap . 
-                                                  , ppHiddenNoWindows = (\s -> clickableWrap ((read s::Int) - 1) ("  " ++ s ++ "  "))
-                                                  , ppUrgent = (\s -> clickableWrap ((read s::Int) - 1) (xmobarBorder "Top" urgentColor 4 ("  " ++ s ++ "  ")))
+                                                  , ppHidden = (\s -> clickableWrap ((read s::Int) - 1) (createDwmBox foregroundColor (" " ++ s ++ " "))) --better way to clickablewrap . 
+                                                  , ppHiddenNoWindows = (\s -> clickableWrap ((read s::Int) - 1) (" " ++ s ++ " "))
+                                                  , ppUrgent = (\s -> clickableWrap ((read s::Int) - 1) (xmobarBorder "Top" urgentColor 4 (" " ++ s ++ " ")))
                                           }
                                       )
                                       where

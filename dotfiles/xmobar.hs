@@ -1,7 +1,12 @@
 Config { 
 
    -- appearance
-     font =         "xft:Noto Sans Display Nerd Font:size=10,Inconsolata LGC Nerd Font:size=10,DejaVu Sans Mono Nerd Font:size=10,Noto Sans Mono CJK JP:size=10,Noto Color Emoji:size=10,Noto Sans Hebrew:size=10"
+     font =         "TX-02 10"
+   , additionalFonts = ["Noto Sans Display Nerd Font 12", 
+                        "DejaVu Sans Mono Nerd Font 12", 
+                        "Noto Sans Mono CJK JP 12", 
+                        "Noto Color Emoji 12", 
+                        "Noto Sans Hebrew 12"]
    , bgColor =      "#222222"
    , fgColor =      "#bbbbbb"
    , position =     Top
@@ -22,4 +27,4 @@ Config {
 
    , commands = [ Run UnsafeXMonadLog,
                   Run XPropertyLog "WM_NAME" ]
-   }
+}
