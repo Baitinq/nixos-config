@@ -12,8 +12,8 @@ final: prev: {
     src = prev.fetchFromGitHub {
       owner = "Baitinq";
       repo = "dmenu";
-      rev = "4935902378d321c465f5f8ec18619b22da75527b";
-      sha256 = "sha256-MyNMxdaWtgjClZGIHUtYwwx51u5NII5Ce4BnOnUojo8=";
+      rev = "6f11b0e8c1a5fa2be1bd83820ccd8569dd2b5fa2";
+      sha256 = "sha256-DLuri86CMw4+3qznfskYFloCJae0eXExDpoQ4D8GpjA=";
     };
     NIX_CFLAGS_COMPILE = "-lXrender -lm";
     patches = [./patches/dmenu_height.patch];
