@@ -238,7 +238,9 @@ myStatusBar = statusBarProp "xmobar" (do
                                                     ppCurrent = if numWindows > 0
                                                                         then xmobarBorder "Top" foregroundColor 4 . xmobarColor foregroundColor backgroundColor . wrap " " " "
                                                                         else xmobarColor foregroundColor backgroundColor . wrap " " " "
-                                                  , ppTitle = id
+                                                  , ppTitle = (\xs -> case length xs > 70 of
+                                                                        True -> take 70 xs ++ "..."
+                                                                        False -> xs) . xmobarStrip
                                                   , ppSep = " |  "
                                                   , ppWsSep = ""
                                                   , ppLayout = (\_ -> "")
