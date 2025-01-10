@@ -1,7 +1,9 @@
 theme = shinobi
+bold-is-bright = true
 
 font-family = TX-02
-font-size = 12
+font-size = 14
+font-thicken = true
 font-feature = -calt
 font-feature = -dlig
 font-feature = -liga
