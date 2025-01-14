@@ -603,6 +603,12 @@ require('lazy').setup({
 
       local servers = {
         hls = {},
+        zls = {
+          settings = {
+            enable_build_on_save = true,
+            build_on_save_step = 'check',
+          },
+        },
         gopls = {
           settings = {
             gopls = {
