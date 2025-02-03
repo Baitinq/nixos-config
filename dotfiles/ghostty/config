@@ -18,3 +18,5 @@ clipboard-paste-protection = false
 gtk-adwaita = false
 
 initial-command = "zsh"
+
+confirm-close-surface = false
