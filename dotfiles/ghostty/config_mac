@@ -1,0 +1,24 @@
+theme = shinobi
+bold-is-bright = true
+
+font-family = TX-02
+font-size = 14
+font-thicken = true
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
+
+window-decoration = false
+window-padding-x = 4
+window-padding-y = 4
+
+clipboard-read = "allow"
+clipboard-paste-protection = false
+
+gtk-adwaita = false
+
+initial-command = "zsh"
+
+confirm-close-surface = false
+
+adjust-cell-width = "-5%"
