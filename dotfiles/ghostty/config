@@ -9,8 +9,6 @@ font-feature = -dlig
 font-feature = -liga
 
 window-decoration = false
-window-padding-x = 0
-window-padding-y = 0
 
 clipboard-read = "allow"
 clipboard-paste-protection = false
