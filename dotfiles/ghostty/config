@@ -13,6 +13,9 @@ window-decoration = false
 clipboard-read = "allow"
 clipboard-paste-protection = false
 
+keybind = alt+c=copy_to_clipboard
+keybind = alt+v=paste_from_clipboard
+
 gtk-adwaita = false
 
 initial-command = "zsh"
