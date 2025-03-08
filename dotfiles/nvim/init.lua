@@ -241,29 +241,33 @@ require('lazy').setup({
   'github/copilot.vim',
 
   {
-    "yetone/avante.nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      {
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = { file_types = { "markdown", "Avante" } },
-        ft = { "markdown", "Avante" },
-      },
-    },
-    build = "make",
-    opts = {
-        provider = "openai",
-        openai = {
-          endpoint = "https://api.openai.com/v1",
-          model = "o3-mini", -- your desired model (or use gpt-4o, etc.)
-          timeout = 30000, -- timeout in milliseconds
-          temperature = 0, -- adjust if needed
-          max_tokens = 4096,
+    "olimorris/codecompanion.nvim",
+    config = function()
+      require("codecompanion").setup({
+         strategies = {
+          chat = {
+            adapter = "openai",
+          },
         },
-      },
+
+        adapters = {
+          openai = function()
+            return require("codecompanion.adapters").extend("openai", {
+              schema = {
+                model = {
+                  default = "o3-mini",
+                },
+              },
+            })
+          end,
+        },
+      })
+      vim.keymap.set('n', '<leader>a', ':CodeCompanionAction<CR>', { desc = '[A]I' })
+    end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
   },
 
   {
