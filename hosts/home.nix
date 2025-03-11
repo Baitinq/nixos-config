@@ -77,6 +77,7 @@
         appimage-run
         ghidra
         ollama
+        llm
         kubectl
         kubectx
         kubernetes-helm
