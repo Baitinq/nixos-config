@@ -22,6 +22,7 @@
     mkfs.vfat "${HDD}"-part1
     mkfs.ext4 "${HDD}"-part2
     cryptsetup -q luksFormat "${HDD}"-part3  --type luks2
+    systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0 "${HDD}"-part3
     cryptsetup open --type luks "${HDD}"-part3 encrypted_root
     pvcreate /dev/mapper/encrypted_root
     vgcreate encrypted_root_pool /dev/mapper/encrypted_root

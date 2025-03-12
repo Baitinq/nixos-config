@@ -25,6 +25,7 @@
   ];
 
   boot = lib.mkForce {
+    initrd.systemd.enable = true;
     loader = {
       efi = {
         efiSysMountPoint = "/boot/efi";
@@ -139,6 +140,7 @@
     strace
     fzf
     powertop
+    tpm2-tss
     inputs.deploy-rs.defaultPackage."${system}"
   ];
 
