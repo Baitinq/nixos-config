@@ -78,6 +78,7 @@
         ghidra
         ollama
         llm
+        claude-code
         kubectl
         kubectx
         kubernetes-helm
