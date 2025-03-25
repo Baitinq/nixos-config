@@ -114,6 +114,7 @@
   home.sessionVariables = {
     LOCATION = "${location}";
     OPENAI_API_KEY = "${secrets.openai_api_key}";
+    ANTHROPIC_API_KEY = "${secrets.anthropic_api_key}";
   };
 
   services = {
