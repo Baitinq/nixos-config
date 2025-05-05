@@ -79,6 +79,7 @@
         ollama
         llm
         claude-code
+        codex
         kubectl
         kubectx
         kubernetes-helm
