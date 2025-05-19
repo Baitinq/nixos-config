@@ -351,6 +351,7 @@
         open = "xdg-open";
         k = "kubectl";
         bzl = "bazel";
+        codex = "codex --disable-response-storage";
         extract = ''
           () {
             if [ -f $1 ] ; then
