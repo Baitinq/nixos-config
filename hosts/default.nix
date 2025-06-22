@@ -36,7 +36,7 @@
       overlays =
         [
           inputs.nur.overlays.default
-          # inputs.neovim-nightly-overlay.overlay
+          inputs.neovim-nightly-overlay.overlays.default
           (import ../packages)
           (import ../overlays)
         ]

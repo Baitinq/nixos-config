@@ -124,7 +124,6 @@
     gitFull
     git-crypt
     tmux
-    # neovim-nightly
     neovim
     htop
     pfetch
