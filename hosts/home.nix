@@ -78,6 +78,7 @@
         ghidra
         ollama
         llm
+        opencode
         claude-code
         codex
         kubectl
