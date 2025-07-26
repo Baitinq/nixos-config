@@ -354,6 +354,7 @@
         k = "kubectl";
         bzl = "bazel";
         codex = "codex --disable-response-storage";
+        claude = "claude --dangerously-skip-permissions";
         extract = ''
           () {
             if [ -f $1 ] ; then
