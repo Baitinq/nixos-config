@@ -118,6 +118,7 @@
     OPENAI_API_KEY = "${secrets.openai_api_key}";
     ANTHROPIC_API_KEY = "${secrets.anthropic_api_key}";
     GOOGLE_GENERATIVE_AI_API_KEY = "${secrets.google_genai_api_key}";
+    OPENROUTER_API_KEY = "${secrets.openrouter_api_key}";
   };
 
   services = {
