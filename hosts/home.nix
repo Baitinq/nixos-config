@@ -81,6 +81,7 @@
         opencode
         claude-code
         codex
+        gemini-cli
         kubectl
         kubectx
         kubernetes-helm
@@ -117,7 +118,7 @@
     LOCATION = "${location}";
     OPENAI_API_KEY = "${secrets.openai_api_key}";
     ANTHROPIC_API_KEY = "${secrets.anthropic_api_key}";
-    GOOGLE_GENERATIVE_AI_API_KEY = "${secrets.google_genai_api_key}";
+    GEMINI_API_KEY = "${secrets.google_genai_api_key}";
     OPENROUTER_API_KEY = "${secrets.openrouter_api_key}";
   };
 
@@ -356,6 +357,7 @@
         bzl = "bazel";
         codex = "codex --disable-response-storage";
         claude = "claude --dangerously-skip-permissions";
+        gemini = "gemini --yolo";
         extract = ''
           () {
             if [ -f $1 ] ; then
