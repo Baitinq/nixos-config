@@ -187,6 +187,7 @@
     irqbalance.enable = true;
     fwupd.enable = true;
     libinput.enable = false;
+    usbmuxd.enable = true;
   };
 
   programs = {
