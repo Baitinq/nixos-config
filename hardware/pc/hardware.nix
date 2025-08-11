@@ -38,6 +38,17 @@ in {
 
     graphics = {
       enable = true;
+      extraPackages = with pkgs; [
+        rocmPackages.clr.icd
+      ];
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
+
+  environment.systemPackages = with pkgs; [
+    clinfo
+  ];
 }
