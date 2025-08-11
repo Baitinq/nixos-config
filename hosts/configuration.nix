@@ -61,6 +61,10 @@
       # networking.firewall.allowedUDPPorts = [ ... ];
       # Or disable the firewall altogether.
     };
+    wireless = {
+      enable = true; # Enables wireless support via wpa_supplicant.
+      networks = secrets.wifi_networks;
+    };
   };
 
   # Select internationalisation properties.
