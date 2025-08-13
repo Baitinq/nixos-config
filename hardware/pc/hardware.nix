@@ -19,8 +19,8 @@ in {
       kernelModules = [];
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = ["kvm_intel" "amdgpu"];
-    extraModulePackages = [];
+    kernelModules = ["kvm_intel" "nvidia"];
+    extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
     kernelParams = ["boot.shell_on_fail" "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off"];
   };
 
@@ -28,7 +28,7 @@ in {
 
   services = {
     xserver = {
-      videoDrivers = ["amdgpu"];
+      videoDrivers = ["nvidia"];
     };
     fstrim.enable = true;
   };
@@ -38,9 +38,11 @@ in {
 
     graphics = {
       enable = true;
-      extraPackages = with pkgs; [
-        rocmPackages.clr.icd
-      ];
+    };
+    nvidia = {
+      modesetting.enable = true;
+      open = true;
+      nvidiaSettings = true;
     };
   };
 
