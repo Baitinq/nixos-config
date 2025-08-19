@@ -85,6 +85,7 @@
         kubectl
         kubectx
         kubernetes-helm
+        python313Packages.huggingface-hub
       ]
       ++ (with pkgs.custom; [
         lemacs
