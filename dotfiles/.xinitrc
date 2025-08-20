@@ -37,7 +37,21 @@ fi
 
 # NEEDED FOR NVIDIA DRIVERS
 if [ -x "$(command -v nvidia-smi)" ]; then
-  xrandr --setprovideroutputsource modesetting NVIDIA-0
+
+  # Preferred resolution + refresh rate
+  RES="3440x1440"
+  RATE="160.00"
+
+  # Find a connected display (DP-2, HDMI-0, etc.)
+  OUTPUT="$(xrandr | grep " connected" | cut -d' ' -f1)"
+
+  # Only switch if the mode exists
+  if xrandr | grep -qE "${RES}"; then
+    xrandr --output "$OUTPUT" --mode "$RES" --rate "$RATE"
+  else
+    # For PRIME / hybrid setups
+    xrandr --setprovideroutputsource modesetting NVIDIA-0
+   fi
 fi
 
 # NEEDED FOR CHROMEBOOK
