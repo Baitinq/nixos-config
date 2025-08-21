@@ -120,7 +120,10 @@ in {
       options = ["compress-force=zstd"];
     };
 
-    swapDevices = [];
+    swapDevices = [{
+      device = "/nix/swapfile";
+      size = 16*1024;
+    }];
 
     services.btrfs.autoScrub.enable = true;
 
