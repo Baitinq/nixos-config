@@ -32,6 +32,7 @@
         allowUnfree = true;
         allowBroken = true;
         allowUnsupportedSystem = true;
+        cudaSupport = hardware == "pc";
       };
       overlays =
         [
