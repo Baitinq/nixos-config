@@ -54,7 +54,6 @@
     extraHosts = builtins.readFile "${inputs.hosts}/hosts";
     dhcpcd.enable = true;
     resolvconf.enable = true;
-    nameservers = ["127.0.0.1"];
     firewall = {
       enable = true;
       allowedTCPPorts = [80 22 9090];
@@ -182,7 +181,34 @@
       ];
     };
     gnome.gnome-keyring.enable = true;
-    unbound.enable = true;
+    unbound = {
+      enable = true;
+      settings = {
+        server = {
+          # Based on recommended settings in https://docs.pi-hole.net/guides/dns/unbound/#configure-unbound
+          harden-glue = true;
+          harden-dnssec-stripped = true;
+          use-caps-for-id = false;
+          prefetch = true;
+          edns-buffer-size = 1232;
+
+          # Custom settings
+          hide-identity = true;
+          hide-version = true;
+        };
+        forward-zone = [
+          # Example config with quad9
+          {
+            name = ".";
+            forward-addr = [
+                  "1.1.1.1#cloudflare-dns.com"
+                  "1.0.0.1#cloudflare-dns.com"
+            ];
+            forward-tls-upstream = true;  # Protected DNS
+          }
+        ];
+      };
+    };
     dbus.enable = true;
     irqbalance.enable = true;
     fwupd.enable = true;
