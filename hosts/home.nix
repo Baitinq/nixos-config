@@ -121,6 +121,7 @@
     ANTHROPIC_API_KEY = "${secrets.anthropic_api_key}";
     GEMINI_API_KEY = "${secrets.google_genai_api_key}";
     OPENROUTER_API_KEY = "${secrets.openrouter_api_key}";
+    HF_TOKEN = "${secrets.huggingface_api_key}";
   };
 
   services = {
