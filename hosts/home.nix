@@ -76,7 +76,7 @@
         slurp
         appimage-run
         ghidra
-        ollama
+        ((ollama.override { acceleration = "cuda"; }))
         llm
         opencode
         claude-code
