@@ -67,6 +67,10 @@ final: prev: {
     scripts = [prev.mpvScripts.mpris];
   };
 
+  git-crypt = prev.git-crypt.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [./patches/git-crypt-worktrees.patch];
+  });
+
   emacs = prev.symlinkJoin {
     inherit (prev.emacs) name;
     inherit (prev.emacs) version;
