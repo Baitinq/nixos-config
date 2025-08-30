@@ -88,6 +88,7 @@
         python313Packages.huggingface-hub
       ]
       ++ (with pkgs.custom; [
+        claude-squad
         lemacs
         kindlegen
       ]);
@@ -359,6 +360,7 @@
         open = "xdg-open";
         k = "kubectl";
         bzl = "bazel";
+        cs = "claude-squad -p \"opencode\"";
         codex = "codex --disable-response-storage";
         claude = "claude --dangerously-skip-permissions";
         gemini = "gemini --yolo";
