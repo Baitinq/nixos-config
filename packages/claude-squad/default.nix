@@ -26,6 +26,10 @@ buildGoModule rec {
   
   buildInputs = [ tmux gh ];
 
+  patches = [
+    ./claude-squad-shell.patch
+  ];
+
   postInstall = ''
     wrapProgram $out/bin/claude-squad \
       --prefix PATH : ${lib.makeBinPath [ tmux gh ]}

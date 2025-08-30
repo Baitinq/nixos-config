@@ -1,0 +1,254 @@
+diff --git a/app/app.go b/app/app.go
+index b761af3..2adc7a7 100644
+--- a/app/app.go
++++ b/app/app.go
+@@ -605,6 +605,22 @@ func (m *home) handleKeyPress(msg tea.KeyMsg) (mod tea.Model, cmd tea.Cmd) {
+ 			return m, m.handleError(err)
+ 		}
+ 		return m, tea.WindowSize()
++	case keys.KeyShell:
++		selected := m.list.GetSelectedInstance()
++		if selected == nil {
++			return m, nil
++		}
++
++		m.showHelpScreen(helpTypeInstanceShell{}, func() {
++			m.state = stateDefault
++			ch, err := m.list.AttachShell()
++			if err != nil {
++				log.ErrorLog.Printf("failed to attach shell: %v", err)
++				return
++			}
++			<-ch
++		})
++		return m, nil
+ 	case keys.KeyEnter:
+ 		if m.list.NumInstances() == 0 {
+ 			return m, nil
+diff --git a/app/help.go b/app/help.go
+index b9949ca..f95ac7e 100644
+--- a/app/help.go
++++ b/app/help.go
+@@ -29,6 +29,8 @@ type helpTypeInstanceAttach struct{}
+ 
+ type helpTypeInstanceCheckout struct{}
+ 
++type helpTypeInstanceShell struct{}
++
+ func helpStart(instance *session.Instance) helpText {
+ 	return helpTypeInstanceStart{instance: instance}
+ }
+@@ -105,6 +107,20 @@ func (h helpTypeInstanceCheckout) toContent() string {
+ 	)
+ 	return content
+ }
++
++func (h helpTypeInstanceShell) toContent() string {
++	content := lipgloss.JoinVertical(lipgloss.Left,
++		titleStyle.Render("Attaching to Shell"),
++		"",
++		"Changes will be committed locally and the session will be paused.",
++		"Then an interactive shell will open in the instance's git worktree directory.",
++		"",
++		"You can inspect files, run commands, or make changes directly in the branch.",
++		"",
++		descStyle.Render("To exit the shell, type ")+keyStyle.Render("exit")+descStyle.Render(" or press ")+keyStyle.Render("ctrl-d"),
++	)
++	return content
++}
+ func (h helpTypeGeneral) mask() uint32 {
+ 	return 1
+ }
+@@ -119,6 +135,10 @@ func (h helpTypeInstanceCheckout) mask() uint32 {
+ 	return 1 << 3
+ }
+ 
++func (h helpTypeInstanceShell) mask() uint32 {
++	return 1 << 4
++}
++
+ var (
+ 	titleStyle  = lipgloss.NewStyle().Bold(true).Underline(true).Foreground(lipgloss.Color("#7D56F4"))
+ 	headerStyle = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#36CFC9"))
+diff --git a/keys/keys.go b/keys/keys.go
+index d984c30..eef4100 100644
+--- a/keys/keys.go
++++ b/keys/keys.go
+@@ -22,8 +22,9 @@ const (
+ 
+ 	KeyCheckout
+ 	KeyResume
+-	KeyPrompt // New key for entering a prompt
+-	KeyHelp   // Key for showing help screen
++	KeyShell
++	KeyPrompt
++	KeyHelp
+ 
+ 	// Diff keybindings
+ 	KeyShiftUp
+@@ -47,6 +48,7 @@ var GlobalKeyStringsMap = map[string]KeyName{
+ 	"tab":        KeyTab,
+ 	"c":          KeyCheckout,
+ 	"r":          KeyResume,
++	"x":          KeyShell,
+ 	"p":          KeySubmit,
+ 	"?":          KeyHelp,
+ }
+@@ -101,6 +103,10 @@ var GlobalkeyBindings = map[KeyName]key.Binding{
+ 		key.WithKeys("c"),
+ 		key.WithHelp("c", "checkout"),
+ 	),
++	KeyShell: key.NewBinding(
++		key.WithKeys("x"),
++		key.WithHelp("x", "shell"),
++	),
+ 	KeyTab: key.NewBinding(
+ 		key.WithKeys("tab"),
+ 		key.WithHelp("tab", "switch tab"),
+diff --git a/session/instance.go b/session/instance.go
+index cc4b5e8..1322930 100644
+--- a/session/instance.go
++++ b/session/instance.go
+@@ -8,6 +8,7 @@ import (
+ 
+ 	"fmt"
+ 	"os"
++	"os/exec"
+ 	"strings"
+ 	"time"
+ 
+@@ -552,3 +553,45 @@ func (i *Instance) SendKeys(keys string) error {
+ 	}
+ 	return i.tmuxSession.SendKeys(keys)
+ }
++
++func (i *Instance) AttachShell() (chan struct{}, error) {
++	if !i.started {
++		return nil, fmt.Errorf("cannot attach shell for instance that has not been started")
++	}
++	if i.Status == Paused {
++		return nil, fmt.Errorf("cannot attach shell to paused instance - resume first")
++	}
++
++	worktreePath := i.gitWorktree.GetWorktreePath()
++
++	shell := detectInteractiveShell()
++	shellSession := tmux.NewTmuxSession(fmt.Sprintf("%s-shell", i.Title), shell)
++	if err := shellSession.Start(worktreePath); err != nil {
++		return nil, fmt.Errorf("failed to start shell session: %w", err)
++	}
++
++	ch, err := shellSession.Attach()
++	if err != nil {
++		return nil, fmt.Errorf("failed to attach to shell session: %w", err)
++	}
++
++	cleanupCh := make(chan struct{})
++	go func() {
++		defer close(cleanupCh)
++		<-ch
++		if err := shellSession.Close(); err != nil {
++			log.ErrorLog.Printf("failed to close shell session: %v", err)
++		}
++	}()
++
++	return cleanupCh, nil
++}
++
++func detectInteractiveShell() string {
++	if shell := os.Getenv("SHELL"); shell != "" {
++		if _, err := exec.LookPath(shell); err == nil {
++			return shell
++		}
++	}
++	return "/bin/bash"
++}
+diff --git a/ui/list.go b/ui/list.go
+index 0c8e1a6..a6c3c09 100644
+--- a/ui/list.go
++++ b/ui/list.go
+@@ -303,6 +303,11 @@ func (l *List) Attach() (chan struct{}, error) {
+ 	return targetInstance.Attach()
+ }
+ 
++func (l *List) AttachShell() (chan struct{}, error) {
++	targetInstance := l.items[l.selectedIdx]
++	return targetInstance.AttachShell()
++}
++
+ // Up selects the prev item in the list.
+ func (l *List) Up() {
+ 	if len(l.items) == 0 {
+diff --git a/ui/menu.go b/ui/menu.go
+index af94d97..bf85147 100644
+--- a/ui/menu.go
++++ b/ui/menu.go
+@@ -49,7 +49,10 @@ type Menu struct {
+ 	instance      *session.Instance
+ 	isInDiffTab   bool
+ 
+-	// keyDown is the key which is pressed. The default is -1.
++	instanceGroup []keys.KeyName
++	actionGroup   []keys.KeyName
++	systemGroup   []keys.KeyName
++
+ 	keyDown keys.KeyName
+ }
+ 
+@@ -121,28 +124,24 @@ func (m *Menu) updateOptions() {
+ }
+ 
+ func (m *Menu) addInstanceOptions() {
+-	// Instance management group
+-	options := []keys.KeyName{keys.KeyNew, keys.KeyKill}
++	m.instanceGroup = []keys.KeyName{keys.KeyNew, keys.KeyKill}
+ 
+-	// Action group
+-	actionGroup := []keys.KeyName{keys.KeyEnter, keys.KeySubmit}
++	m.actionGroup = []keys.KeyName{keys.KeyEnter, keys.KeyShell, keys.KeySubmit}
+ 	if m.instance.Status == session.Paused {
+-		actionGroup = append(actionGroup, keys.KeyResume)
++		m.actionGroup = append(m.actionGroup, keys.KeyResume)
+ 	} else {
+-		actionGroup = append(actionGroup, keys.KeyCheckout)
++		m.actionGroup = append(m.actionGroup, keys.KeyCheckout)
+ 	}
+-
+-	// Navigation group (when in diff tab)
+ 	if m.isInDiffTab {
+-		actionGroup = append(actionGroup, keys.KeyShiftUp)
++		m.actionGroup = append(m.actionGroup, keys.KeyShiftUp)
+ 	}
+ 
+-	// System group
+-	systemGroup := []keys.KeyName{keys.KeyTab, keys.KeyHelp, keys.KeyQuit}
++	m.systemGroup = []keys.KeyName{keys.KeyTab, keys.KeyHelp, keys.KeyQuit}
+ 
+-	// Combine all groups
+-	options = append(options, actionGroup...)
+-	options = append(options, systemGroup...)
++	var options []keys.KeyName
++	options = append(options, m.instanceGroup...)
++	options = append(options, m.actionGroup...)
++	options = append(options, m.systemGroup...)
+ 
+ 	m.options = options
+ }
+@@ -156,14 +155,13 @@ func (m *Menu) SetSize(width, height int) {
+ func (m *Menu) String() string {
+ 	var s strings.Builder
+ 
+-	// Define group boundaries
+ 	groups := []struct {
+ 		start int
+ 		end   int
+ 	}{
+-		{0, 2}, // Instance management group (n, d)
+-		{2, 5}, // Action group (enter, submit, pause/resume)
+-		{6, 8}, // System group (tab, help, q)
++		{0, len(m.instanceGroup)},
++		{len(m.instanceGroup), len(m.instanceGroup) + len(m.actionGroup)},
++		{len(m.instanceGroup) + len(m.actionGroup), len(m.options)},
+ 	}
+ 
+ 	for i, k := range m.options {
