@@ -7,6 +7,10 @@
   ...
 }: let
   powerMode = "performance";
+  white-rgb = pkgs.writeScriptBin "white-rgb" ''
+    #!/bin/sh
+    ${pkgs.openrgb}/bin/openrgb --mode static --color FFFFFF
+  '';
 in {
   imports = [
     ./disks.nix
@@ -19,7 +23,7 @@ in {
       kernelModules = [];
     };
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = ["kvm_intel" "nvidia"];
+    kernelModules = ["kvm_intel" "nvidia" "i2c-dev"];
     extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
     kernelParams = ["boot.shell_on_fail" "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off"];
   };
@@ -31,6 +35,16 @@ in {
       videoDrivers = ["nvidia"];
     };
     fstrim.enable = true;
+    hardware.openrgb.enable = true;
+  };
+
+  systemd.services.white-rgb = {
+    description = "white-rgb";
+    serviceConfig = {
+      ExecStart = "${white-rgb}/bin/white-rgb";
+      Type = "oneshot";
+    };
+    wantedBy = [ "multi-user.target" ];
   };
 
   hardware = {
@@ -46,11 +60,9 @@ in {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
     nvidia-container-toolkit.enable = true;
-  };
 
-  systemd.tmpfiles.rules = [
-    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
-  ];
+    i2c.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     clinfo
