@@ -299,6 +299,7 @@
       enable = true;
 
       oh-my-zsh.enable = true;
+      profileExtra = builtins.readFile "${dotfiles}/.bash_profile";
 
       plugins = [
         {

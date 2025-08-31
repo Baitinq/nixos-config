@@ -87,6 +87,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
       ];
+      shell = pkgs.zsh;
     };
   };
 
@@ -217,6 +218,7 @@
   };
 
   programs = {
+    zsh.enable = true;
     gnupg.agent.enable = true;
 
     ssh = {
