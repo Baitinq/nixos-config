@@ -67,4 +67,6 @@ in {
   environment.systemPackages = with pkgs; [
     clinfo
   ];
+
+  networking.interfaces.eth0.wakeOnLan.enable = true;
 }

@@ -42,6 +42,7 @@
         polkit_gnome
         nixpkgs-fmt
         virt-manager
+        wol
         xmonadctl
         xdotool #needed for xmobar clickable workspaces
         xlockmore
