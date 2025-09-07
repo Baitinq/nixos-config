@@ -13,10 +13,8 @@
   services = {
     # Configure keymap in X11
     xserver.xkb.layout = "us";
-    logind.extraConfig = ''
-      # don’t shutdown when power button is short-pressed
-      HandlePowerKey=ignore
-    '';
+    # don’t shutdown when power button is short-pressed
+    logind.settings.Login.HandlePowerKey = "ignore";
   };
 
   environment.systemPackages = with pkgs; [
