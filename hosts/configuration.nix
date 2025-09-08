@@ -144,7 +144,7 @@
     fzf
     powertop
     tpm2-tss
-    inputs.deploy-rs.defaultPackage."${system}"
+    inputs.deploy-rs.packages."${system}".deploy-rs
   ];
 
   environment.defaultPackages = [];
