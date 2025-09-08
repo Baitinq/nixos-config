@@ -27,6 +27,8 @@
 
     nixtest.url = "github:jetpack-io/nixtest";
 
+    jj.url = "github:gusinacio/jj/lfs";
+
     nix-index = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
