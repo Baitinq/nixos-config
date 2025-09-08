@@ -190,6 +190,13 @@
           name = "Baitinq";
           email = "manuelpalenzuelamerino@gmail.com";
         };
+        ui = {
+          diff-formatter = ":git";
+          conflict-marker-style = "git";
+        };
+        aliases = {
+          tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+        };
         signing = {
           behavior = "own";
           backend = "gpg";
