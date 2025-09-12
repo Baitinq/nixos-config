@@ -67,7 +67,7 @@
         swayidle
         swaylock-effects
         swaybg
-        river
+        river-classic
         wlr-randr
         wlsunset
         vscode
@@ -195,7 +195,8 @@
           conflict-marker-style = "git";
         };
         aliases = {
-          tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+          tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@"];
+          tug- = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
         };
         signing = {
           behavior = "own";
