@@ -12,7 +12,7 @@
 }: {
   home.packages = with pkgs;
     [
-      minecraft
+      prismlauncher
       trackma
       adl
       jetbrains.idea-community
