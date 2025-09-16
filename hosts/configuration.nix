@@ -51,7 +51,14 @@
   networking = {
     hostName = hostname;
     enableIPv6 = true;
-    extraHosts = builtins.readFile "${inputs.hosts}/hosts";
+    extraHosts = let
+      hostsFile = builtins.readFile "${inputs.hosts}/hosts";
+      lines = lib.splitString "\n" hostsFile;
+      blacklist = [ "mixpanel.com" "mxpnl.com" ];
+      filtered = builtins.filter (line:
+        builtins.all (domain: !(lib.hasInfix domain line)) blacklist
+      ) lines;
+    in lib.concatStringsSep "\n" filtered;
     dhcpcd.enable = true;
     resolvconf.enable = true;
     firewall = {
