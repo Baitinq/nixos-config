@@ -387,7 +387,6 @@
         k = "kubectl";
         bzl = "bazel";
         cs = "claude-squad -p \"opencode\"";
-        codex = "codex --disable-response-storage";
         claude = "claude --dangerously-skip-permissions";
         gemini = "gemini --yolo";
         extract = ''
