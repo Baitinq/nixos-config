@@ -72,6 +72,7 @@
         wlsunset
         vscode
         chromium
+        brave
         inputs.zen-browser.packages."${system}".default
         grim
         qbittorrent
