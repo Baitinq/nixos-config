@@ -636,6 +636,7 @@ require('lazy').setup({
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local servers = {
+        pyright = {},
         hls = {},
         zls = {
           settings = {
