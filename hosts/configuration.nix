@@ -142,6 +142,7 @@
     zip
     yt-dlp
     lf
+    jq
     file
     usbutils
     pciutils

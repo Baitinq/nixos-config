@@ -85,6 +85,7 @@
         claude-code
         codex
         gemini-cli
+        gh
         kubectl
         kubectx
         kubernetes-helm
