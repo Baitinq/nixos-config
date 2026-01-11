@@ -1,0 +1,20 @@
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -9,7 +9,6 @@
+     "numpy>=2.0",
+     "scipy>=1.14",
+     "sounddevice>=0.5",
+-    "pywhispercpp",
+ ]
+
+ [project.scripts]
+@@ -17,8 +16,5 @@
+
+ [build-system]
+-requires = ["uv_build>=0.8.4,<0.9.0"]
+-build-backend = "uv_build"
+-
+-[tool.uv.sources.pywhispercpp]
+-git = "https://github.com/absadiki/pywhispercpp"
++requires = ["setuptools>=61.0"]
++build-backend = "setuptools.build_meta"

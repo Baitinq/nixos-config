@@ -13,7 +13,7 @@
   ...
 }: {
   imports = [
-    ../modules/email
+    # ../modules/email
   ];
 
   home = {
@@ -25,7 +25,7 @@
         scrot
         redshift
         discord
-        tdesktop
+        telegram-desktop
         mpv
         sxiv
         #dwm
@@ -57,7 +57,7 @@
         manga-cli
         mov-cli
         calibre
-        kcc
+        # kcc
         slack
         openvpn
         smart-wallpaper
@@ -95,6 +95,7 @@
         claude-squad
         lemacs
         kindlegen
+        habla
       ]);
   };
 
@@ -161,16 +162,18 @@
     git = {
       enable = true;
       package = pkgs.gitFull;
-      userName = "Baitinq";
-      userEmail = "manuelpalenzuelamerino@gmail.com";
       signing = {
         signByDefault = true;
         key = "18BE4F736F27FC190C1E1000BB3C0BC698650937";
       };
-      aliases = {
-        pr = "!f() { git fetch -fu \${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f";
-      };
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Baitinq";
+          email = "manuelpalenzuelamerino@gmail.com";
+        };
+        alias = {
+          pr = "!f() { git fetch -fu \${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f";
+        };
         push.autoSetupRemote = true;
         init.defaultBranch = "master";
         safe.directory = ["*"];
@@ -186,7 +189,6 @@
 
     jujutsu = {
       enable = true;
-      package = inputs.jj.packages."${system}".jujutsu;
       settings = {
         user = {
           name = "Baitinq";

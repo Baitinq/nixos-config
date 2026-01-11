@@ -31,7 +31,6 @@
       config = {
         allowUnfree = true;
         allowBroken = true;
-        allowUnsupportedSystem = true;
         cudaSupport = false;
       };
       overlays =
