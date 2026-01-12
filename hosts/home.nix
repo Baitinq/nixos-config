@@ -92,6 +92,7 @@
         python313Packages.huggingface-hub
       ]
       ++ (with pkgs.custom; [
+        minecraft
         claude-squad
         lemacs
         kindlegen

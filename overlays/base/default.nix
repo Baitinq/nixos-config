@@ -29,7 +29,7 @@ final: prev: {
     };
   });
 
-  minecraft = prev.minecraft.override {jre = prev.jdk8;};
+  # minecraft now in packages/minecraft
 
   xwinwrap = prev.xwinwrap.overrideAttrs (old: {
     src = prev.fetchFromGitHub {
