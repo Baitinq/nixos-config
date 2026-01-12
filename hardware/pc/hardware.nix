@@ -25,7 +25,7 @@ in {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = ["kvm_intel" "nvidia" "i2c-dev"];
     extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
-    kernelParams = ["boot.shell_on_fail" "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off"];
+    kernelParams = ["boot.shell_on_fail" "net.ifnames=0" "biosdevname=0" "iomem=relaxed" "mitigations=off" "r8169.eee_enable=0" "r8169.use_dac=1"];
   };
 
   powerManagement.cpuFreqGovernor = powerMode;
