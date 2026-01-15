@@ -173,6 +173,8 @@
         auth include login
       '';
     };
+    # Auto-unlock gnome-keyring on TTY login
+    pam.services.login.enableGnomeKeyring = true;
   };
 
   services = {
