@@ -109,12 +109,14 @@
   };
 
   environment.sessionVariables = rec {
-    XDG_CACHE_HOME = "\${HOME}/.cache";
-    XDG_CONFIG_HOME = "\${HOME}/.config";
-    XDG_BIN_HOME = "\${HOME}/.local/bin";
-    XDG_DATA_HOME = "\${HOME}/.local/share";
-    XDG_STATE_HOME = "\${HOME}/.local/state";
-    XDG_DESKTOP_DIR = "\${HOME}/";
+    # Use $HOME (not ${HOME}) so NixOS' pam_env generation can rewrite it to @{HOME}.
+    # This matters for things started very early in PAM (e.g. gnome-keyring).
+    XDG_CACHE_HOME = "$HOME/.cache";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_BIN_HOME = "$HOME/.local/bin";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
+    XDG_DESKTOP_DIR = "$HOME/";
   };
 
   environment.localBinInPath = true;
