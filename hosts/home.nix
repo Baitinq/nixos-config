@@ -80,6 +80,7 @@
         appimage-run
         ghidra
         ((ollama.override { acceleration = "cuda"; }))
+        ((llama-cpp.override { cudaSupport = true; }))
         llm
         opencode
         claude-code
