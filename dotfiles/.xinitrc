@@ -76,6 +76,7 @@ numlockx on
 systemctl --user start graphical-session.target
 
 dunst &
+habla &
 
 dwmbar &
 

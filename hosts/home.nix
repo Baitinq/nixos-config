@@ -165,6 +165,7 @@
     };
   };
 
+
   programs = {
     git = {
       enable = true;

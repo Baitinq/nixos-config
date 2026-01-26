@@ -13,3 +13,6 @@ alt + shift + e
 # clipboard
 alt + c
   clipmenu
+
+alt + shift
+  habla --toggle
