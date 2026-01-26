@@ -12,7 +12,7 @@ alt + shift + e
 
 # clipboard
 alt + c
-  clipmenu
+	clipmenu
 
 alt + a
-  xdotool type -- "$(habla --toggle) "
+	habla --toggle | while IFS= read -r line; do xdotool type -- "$line "; done
