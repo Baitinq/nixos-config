@@ -14,5 +14,5 @@ alt + shift + e
 alt + c
   clipmenu
 
-alt + shift
-  habla --toggle
+alt + a
+  xdotool type -- "$(habla --toggle) "
