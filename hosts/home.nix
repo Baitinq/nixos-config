@@ -464,9 +464,19 @@
     ".Xresources".source = "${dotfiles}/.Xresources";
 
     ".scripts/".source = "${dotfiles}/scripts/";
+    ".ssh/id_ed25519.pub".text = secrets.ssh-key.public;
 
     ".netrc".text = secrets.netrc;
   };
+
+  home.activation.setupSshKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p ~/.ssh
+    chmod 700 ~/.ssh
+    cat > ~/.ssh/id_ed25519 << 'EOF'
+${secrets.ssh-key.private}
+EOF
+    chmod 600 ~/.ssh/id_ed25519
+  '';
 
   home.file = {
     ".tmux/plugins/tpm".source = inputs.tpm;
