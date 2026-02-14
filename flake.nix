@@ -63,6 +63,8 @@
       url = "github:Baitinq/Wallpapers";
       flake = false;
     };
+
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs = inputs @ {

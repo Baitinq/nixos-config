@@ -15,7 +15,7 @@
       prismlauncher
       trackma
       adl
-      jetbrains.idea-community
+      jetbrains.idea-oss
       gimp
       godot_4
     ]

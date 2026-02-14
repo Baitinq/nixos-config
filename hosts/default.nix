@@ -37,6 +37,7 @@
         [
           inputs.nur.overlays.default
           inputs.neovim-nightly-overlay.overlays.default
+          inputs.llm-agents.overlays.default
           (import ../packages)
           (import ../overlays)
         ]

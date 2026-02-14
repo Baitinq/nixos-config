@@ -82,10 +82,11 @@
         ((ollama.override { acceleration = "cuda"; }))
         ((llama-cpp.override { cudaSupport = true; }))
         llm
-        opencode
-        claude-code
-        codex
-        gemini-cli
+        pkgs.llm-agents.opencode
+        pkgs.llm-agents.claude-code
+        pkgs.llm-agents.codex
+        pkgs.llm-agents.gemini-cli
+        pkgs.llm-agents.pi
         gh
         kubectl
         kubectx
