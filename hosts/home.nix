@@ -79,8 +79,8 @@
         slurp
         appimage-run
         ghidra
-        ((ollama.override { acceleration = "cuda"; }))
-        ((llama-cpp.override { cudaSupport = true; }))
+        # ((ollama.override { acceleration = "cuda"; }))
+        # ((llama-cpp.override { cudaSupport = true; }))
         llm
         pkgs.llm-agents.opencode
         pkgs.llm-agents.claude-code
@@ -131,6 +131,7 @@
     GEMINI_API_KEY = "${secrets.google_genai_api_key}";
     OPENROUTER_API_KEY = "${secrets.openrouter_api_key}";
     HF_TOKEN = "${secrets.huggingface_api_key}";
+    ZEN_API_KEY = "${secrets.zen_api_key}";
   };
 
   services = {
