@@ -1,5 +1,5 @@
 --[[
--- TODO: Use lazy's features to avoid loading plugins unlazily
+-- Neovim 0.12 configuration using the native package manager and APIs.
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -157,6 +157,22 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Neovim 0.12 native completion. The `o` source uses the LSP omnifunc.
+vim.opt.autocomplete = true
+vim.opt.autocompletedelay = 100
+vim.opt.complete = { 'o', '.', 'w', 'b', 'u', 't' }
+vim.opt.completeopt = { 'menuone', 'noselect', 'popup', 'fuzzy' }
+
+-- Neovim 0.12's experimental message and command-line presentation layer.
+-- `g<` opens the message pager.
+vim.opt.cmdheight = 0
+require('vim._core.ui2').enable {
+  msg = {
+    targets = 'msg',
+    msg = { height = 0.5, timeout = 4000 },
+  },
+}
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -191,8 +207,8 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- Disable logs as codecompanion is using a deprecated blink.cmp api. TODO: keep in mind 
-vim.lsp.set_log_level("off")
+-- The LSP log can become very large in monorepos. Enable it temporarily when debugging.
+vim.lsp.log.set_level("OFF")
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -208,188 +224,138 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.uv.fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
-
--- [[ Configure and install plugins ]]
+-- ============================================================
+-- SECTION 3: NATIVE PACKAGE MANAGEMENT
+-- See `:help vim.pack`, `:help vim.pack-examples`, and
+-- https://echasnovski.com/blog/2026-03-13-a-guide-to-vim-pack
 --
---  To check the current status of your plugins, run
---    :Lazy
+-- Inspect installed state without fetching:
+--   :lua vim.pack.update(nil, { offline = true })
+-- Review available updates:
+--   :lua vim.pack.update()
+-- In the review buffer, `:write` applies and `:quit` discards changes.
+-- ============================================================
+
+-- Build hooks must be registered before `vim.pack.add()` so they also run
+-- while bootstrapping plugins from nvim-pack-lock.json.
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(event)
+		if event.data.kind ~= "install" and event.data.kind ~= "update" then
+			return
+		end
+
+		if event.data.spec.name == "nvim-treesitter" then
+			if not event.data.active then
+				vim.cmd.packadd("nvim-treesitter")
+			end
+			vim.cmd("TSUpdate")
+		end
+	end,
+})
+
+-- `vim.pack.add()` installs missing Git repositories, records revisions in
+-- nvim-pack-lock.json, and loads each package so it can be configured below.
+vim.pack.add({
+	"https://github.com/tpope/vim-sleuth",
+	"https://github.com/direnv/direnv.vim",
+	"https://github.com/christoomey/vim-tmux-navigator",
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/nvim-mini/mini.nvim",
+	"https://github.com/folke/tokyonight.nvim",
+	"https://github.com/folke/which-key.nvim",
+	"https://github.com/folke/todo-comments.nvim",
+	"https://github.com/lewis6991/gitsigns.nvim",
+	"https://github.com/nvim-telescope/telescope.nvim",
+	"https://github.com/nvim-telescope/telescope-ui-select.nvim",
+	"https://github.com/stevearc/oil.nvim",
+	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/mason-org/mason.nvim",
+	"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
+	"https://github.com/j-hui/fidget.nvim",
+	"https://github.com/stevearc/conform.nvim",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+	"https://github.com/folke/flash.nvim",
+	"https://github.com/vim-test/vim-test",
+	"https://github.com/linrongbin16/gitlinker.nvim",
+	"https://github.com/monkoose/neocodeium",
+	"https://github.com/olimorris/codecompanion.nvim",
+}, { confirm = false })
+
+-- ============================================================
+-- SECTION 4: UI AND CORE EDITING
+-- ============================================================
+
+-- Collection of various small independent plugins/modules.
+-- Better Around/Inside textobjects
 --
---  You can press `?` in this menu for help. Use `:q` to close the window
+-- Examples:
+--  - va)  - [V]isually select [A]round [)]paren
+--  - yinq - [Y]ank [I]nside [N]ext [']quote
+--  - ci'  - [C]hange [I]nside [']quote
 --
---  To update plugins, you can run
---    :Lazy update
+-- Add/delete/replace surroundings (brackets, quotes, etc.)
 --
--- NOTE: Here is where you install your plugins.
-require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+-- - sd'   - [S]urround [D]elete [']quotes
+-- - sr)'  - [S]urround [R]eplace [)] [']
+--
+-- mini.icons also provides a compatibility shim for plugins expecting the
+-- nvim-web-devicons module.
+require("mini.icons").setup()
+MiniIcons.mock_nvim_web_devicons()
+require("mini.pairs").setup()
+require("mini.ai").setup({
+	-- Avoid Neovim 0.12's built-in incremental-selection mappings.
+	mappings = { around_next = "aa", inside_next = "ii" },
+	n_lines = 500,
+})
+require("mini.surround").setup()
+-- Simple and easy statusline.
+-- You could remove this setup call if you don't like it and try another
+-- statusline plugin.
+local statusline = require("mini.statusline")
+-- Set use_icons to true if you have a Nerd Font.
+statusline.setup({ use_icons = vim.g.have_nerd_font })
+statusline.section_location = function()
+	return "%P %2l:%-2v"
+end
 
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  'direnv/direnv.vim',
+-- You can easily change to a different colorscheme. To see installed schemes,
+-- use `:Telescope colorscheme`.
+require("tokyonight").setup({ styles = { comments = { italic = false } } })
+-- Other variants include tokyonight-storm, tokyonight-moon, and tokyonight-day.
+vim.cmd.colorscheme("tokyonight-night")
 
-  'christoomey/vim-tmux-navigator',
+-- Highlight todo, notes, etc in comments.
+require("todo-comments").setup({ signs = false })
 
-  {'echasnovski/mini.pairs', opts = {} },
+-- Adds git related signs to the gutter, as well as utilities for managing changes.
+-- See `:help gitsigns` to understand what the configuration keys do.
+require("gitsigns").setup({
+	signs = {
+		add = { text = "+" },
+		change = { text = "~" },
+		delete = { text = "_" },
+		topdelete = { text = "‾" },
+		changedelete = { text = "~" },
+	},
+})
+vim.keymap.set("n", "<leader>gb", require("gitsigns").blame_line, { desc = "[G]it [B]lame" })
 
-  'github/copilot.vim',
+require("which-key").setup({ delay = 0, icons = { mappings = vim.g.have_nerd_font } })
+require("which-key").add({
+	{ "<leader>c", group = "[C]ode" },
+	{ "<leader>d", group = "[D]ocument" },
+	{ "<leader>r", group = "[R]ename" },
+	{ "<leader>s", group = "[S]earch" },
+	{ "<leader>t", group = "[T]est" },
+	{ "<leader>w", group = "[W]orkspace" },
+})
 
-  {
-    "olimorris/codecompanion.nvim",
-    config = function()
-      require("codecompanion").setup({
-         strategies = {
-          chat = {
-            adapter = "openai",
-          },
-        },
+-- ============================================================
+-- SECTION 5: SEARCH AND NAVIGATION
+-- ============================================================
 
-        adapters = {
-          openai = function()
-            return require("codecompanion.adapters").extend("openai", {
-              schema = {
-                model = {
-                  default = "o3-mini",
-                },
-              },
-            })
-          end,
-        },
-      })
-      vim.keymap.set('n', '<leader>a', ':CodeCompanionAction<CR>', { desc = '[A]I' })
-    end,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-  },
-
-  {
-    "linrongbin16/gitlinker.nvim",
-    config = function()
-      require('gitlinker').setup {
-        vim.keymap.set('n', '<leader>gl', require('gitlinker').link, { desc = '[G]it [L]ink' })
-      }
-    end
-  },
-
-  { 'klen/nvim-test',
-    config = function()
-
-      -- If go parser is installed, then we can activate the go nvim-test runner
-      if require("nvim-treesitter.parsers").has_parser('go') then
-        require('nvim-test.runners.go-test'):setup {
-          args = { "test", "-tags", "dynamic" }
-        }
-      end
-      require('nvim-test').setup {
-        vim.keymap.set('n', '<leader>tf', function() require('nvim-test').run('file') end, { desc = '[T]est [F]ile' }),
-        vim.keymap.set('n', '<leader>tn', function() require('nvim-test').run('nearest') end, { desc = '[T]est [N]earest' }),
-        vim.keymap.set('n', '<leader>ts', function() require('nvim-test').run('suite') end, { desc = '[T]est [S]uite' }),
-        vim.keymap.set('n', '<leader>tl', function() require('nvim-test').run_last() end, { desc = '[T]est [L]ast' }),
-        vim.keymap.set('n', '<leader>tv', function() require('nvim-test').visit() end, { desc = '[T]est [V]isit' })
-      }
-    end
-  },
-
-  --
-  -- Use `opts = {}` to force a plugin to be loaded.
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`. This is equivalent to the following lua:
-  --    require('gitsigns').setup({ ... })
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup {
-        signs = {
-          add = { text = '+' },
-          change = { text = '~' },
-          delete = { text = '_' },
-          topdelete = { text = '‾' },
-          changedelete = { text = '~' },
-        },
-        vim.keymap.set('n', '<leader>gb', require('gitsigns').blame_line, { desc = '[G]it [B]lame' }),
-      }
-    end
-  },
-
-  -- NOTE: Plugins can also be configured to run lua code when they are loaded.
-  --
-  -- This is often very useful to both group configuration, as well as handle
-  -- lazy loading plugins that don't need to be loaded immediately at startup.
-  --
-  -- For example, in the following configuration, we use:
-  --  event = 'VimEnter'
-  --
-  -- which loads which-key before all the UI elements are loaded. Events can be
-  -- normal autocommands events (`:help autocmd-events`).
-  --
-  -- Then, because we use the `config` key, the configuration only runs
-  -- after the plugin has been loaded:
-  --  config = function() ... end
-
-  { -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
-
-      -- Document existing key chains
-      require('which-key').add {
-        { '<leader>c', group = '[C]ode' },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-      }
-    end,
-  },
-
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
-
-  { -- Fuzzy Finder (files, lsp, etc)
-    'nvim-telescope/telescope.nvim',
-    event = 'VimEnter',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      { -- If encountering errors, see telescope-fzf-native README for install instructions
-        'nvim-telescope/telescope-fzf-native.nvim',
-
-        -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
-        build = 'make',
-
-        -- `cond` is a condition used to determine whether this plugin should be
-        -- installed and loaded.
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-
-      { "debugloop/telescope-undo.nvim" },
-
-      -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    },
-    config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
       -- it can fuzzy find! It's more than just a "file finder", it can search
       -- many different aspects of Neovim, your workspace, LSP, and more!
@@ -411,108 +377,50 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
-      require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
-          },
-        },
+require("telescope").setup({
+	-- You can put default mappings and picker-specific options in this table.
+	-- See `:help telescope.setup()` for all available settings.
+	extensions = { ["ui-select"] = { require("telescope.themes").get_dropdown() } },
+	pickers = { find_files = { hidden = true } },
+})
+require("telescope").load_extension("ui-select")
 
-        pickers = {
-          find_files = {
-            hidden = true
-          },
-        },
-      }
+-- See `:help telescope.builtin`.
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+vim.keymap.set("n", "<leader>sf", builtin.git_files, { desc = "[S]earch [F]iles" })
+vim.keymap.set("n", "<leader>sF", function()
+	builtin.find_files({ previewer = false })
+end, { desc = "[S]earch [F]iles (non-git)" })
+vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+vim.keymap.set({ "n", "v" }, "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = "[S]earch Recent Files" })
+vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "Find existing buffers" })
+-- nvim.undotree is an optional plugin shipped with Neovim 0.12. Moving the
+-- cursor in its window previews the selected state in the undo tree.
+vim.cmd.packadd("nvim.undotree")
+vim.keymap.set("n", "<leader>u", "<cmd>Undotree<cr>", { desc = "[U]ndo Tree" })
+vim.keymap.set("n", "<leader>/", function()
+	builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ winblend = 10, previewer = false }))
+end, { desc = "Fuzzily search current buffer" })
+vim.keymap.set("n", "<leader>s/", function()
+	builtin.live_grep({ grep_open_files = true, prompt_title = "Live Grep in Open Files" })
+end, { desc = "[S]earch in open files" })
+vim.keymap.set("n", "<leader>sn", function()
+	builtin.find_files({ cwd = vim.fn.stdpath("config"), follow = true })
+end, { desc = "[S]earch [N]eovim files" })
 
-      -- Enable telescope extensions, if they are installed
-      pcall(require('telescope').load_extension, 'fzf')
-      pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require("telescope").load_extension, "undo")
+require("oil").setup({ default_file_explorer = true, view_options = { show_hidden = true } })
+vim.keymap.set("n", "<leader>b", "<cmd>Oil<cr>", { desc = "[B]rowse files" })
 
-      -- See `:help telescope.builtin`
-      local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.git_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>sF', function() builtin.find_files({previewer = false}) end, { desc = '[S]earch [F]iles (non-git)' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+-- ============================================================
+-- SECTION 6: NATIVE LSP AND COMPLETION
+-- ============================================================
 
-      vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "[U]ndo Menu" })
-
-      -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = false,
-        })
-      end, { desc = '[/] Fuzzily search in current buffer' })
-
-      -- Also possible to pass additional configuration options.
-      --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      vim.keymap.set('n', '<leader>s/', function()
-        builtin.live_grep {
-          grep_open_files = true,
-          prompt_title = 'Live Grep in Open Files',
-        }
-      end, { desc = '[S]earch [/] in Open Files' })
-
-      -- Shortcut for searching your neovim configuration files
-      vim.keymap.set('n', '<leader>sn', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[S]earch [N]eovim files' })
-    end,
-  },
-
-  {
-  'stevearc/oil.nvim',
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    require("oil").setup({
-      default_file_explorer = true,
-      view_options = {
-          show_hidden = true,
-      },
-    })
-    vim.keymap.set("n", '<leader>b', "<CMD>Oil<CR>", { desc = '[B]rowse files' })
-  end
-  },
-
-  { -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
-
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim', opts = {} },
-
-      'saghen/blink.cmp',
-    },
-    config = function()
       -- Brief Aside: **What is LSP?**
       --
       -- LSP is an acronym you've probably heard, but might not understand what it is.
@@ -538,13 +446,21 @@ require('lazy').setup({
       -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
       -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
-      --  This function gets run when an LSP attaches to a particular buffer.
-      --    That is to say, every time a new file is opened that is associated with
-      --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-      --    function will be executed to configure the current buffer
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-        callback = function(event)
+-- Neovim 0.12 manages server lifecycle with `vim.lsp.config()` and
+-- `vim.lsp.enable()`. nvim-lspconfig supplies standard server definitions.
+
+-- Useful status updates for LSP.
+require("fidget").setup({})
+
+-- Manually request native LSP completion. <C-y> accepts a candidate and
+-- Neovim's built-in vim.snippet expands and navigates snippet placeholders.
+vim.keymap.set("i", "<C-Space>", function()
+	vim.lsp.completion.get()
+end, { desc = "Trigger LSP completion" })
+-- Configure buffer-local behavior each time a language server attaches.
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+	callback = function(event)
           -- NOTE: Remember that lua is a real programming language, and as such it is possible
           -- to define small helper and utility functions so you don't have to repeat yourself
           -- many times.
@@ -568,7 +484,7 @@ require('lazy').setup({
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           -- Jump to the type of the word under your cursor.
-          --  Useful when you're not sure what type a variable is and you want to see
+          --  Useful when you're not sure what language a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
           map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
 
@@ -597,392 +513,215 @@ require('lazy').setup({
           --  For example, in C this would take you to the header
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-          end
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-              buffer = event.buf,
-              callback = vim.lsp.buf.document_highlight,
-            })
-
-            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-              buffer = event.buf,
-              callback = vim.lsp.buf.clear_references,
-            })
-          end
-          if client and client.server_capabilities.codeLensProvider then
-						vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-							buffer = event.buf,
-							callback = function()
-								return vim.lsp.codelens.refresh({ bufnr = event.buf })
-							end,
-						})
-					end
-        end,
-      })
-
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP Specification.
-      --  When you add blink, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-
-      local servers = {
-        pyright = {},
-        hls = {},
-        zls = {
-          settings = {
-            enable_build_on_save = true,
-            build_on_save_step = 'check',
-          },
-        },
-        gopls = {
-          settings = {
-            gopls = {
-              ["ui.inlayhint.hints"] = {
-                compositeLiteralFields = true,
-                constantValues = true,
-              },
-              ["ui.codelenses"] = {
-                test = true,
-                generate = true,
-              },
-            },
-          },
-        },
-      }
-
-      for lsp, settings in pairs(servers) do
-            settings.capabilities = vim.tbl_deep_extend('force', {}, capabilities, settings.capabilities or {})
-            require('lspconfig')[lsp].setup(settings)
-      end
-
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-      local autoinstalled_servers = {
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        }
-        -- clangd = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
-      }
-
-      -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
-      --    :Mason
-      --
-      --  You can press `g?` for help in this menu
-      require('mason').setup({ PATH = "append"})
-
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(autoinstalled_servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format lua code
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-      require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = autoinstalled_servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      }
-    end,
-  },
-
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    opts = {
-      notify_on_error = false,
-      format_after_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        return {
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
-        go = { "goimports", "gofmt" },
-        haskell = { 'ormolu' },
-      },
-    },
-  },
-
-{ -- Autocompletion
-    'saghen/blink.cmp',
-    event = 'InsertEnter',
-    version = '1.*',
-    dependencies = {
-      -- Snippet Engine
-      {
-        'L3MON4D3/LuaSnip',
-        version = '2.*',
-        build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
-        },
-        opts = {},
-      },
-    },
-    --- @module 'blink.cmp'
-    --- @type blink.cmp.Config
-    opts = {
-      keymap = {
-        -- 'default' (recommended) for mappings similar to built-in completions
-        --   <c-y> to accept ([y]es) the completion.
-        --    This will auto-import if your LSP supports it.
-        --    This will expand snippets if the LSP sent a snippet.
-        -- 'super-tab' for tab to accept
-        -- 'enter' for enter to accept
-        -- 'none' for no mappings
-        --
-        -- For an understanding of why the 'default' preset is recommended,
-        -- you will need to read `:help ins-completion`
-        --
-        -- No, but seriously. Please read `:help ins-completion`, it is really good!
-        --
-        -- All presets have the following mappings:
-        -- <tab>/<s-tab>: move to right/left of your snippet expansion
-        -- <c-space>: Open menu or open docs if already open
-        -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
-        -- <c-e>: Hide menu
-        -- <c-k>: Toggle signature help
-        --
-        -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'enter',
-
-        -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-        --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
-      },
-
-      appearance = {
-        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = 'mono',
-      },
-
-      sources = {
-        default = { 'lsp', 'path', 'snippets' },
-      },
-
-      snippets = { preset = 'luasnip' },
-
-      -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-      -- which automatically downloads a prebuilt binary when enabled.
-      --
-      -- By default, we use the Lua implementation instead, but you may enable
-      -- the rust implementation via `'prefer_rust_with_warning'`
-      --
-      -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
-
-      -- Shows a signature help window while you type arguments for a function
-      signature = { enabled = true },
-    },
-  },
-
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-    'folke/tokyonight.nvim',
-    priority = 1000, -- make sure to load this before all the other start plugins
-    init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-
-      -- You can configure highlights by doing something like
-      vim.cmd.hi 'Comment gui=none'
-    end,
-  },
-
-  -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-
-  { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
-    config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [']quote
-      --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
-
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%P %2l:%-2v'
-      end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
-    end,
-  },
-
-  { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-    },
-    config = function(_, opts)
-      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-      ---@diagnostic disable-next-line: missing-fields
-      require('nvim-treesitter.configs').setup(opts)
-
-      -- There are additional nvim-treesitter modules that you can use to interact
-      -- with nvim-treesitter. You should go explore a few and see what interests you:
-      --
-      --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-      --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-      --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    end,
-  },
-
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-    },
-  }
-
-  -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- put them in the right spots if you want.
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for kickstart
-  --
-  --  Here are some example plugins that I've included in the kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
-  --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
-}, {
-  ui = {
-    -- If you have a Nerd Font, set icons to an empty table which will use the
-    -- default lazy.nvim defined Nerd Font icons otherwise define a unicode icons table
-    icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
-    },
-  },
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if client and client:supports_method("textDocument/completion", event.buf) then
+			vim.lsp.completion.enable(true, client.id, event.buf)
+		end
+		if client and client:supports_method("textDocument/inlayHint", event.buf) then
+			vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+		end
+		if client and client:supports_method("textDocument/documentHighlight", event.buf) then
+			local group = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+			vim.api.nvim_create_autocmd(
+				{ "CursorHold", "CursorHoldI" },
+				{ buffer = event.buf, group = group, callback = vim.lsp.buf.document_highlight }
+			)
+			vim.api.nvim_create_autocmd(
+				{ "CursorMoved", "CursorMovedI" },
+				{ buffer = event.buf, group = group, callback = vim.lsp.buf.clear_references }
+			)
+		end
+		if client and client:supports_method("textDocument/codeLens", event.buf) then
+			vim.lsp.codelens.enable(true, { bufnr = event.buf })
+		end
+	end,
 })
+
+-- Enable the following language servers. Add override configuration in these
+-- tables. Common keys are `cmd`, `filetypes`, `capabilities`, and `settings`.
+-- See `:help lspconfig-all` for the available server definitions.
+-- Servers are enabled globally, but only start in matching buffers.
+local servers = {
+	pyright = {},
+	hls = {},
+	zls = { settings = { enable_build_on_save = true, build_on_save_step = "check" } },
+	gopls = {
+		settings = {
+			gopls = {
+				hints = { compositeLiteralFields = true, constantValues = true },
+				codelenses = { test = true, generate = true },
+				staticcheck = true,
+			},
+		},
+	},
+	lua_ls = {
+		on_init = function(client)
+			if client.workspace_folders then
+				local path = client.workspace_folders[1].name
+				if
+					path ~= vim.fn.stdpath("config")
+					and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+				then
+					return
+				end
+			end
+			client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+				runtime = { version = "LuaJIT", path = { "lua/?.lua", "lua/?/init.lua" } },
+				workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
+			})
+		end,
+		settings = { Lua = { completion = { callSnippet = "Replace" } } },
+	},
+}
+-- Mason installs only the tools we want it to own. gopls, hls, and zls are
+-- intentionally expected from the system PATH.
+require("mason").setup({ PATH = "append" })
+require("mason-tool-installer").setup({ ensure_installed = { "lua-language-server", "stylua" } })
+for name, config in pairs(servers) do
+	vim.lsp.config(name, config)
+	vim.lsp.enable(name)
+end
+
+-- ============================================================
+-- SECTION 7: FORMATTING AND TESTING
+-- ============================================================
+
+-- Autoformat with conform.nvim. External formatters are selected by filetype;
+-- LSP formatting is used as a fallback for languages without one. C and C++
+-- deliberately avoid LSP fallback because they do not have one standardized
+-- formatting style. Additional formatters can be added to `formatters_by_ft`.
+require("conform").setup({
+	notify_on_error = false,
+	-- Conform can run multiple formatters sequentially. It can also use a
+	-- sub-list to stop after the first available formatter.
+	format_after_save = function(bufnr)
+		return { lsp_format = ({ c = true, cpp = true })[vim.bo[bufnr].filetype] and "never" or "fallback" }
+	end,
+	formatters_by_ft = {
+		lua = { "stylua" },
+		go = { "goimports", "gofmt" },
+		haskell = { "ormolu" },
+	},
+})
+
+-- nvim-test is tied to the retired nvim-treesitter master API. vim-test keeps
+-- the same commands/keybindings while working with the 0.12 Treesitter stack.
+vim.g["test#go#gotest#options"] = "-tags=dynamic"
+vim.keymap.set("n", "<leader>tf", "<cmd>TestFile<cr>", { desc = "[T]est [F]ile" })
+vim.keymap.set("n", "<leader>tn", "<cmd>TestNearest<cr>", { desc = "[T]est [N]earest" })
+vim.keymap.set("n", "<leader>ts", "<cmd>TestSuite<cr>", { desc = "[T]est [S]uite" })
+vim.keymap.set("n", "<leader>tl", "<cmd>TestLast<cr>", { desc = "[T]est [L]ast" })
+vim.keymap.set("n", "<leader>tv", "<cmd>TestVisit<cr>", { desc = "[T]est [V]isit" })
+
+-- ============================================================
+-- SECTION 8: TREESITTER
+-- ============================================================
+
+-- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`.
+-- Treesitter highlights, edits, and navigates code using a syntax tree.
+-- nvim-treesitter installs parsers and compatible queries; Neovim 0.12 itself
+-- provides highlighting and selection, while nvim-treesitter supplies
+-- installation and indentation.
+--
+-- Other useful modules to explore include Treesitter context and textobjects.
+local parsers = {
+	"bash",
+	"c",
+	"diff",
+	"go",
+	"haskell",
+	"html",
+	"lua",
+	"luadoc",
+	"markdown",
+	"markdown_inline",
+	"query",
+	"vim",
+	"vimdoc",
+	"yaml",
+	"zig",
+}
+require("nvim-treesitter").install(parsers)
+local available_parsers = require("nvim-treesitter").get_available()
+-- Attach native highlighting and Treesitter indentation when a parser exists.
+local function treesitter_attach(buf, language)
+	if not vim.treesitter.language.add(language) then
+		return
+	end
+	vim.treesitter.start(buf, language)
+	if vim.treesitter.query.get(language, "indents") then
+		vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end
+end
+-- Autoinstall languages that are available but do not have an installed parser.
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(event)
+		local language = vim.treesitter.language.get_lang(event.match)
+		if not language then
+			return
+		end
+		local installed_parsers = require("nvim-treesitter").get_installed("parsers")
+		if vim.tbl_contains(installed_parsers, language) then
+			treesitter_attach(event.buf, language)
+		elseif vim.tbl_contains(available_parsers, language) then
+			require("nvim-treesitter").install(language):await(function()
+				treesitter_attach(event.buf, language)
+			end)
+		else
+			treesitter_attach(event.buf, language)
+		end
+	end,
+})
+
+-- Other Treesitter modules worth exploring include:
+--  - Incremental selection: `:help treesitter-incremental-selection`
+--  - Current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+--  - Textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+
+-- ============================================================
+-- SECTION 9: MOTION, GIT, AI, AND TEST UTILITIES
+-- These are personal additions beyond the core Kickstart example.
+-- ============================================================
+require("flash").setup({})
+vim.keymap.set({ "n", "x", "o" }, "s", function()
+	require("flash").jump()
+end, { desc = "Flash" })
+
+require("gitlinker").setup({})
+vim.keymap.set("n", "<leader>gl", require("gitlinker").link, { desc = "[G]it [L]ink" })
+
+require("neocodeium").setup({})
+-- Keep Tab available for native snippet navigation.
+vim.keymap.set("i", "<M-f>", require("neocodeium").accept, { desc = "Accept NeoCodeium suggestion" })
+
+require("codecompanion").setup({
+	strategies = { chat = { adapter = "openai_responses" } },
+	adapters = {
+		openai_responses = function()
+			return require("codecompanion.adapters").extend("openai_responses", { schema = { model = { default = "gpt-5.6-luna" } } })
+		end,
+	},
+})
+vim.keymap.set("n", "<leader>a", "<cmd>CodeCompanionActions<cr>", { desc = "[A]I" })
+
+-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
+-- init.lua. If you want these files, they are in the repository, so you can just download them and
+-- put them in the right spots if you want.
+
+-- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for kickstart
+--
+-- Here are some example plugins included in the Kickstart repository. Require
+-- them here after copying the files into `lua/kickstart/plugins/`.
+--
+-- require 'kickstart.plugins.debug'
+-- require 'kickstart.plugins.indent_line'
+
+-- NOTE: You can also add your own plugins and configuration from Lua modules.
+-- Native `vim.pack.add()` can be called from those modules directly.
+
+-- Inspect plugins: :lua vim.pack.update(nil, { offline = true })
+-- Update plugins:  :lua vim.pack.update()
+-- Review changes, then `:write` to apply or `:quit` to cancel.
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
