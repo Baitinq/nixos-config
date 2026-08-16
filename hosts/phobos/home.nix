@@ -12,10 +12,10 @@
 }: {
   home.packages = with pkgs;
     [
+      #adl # archived upstream
       prismlauncher
       trackma
-      adl
-      jetbrains.idea-oss
+      #jetbrains.idea-oss # insecure
       gimp
       godot_4
     ]

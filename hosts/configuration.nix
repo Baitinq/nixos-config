@@ -152,6 +152,7 @@
     xclip
     strace
     fzf
+    brightnessctl
     powertop
     tpm2-tss
     inputs.deploy-rs.packages."${system}".deploy-rs
@@ -237,7 +238,6 @@
       enableAskPassword = false;
     };
 
-    light.enable = true;
 
     dconf.enable = true;
 

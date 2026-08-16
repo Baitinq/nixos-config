@@ -37,7 +37,7 @@
         [
           inputs.nur.overlays.default
           inputs.neovim-nightly-overlay.overlays.default
-          inputs.llm-agents.overlays.default
+          inputs.llm-agents.overlays.shared-nixpkgs
           (import ../packages)
           (import ../overlays)
         ]

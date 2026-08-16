@@ -66,6 +66,7 @@ in {
 
   environment.systemPackages = with pkgs; [
     clinfo
+    (llama-cpp.override { cudaSupport = true; })
   ];
 
   networking.interfaces.eth0.wakeOnLan.enable = true;

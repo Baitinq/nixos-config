@@ -80,7 +80,6 @@
         appimage-run
         ghidra
         # ((ollama.override { acceleration = "cuda"; }))
-        # ((llama-cpp.override { cudaSupport = true; }))
         llm
         pkgs.llm-agents.opencode
         pkgs.llm-agents.claude-code
@@ -94,10 +93,10 @@
         python313Packages.huggingface-hub
       ]
       ++ (with pkgs.custom; [
-        minecraft
-        claude-squad
-        lemacs
-        kindlegen
+        # minecraft
+        # claude-squad
+        # lemacs
+        # kindlegen
         habla
       ]);
   };
@@ -281,7 +280,7 @@
         id = 0;
         name = "Default";
         isDefault = true;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           ublock-origin
           darkreader
           h264ify
