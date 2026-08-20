@@ -85,7 +85,9 @@
         pkgs.llm-agents.claude-code
         pkgs.llm-agents.codex
         pkgs.llm-agents.gemini-cli
-        pkgs.llm-agents.pi
+        # This CPU (Ivy Bridge) has no AVX2/BMI2, which pi's bun-compiled
+        # binary requires -> SIGILL. useBun=false uses the node entrypoint.
+        (pkgs.llm-agents.pi.override {useBun = false;})
         gh
         kubectl
         kubectx
