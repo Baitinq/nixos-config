@@ -70,7 +70,7 @@
         river-classic
         wlr-randr
         wlsunset
-        vscode
+        # vscode
         chromium
         brave
         inputs.zen-browser.packages."${system}".default
