@@ -100,6 +100,7 @@
         # lemacs
         # kindlegen
         habla
+        osh
       ]);
   };
 

@@ -5,6 +5,7 @@ final: prev: {
     swhkd = prev.callPackage ./swhkd {};
     claude-squad = prev.callPackage ./claude-squad {};
     habla = prev.callPackage ./habla {};
+    osh = prev.callPackage ./osh {};
     minecraft = prev.callPackage ./minecraft {};
   };
 }
