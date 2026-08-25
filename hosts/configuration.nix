@@ -83,6 +83,7 @@
       hashedPassword = secrets.root.hashed_password;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJgr7cdkkhWJplfN+A7LvBDk9r/PRHPUGj/yQyHilk5c (none)"
       ];
     };
 
@@ -92,6 +93,7 @@
       hashedPassword = secrets.baitinq.hashed_password;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID99gQ/AgXhgwAjs+opsRXMbWpXFRT2aqAOUbN3DsrhQ (none)"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJgr7cdkkhWJplfN+A7LvBDk9r/PRHPUGj/yQyHilk5c (none)"
       ];
       shell = pkgs.zsh;
     };
