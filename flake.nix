@@ -65,6 +65,11 @@
     };
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    fn-agent = {
+      url = "github:Baitinq/fn-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

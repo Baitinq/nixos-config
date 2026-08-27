@@ -100,7 +100,7 @@
         # lemacs
         # kindlegen
         habla
-        osh
+        fn-agent
       ]);
   };
 
