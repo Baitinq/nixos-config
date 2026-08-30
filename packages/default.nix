@@ -4,7 +4,7 @@ inputs: final: prev: {
     lemacs = prev.callPackage ./lemacs {};
     swhkd = prev.callPackage ./swhkd {};
     claude-squad = prev.callPackage ./claude-squad {};
-    habla = prev.callPackage ./habla {};
+    habla = inputs.habla.packages.${prev.stdenv.hostPlatform.system}.default;
     fn-agent = inputs.fn-agent.packages.${prev.stdenv.hostPlatform.system}.default;
     minecraft = prev.callPackage ./minecraft {};
   };

@@ -70,6 +70,11 @@
       url = "github:Baitinq/fn-agent";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    habla = {
+      url = "github:Baitinq/habla";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
