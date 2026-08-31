@@ -279,6 +279,7 @@
 
     firefox = {
       enable = true;
+      configPath = ".mozilla/firefox";
       profiles.default = {
         id = 0;
         name = "Default";
@@ -435,7 +436,7 @@
           }'';
       };
 
-      initExtra = ''
+      initContent = ''
         autoload -U history-search-end #needed for -end
         zle -N history-beginning-search-backward-end history-search-end
         zle -N history-beginning-search-forward-end history-search-end

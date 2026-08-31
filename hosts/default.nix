@@ -49,23 +49,26 @@
       hostname = host + "-" + hardware;
     };
 
+    moduleArgs = builtins.removeAttrs extraArgs ["pkgs"];
+
     extraSpecialModules = extraModules ++ lib.optional isHardware ../hardware/${hardware} ++ lib.optional isIso "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
   in
     if isNixOS
     then
       nixpkgs.lib.nixosSystem
       {
-        inherit system;
-        specialArgs = extraArgs;
+        specialArgs = moduleArgs;
         modules =
           [
+            nixpkgs.nixosModules.readOnlyPkgs
+            {nixpkgs.pkgs = pkgs;}
             ./configuration.nix
             ./${host}
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = extraArgs;
+              home-manager.extraSpecialArgs = moduleArgs;
               home-manager.users.${user} = {
                 imports = [
                   ./home.nix
@@ -109,8 +112,15 @@
         ];
       };
 
+  compatibleSystems = lib.filter (entry:
+    if isNixOS
+    then entry.system == "x86_64-linux"
+    else if isMacOS
+    then entry.system == "aarch64-darwin"
+    else true)
+  systems;
   hardwarePermutatedHosts = lib.concatMap (hardware: map (host: host // hardware) hosts) hardwares;
-  systemsPermutatedHosts = lib.concatMap (system: map (host: host // system) hardwarePermutatedHosts) systems;
+  systemsPermutatedHosts = lib.concatMap (system: map (host: host // system) hardwarePermutatedHosts) compatibleSystems;
   permutatedHosts = systemsPermutatedHosts;
 in
   /*

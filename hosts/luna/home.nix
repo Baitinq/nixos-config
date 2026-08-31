@@ -12,9 +12,9 @@
 }: {
   home.packages = with pkgs;
     [
-      xorg.xmodmap
+      xmodmap
       trackma
-      adl
+      # adl # archived upstream
     ]
     ++ (with pkgs.custom; [
       ]);

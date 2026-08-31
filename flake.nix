@@ -196,7 +196,7 @@
 
           profiles.system = {
             user = "root";
-            path = inputs.deploy-rs.lib.${nixosConfig.config.nixpkgs.system}.activate.nixos nixosConfig;
+            path = inputs.deploy-rs.lib.${nixosConfig.pkgs.stdenv.hostPlatform.system}.activate.nixos nixosConfig;
           };
         })
         self.nixosConfigurations;
