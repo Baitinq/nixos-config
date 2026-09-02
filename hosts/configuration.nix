@@ -182,6 +182,13 @@
   };
 
   services = {
+    tailscale = {
+      enable = true;
+      # Allow direct peer-to-peer connections through the host firewall.
+      openFirewall = true;
+      authKeyFile = pkgs.writeText "tailscale-auth-key" secrets.tailscale_auth_key;
+    };
+
     openssh = {
       enable = true;
       settings = {
